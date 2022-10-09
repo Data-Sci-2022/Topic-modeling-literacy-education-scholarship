@@ -40,4 +40,4 @@ vignettes/*.pdf
 .Rproj.user
 
 #Private
-.Private
+Private/
