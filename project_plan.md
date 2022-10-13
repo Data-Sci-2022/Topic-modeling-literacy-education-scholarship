@@ -27,17 +27,17 @@ In terms of data mining efforts, I have a long way ahead. First, I need to conve
 
 ### Analysis overview
 
-I plan to run topic modeling techniques in R to analyze more than five decades (between 1969 and 2021) of scholarship in a leading journal in the field of literacy education. The corpus includes all the articles published in the focal journal, without distinction of sub-types.
+I plan to run topic modeling techniques in R to analyze more than five decades (between 1969 and 2021) of scholarship in a leading journal in the field of literacy education. The corpus includes all the articles published in the focal journal, without distinction of sub-types. Therefore, my expected results from the data analysis involve lists of probabilistic topics weighted by the frequency of appearance across the articles and organized over time, for example by decade (cf. Wang et al., 2017). A situation that may arise in the analysis is the role that *special issues* (collection of articles related to a specific topic) could play in the topic modeling results. For this reason, I will test the model with and without the articles from the special issues.
 
-The primary purpose of my analysis is to identify trends in topics of Literacy Education research and scholarship and trace changes over time. Therefore, my expected results from the data analysis involve lists of probabilistic topics weighted by the frequency of appearance over the articles and organized over time (cf. Wang et al., 2017). Secondarily, I pretend to examine preliminary changes in the discourse and vocabulary employed by literacy researchers publishing in the journal. I also have a possible third purpose that will depend on the time employed for the main analysis: to compare the results with topic analysis developed manually by other authors using content analysis methods (e.g., Baldwin et al., 1992; Guthrie et al., 1983; Parsons et al., 2016).
+In term of objectives, the main purpose of my analysis is to identify trends in the topics of literacy research and scholarship, tracing its shifts over time. Secondarily, I pretend to preliminary examine changes in the discourse and vocabulary employed by literacy researchers publishing in the journal. I also have a possible third purpose that will depend on the time employed for the main analysis: to compare the results with topic analysis developed manually by other authors using content analysis methods (e.g., Baldwin et al., 1992; Guthrie et al., 1983; Parsons et al., 2016).
 
 ### References
 
-Baldwin, R. S., Readence, J. E., Schumm, J. S., Konopak, J. P., Konopak, B. C., & Klingner, J. K. (1992). Forty Years of Nrc Publications: 1952–1991. Journal of Reading Behavior, 24(4), 505–532. https://doi.org/10.1080/10862969209547793
+Baldwin, R. S., Readence, J. E., Schumm, J. S., Konopak, J. P., Konopak, B. C., & Klingner, J. K. (1992). Forty Years of NRC Publications: 1952–1991. Journal of Reading Behavior, 24(4), 505–532. https://doi.org/10.1080/10862969209547793
 
 Blei, D. M. (2009, September 1). Topic Models [Lecture]. Machine Learning Summer School, Cambridge, UK. http://videolectures.net/mlss09uk_blei_tm/
 
-Brett, M. (2012, December 12). » Topic Modeling: A Basic Introduction Journal of Digital Humanities. Journal of Digital Humanities. http://journalofdigitalhumanities.org/2-1/topic-modeling-a-basic-introduction-by-megan-r-brett/
+Brett, M. (2012, December 12). Topic Modeling: A Basic Introduction Journal of Digital Humanities. Journal of Digital Humanities. http://journalofdigitalhumanities.org/2-1/topic-modeling-a-basic-introduction-by-megan-r-brett/
 
 K. (2015, September 29). A gentle introduction to topic modeling using R. Eight to Late. https://eight2late.wordpress.com/2015/09/29/a-gentle-introduction-to-topic-modeling-using-r/
 
