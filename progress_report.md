@@ -21,3 +21,5 @@ I finished the documents required for the beginning of the Final project reposit
 
 For the purpose of the Project plan document, I studied more about topic modeling in my main sources: [Eight to late](https://eight2late.wordpress.com/2015/09/29/a-gentle-introduction-to-topic-modeling-using-r/) and [Text Mining with R](https://www.tidytextmining.com/index.html). 
 
+## November 3rd 2022
+
