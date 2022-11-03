@@ -1,0 +1,39 @@
+---
+title: "Final project; Data processing - Data Science for Linguists (LING 2340)
+Fall 2022"
+subtitle: "Data Processing"
+author: "Gianina Morales"
+date: "11/3/2022"
+output:
+  github_document:
+    toc: TRUE
+---
+# Data processing
+
+## Creating a dataframe from the corpus
+```{r}
+library(tidytext)
+library(tidyverse)
+library(tm)
+library(tidyr)
+```
+
+```{r}
+# read all the content from .txt files into a data frame
+raw_corpus <- tibble(file = dir("Private", full.names = TRUE)) %>%
+    mutate(text = map(file, read_lines)) %>%
+    transmute(id = basename(file), text) %>%
+    unnest(text)
+```
+
+
+```{r}
+tidy_corpus <- raw_text %>% 
+  unnest_tokens(word, text)
+
+tidy_tests
+```
+
+```{r}
+sessionInfo()
+```
