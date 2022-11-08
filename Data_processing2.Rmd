@@ -11,7 +11,7 @@ output:
 # Data processing
 
 ## Pre-processing: Creating and tidying a dataframe from the corpus
-```{r}
+```{r setup, message=FALSE, warning=FALSE}
 library(tidytext)
 library(tidyverse)
 library(tm)
@@ -22,7 +22,8 @@ library(stringr)
 ```
 
 1. **Turning raw data on data frame**
-I divided the data into decades, because of the time required for processing and the fact that I continually had parsing problems. I decided to use data from one decade (2010-2019) for the first report and as a way to test the wrangling process.
+
+1.1. I divided the data into decades, because of the time required for processing and the fact that I continually had parsing problems. I decided to use data from one decade (2010-2019) for the first report and as a way to test the wrangling process.
 
 ```{r}
 # read all the content from one decade of .txt files into a data frame.
@@ -35,11 +36,14 @@ raw_corpus10_19 <- tibble(file = dir("Private/2010-2019", full.names = TRUE))%>%
   #replace spaces with underscore and other changes in column id
 raw_corpus10_19$id <- gsub(" ", "_", raw_corpus10_19$id) 
 raw_corpus10_19$id <- gsub("JLR", "J1_", raw_corpus10_19$id)
+raw_corpus10_19$id <- gsub("[aeiou]", "x", raw_corpus10_19$id)
   
 head(raw_corpus10_19) 
 ```
 
-2. **"Tokenazing" and cleaning the data**
+2. **"Tokenizing" and cleaning the data**
+
+2.1. 2010-2019
 
 ```{r}
 #Tokens of one word by row
@@ -50,20 +54,22 @@ head(tidy_corpus10.19)
 tidy_corpus10.19
 
 #create a list of stopwords additionally to snowball (base from NLTK's to eliminate "giberish" and similar)
-My_stopwords <- c("rf", "ve", "ce", 'el', 'ww', "en", "los", "las", "la", "de", "del", "--", "---", "0o", "0s", "3a", "3b", "3d", "6b", "6o", "a", "a1", "a2", "a3", "a4", "ab", "ag", "aj", "0o", "0s", "3a", "3b", "3d", "6b", "6o", "a", "a1", "a2", "a3", "a4", "ab", "abst", "ac", "ad", "adj", "ae", "af", "ag", "ah", "ain", "aj", "al", "all", "ao", "ap", "ar", "av","aw", "ax", "ay", "az", "b", "b1", "b2", "b3", "ba", "bc", "bd", "be", "bi", "bj", "bk", "bl", "bn", "bp", "br", "bs", "bt", "bu", "bx", "by", "c", "c1", "c2", "c3", "ca", "cc", "cd", "ce", "cf", "cg", "ch", "ci", "cit", "cj", "cl", "cm",  "cn", "co", "com", "con", "cp", "cq", "cr", "cs", "c's", "ct", "cu", "cv", "cx", "cy", "cz", "d", "d2", "da", "dc", "dd", "de", "df", "di", "dj", "dk", "dl", "don", "dp", "dr", "ds", "dt", "du", "dx", "dy", "e", "e2", "e3", "ea", "ec", "ed", "edu", "ee", "ef", "eg", "ei", "ej", "el", "em", "en", "eo", "ep", "eq", "er", "es", "est", "et", "et-al", "etc", "eu", "ev", "ex", "ey", "f", "f2", "fa", "fc", "ff", "fi", "fj", "fl", "fn", "fo", "fr", "fs", "ft", "fu", "fy", "g", "ga", "ge", "gi", "gj", "gl", "go", "gr", "gs", "gy", "h", "h2", "h3", "hh", "hi", "hj", "ho", "hr", "hs", "http", "hu", "hy", "i", "i2", "i3", "i4", "i6", "i7", "i8", "ia", "ib", "ibid", "ic", "id", "i'd", "ie", "if", "ig", "ih", "ii", "ij", "il", "in", "inc", "io", "ip", "iq", "ir", "itd", "iv", "ix", "iy", "iz", "j", "jj", "jr", "js", "jt", "ju", "k", "ke", "kg", "kj", "km", "ko", "l", "l2", "la", "lb", "lc", "le", "les", "lf",  "lj", "ll", "ll", "ln", "lo", "los", "lr", "ls", "lt", "ltd", "m", "m2", "ma", "me", "mg", "ml", "mn", "mo", "mr", "mrs", "ms", "mt", "mu", "n", "n2", "na", "nc", "nd", "ne", "ng", "ni", "nj", "nl", "nn", "no", "nr", "ns", "nt", "ny", "o", "oa", "ob", "oc", "od", "of", "og", "oh", "oi", "oj", "ok", "okay", "ol", "om", "on", "oo", "op", "oq", "or", "ord", "os", "ot", "ou", "ow", "ox", "oz", "p", "p1", "p2", "p3", "pas", "pc", "pd", "pe", "per", "pf", "ph", "pi", "pj", "pk", "pl", "pm", "pn", "po", "pp", "pq", "pr", "ps", "pt", "pu", "put", "py", "q", "qj", "qu", "que", "qv", "r", "r2", "ra", "rc", "rd", "re", "ref", "refs", "rf", "rh", "ri", "rj", "rl", "rm", "rn", "ro", "rq", "rr", "rs", "rt", "ru", "run", "rv", "ry", "s", "s2", "sa", "sc", "sd", "se", "sec", "sf", "si", "sj", "sl", "sm", "sn", "so", "sp", "sq", "sr", "ss", "st", "sub", "sup", "sy", "sz", "t", "t1", "t2", "t3", "tb", "tc", "td", "te", "tf", "th", "ti", "til", "tip", "tj", "tl", "tm", "tn", "to", "tp", "tq", "tr", "ts", "t's", "tt", "tv", "tx", "u", "u201d", "ue", "ui", "uj", "uk", "um", "un", "unto", "uo",  "ups", "ur", "ut", "v", "va", "vd", "ve", "vj", "vo", "vol", "vols", "vq", "vs", "vt", "vu", "w", "wa", "wi", "wo", "www", "x", "x1", "x2", "x3", "xf", "xi", "xj", "xk", "xl", "xn", "xo", "xs", "xt", "xv", "xx", "y", "y2", "yes", "yet", "yj", "yl", "yr", "ys", "yt", "z", "zi", "zz", "doi", "pre", "rst", "dv", "uqlp")
+My_stopwords <- c("rf", "ve", "ce", 'el', 'ww', "en", "los", "las", "la", "de", "del", "--", "---", "0o", "0s", "3a", "3b", "3d", "6b", "6o", "a", "a1", "a2", "a3", "a4", "ab", "ag", "aj", "0o", "0s", "3a", "3b", "3d", "6b", "6o", "a", "a1", "a2", "a3", "a4", "ab", "abst", "ac", "ad", "adj", "ae", "af", "ag", "ah", "ain", "aj", "al", "all", "ao", "ap", "ar", "av","aw", "ax", "ay", "az", "b", "b1", "b2", "b3", "ba", "bc", "bd", "be", "bi", "bj", "bk", "bl", "bn", "bp", "br", "bs", "bt", "bu", "bx", "by", "c", "c1", "c2", "c3", "ca", "cc", "cd", "ce", "cf", "cg", "ch", "ci", "cit", "cj", "cl", "cm",  "cn", "co", "com", "con", "cp", "cq", "cr", "cs", "c's", "ct", "cu", "cv", "cx", "cy", "cz", "d", "d2", "da", "dc", "dd", "de", "df", "di", "dj", "dk", "dl", "don", "dp", "dr", "ds", "dt", "du", "dx", "dy", "e", "e2", "e3", "ea", "ec", "ed", "edu", "ee", "ef", "eg", "ei", "ej", "el", "em", "en", "eo", "ep", "eq", "er", "es", "est", "et", "et-al", "etc", "eu", "ev", "ex", "ey", "f", "f2", "fa", "fc", "ff", "fi", "fj", "fl", "fn", "fo", "fr", "fs", "ft", "fu", "fy", "g", "ga", "ge", "gi", "gj", "gl", "go", "gr", "gs", "gy", "h", "h2", "h3", "hh", "hi", "hj", "ho", "hr", "hs", "http", "hu", "hy", "i", "i2", "i3", "i4", "i6", "i7", "i8", "ia", "ib", "ibid", "ic", "id", "i'd", "ie", "if", "ig", "ih", "ii", "ij", "il", "in", "inc", "io", "ip", "iq", "ir", "itd", "iv", "ix", "iy", "iz", "j", "jj", "jr", "js", "jt", "ju", "k", "ke", "kg", "kj", "km", "ko", "l", "l2", "la", "lb", "lc", "le", "les", "lf",  "lj", "ll", "ll", "ln", "lo", "los", "lr", "ls", "lt", "ltd", "m", "m2", "ma", "me", "mg", "ml", "mn", "mo", "mr", "mrs", "ms", "mt", "mu", "n", "n2", "na", "nc", "nd", "ne", "ng", "ni", "nj", "nl", "nn", "no", "nr", "ns", "nt", "ny", "o", "oa", "ob", "oc", "od", "of", "og", "oh", "oi", "oj", "ok", "okay", "ol", "om", "on", "oo", "op", "oq", "or", "ord", "os", "ot", "ou", "ow", "ox", "oz", "p", "p1", "p2", "p3", "pas", "pc", "pd", "pe", "per", "pf", "ph", "pi", "pj", "pk", "pl", "pm", "pn", "po", "pp", "pq", "pr", "ps", "pt", "pu", "put", "py", "q", "qj", "qu", "que", "qv", "r", "r2", "ra", "rc", "rd", "re", "ref", "refs", "rf", "rh", "ri", "rj", "rl", "rm", "rn", "ro", "rq", "rr", "rs", "rt", "ru", "run", "rv", "ry", "s", "s2", "sa", "sc", "sd", "se", "sec", "sf", "si", "sj", "sl", "sm", "sn", "so", "sp", "sq", "sr", "ss", "st", "sub", "sup", "sy", "sz", "t", "t1", "t2", "t3", "tb", "tas", "tc", "td", "te", "tf", "th", "ti", "til", "tip", "tj", "tl", "tm", "tn", "to", "tp", "tq", "tr", "ts", "t's", "tt", "tv", "tx", "u", "u201d", "ue", "ui", "uj", "uk", "um", "un", "unto", "uo",  "ups", "ur", "ut", "v", "va", "vd", "ve", "vj", "vo", "vol", "vols", "vq", "vs", "vt", "vu", "w", "wa", "wi", "wo", "www", "x", "x1", "x2", "x3", "xf", "xi", "xj", "xk", "xl", "xn", "xo", "xs", "xt", "xv", "xx", "y", "y2", "yes", "yet", "yj", "yl", "yr", "ys", "yt", "z", "zi", "zz", "doi", "pre", "rst", "dv", "uqlp")
 
 #Apply stop words
 tidy_corpus10.19  <- tidy_corpus10.19 %>%
-   anti_join(stop_words, source = "snowball") %>% 
-    filter(str_detect(word, "[a-z']$"),
-         !word %in% My_stopwords) 
+   anti_join(stop_words %>% 
+               filter(lexicon=="snowball") %>% 
+               rbind(tibble(lexicon = "custom", word =My_stopwords)))
+
+head (tidy_corpus10.19)
 ```
 
-3. ***Sample data***
+3. ***Rds***
 
 I saved the product of tokenization in an Rd file
 ```{r}
-save(tidy_corpus10.19, file = "Data_samples/tidy_corpus10.19.Rds")
+save(tidy_corpus10.19, file = "Private/tidy_corpus10.19.Rds")
 ```
 
 ## Processing (test)

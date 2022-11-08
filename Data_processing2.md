@@ -19,60 +19,19 @@ Gianina Morales
 
 ``` r
 library(tidytext)
-```
-
-    ## Warning: package 'tidytext' was built under R version 4.2.2
-
-``` r
 library(tidyverse)
-```
-
-    ## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
-    ## ✔ ggplot2 3.3.6     ✔ purrr   0.3.4
-    ## ✔ tibble  3.1.8     ✔ dplyr   1.0.9
-    ## ✔ tidyr   1.2.0     ✔ stringr 1.4.1
-    ## ✔ readr   2.1.2     ✔ forcats 0.5.2
-    ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-    ## ✖ dplyr::filter() masks stats::filter()
-    ## ✖ dplyr::lag()    masks stats::lag()
-
-``` r
 library(tm)
-```
-
-    ## Warning: package 'tm' was built under R version 4.2.2
-
-    ## Loading required package: NLP
-    ## 
-    ## Attaching package: 'NLP'
-    ## 
-    ## The following object is masked from 'package:ggplot2':
-    ## 
-    ##     annotate
-
-``` r
 library(tidyr)
 library(stopwords)
-```
-
-    ## Warning: package 'stopwords' was built under R version 4.2.2
-
-    ## 
-    ## Attaching package: 'stopwords'
-    ## 
-    ## The following object is masked from 'package:tm':
-    ## 
-    ##     stopwords
-
-``` r
 library(stringr)
 ```
 
-1.  **Turning raw data on data frame** I divided the data into decades,
-    because of the time required for processing and the fact that I
-    continually had parsing problems. I decided to use data from one
-    decade (2010-2019) for the first report and as a way to test the
-    wrangling process.
+1.  **Turning raw data on data frame**
+
+1.1. I divided the data into decades, because of the time required for
+processing and the fact that I continually had parsing problems. I
+decided to use data from one decade (2010-2019) for the first report and
+as a way to test the wrangling process.
 
 ``` r
 # read all the content from one decade of .txt files into a data frame.
@@ -85,6 +44,7 @@ raw_corpus10_19 <- tibble(file = dir("Private/2010-2019", full.names = TRUE))%>%
   #replace spaces with underscore and other changes in column id
 raw_corpus10_19$id <- gsub(" ", "_", raw_corpus10_19$id) 
 raw_corpus10_19$id <- gsub("JLR", "J1_", raw_corpus10_19$id)
+raw_corpus10_19$id <- gsub("[aeiou]", "x", raw_corpus10_19$id)
   
 head(raw_corpus10_19) 
 ```
@@ -92,14 +52,16 @@ head(raw_corpus10_19)
     ## # A tibble: 6 × 2
     ##   id               text                                                         
     ##   <chr>            <chr>                                                        
-    ## 1 J1_2010_bean.txt "Reading First in Pennsylvania: Achievement Findings After F…
-    ## 2 J1_2010_bean.txt "Rita Bean and Jason Draper "                                
-    ## 3 J1_2010_bean.txt "Department of Instruction and Learning, School of Education…
-    ## 4 J1_2010_bean.txt "Greg Turner "                                               
-    ## 5 J1_2010_bean.txt "Florida State University "                                  
-    ## 6 J1_2010_bean.txt "Naomi Zigmond "
+    ## 1 J1_2010_bxxn.txt "Reading First in Pennsylvania: Achievement Findings After F…
+    ## 2 J1_2010_bxxn.txt "Rita Bean and Jason Draper "                                
+    ## 3 J1_2010_bxxn.txt "Department of Instruction and Learning, School of Education…
+    ## 4 J1_2010_bxxn.txt "Greg Turner "                                               
+    ## 5 J1_2010_bxxn.txt "Florida State University "                                  
+    ## 6 J1_2010_bxxn.txt "Naomi Zigmond "
 
-2.  **“Tokenazing” and cleaning the data**
+2.  **“Tokenizing” and cleaning the data**
+
+2.1. 2010-2019
 
 ``` r
 #Tokens of one word by row
@@ -112,12 +74,12 @@ head(tidy_corpus10.19)
     ## # A tibble: 6 × 2
     ##   id               word        
     ##   <chr>            <chr>       
-    ## 1 J1_2010_bean.txt reading     
-    ## 2 J1_2010_bean.txt first       
-    ## 3 J1_2010_bean.txt in          
-    ## 4 J1_2010_bean.txt pennsylvania
-    ## 5 J1_2010_bean.txt achievement 
-    ## 6 J1_2010_bean.txt findings
+    ## 1 J1_2010_bxxn.txt reading     
+    ## 2 J1_2010_bxxn.txt first       
+    ## 3 J1_2010_bxxn.txt in          
+    ## 4 J1_2010_bxxn.txt pennsylvania
+    ## 5 J1_2010_bxxn.txt achievement 
+    ## 6 J1_2010_bxxn.txt findings
 
 ``` r
 tidy_corpus10.19
@@ -126,37 +88,51 @@ tidy_corpus10.19
     ## # A tibble: 2,005,110 × 2
     ##    id               word        
     ##    <chr>            <chr>       
-    ##  1 J1_2010_bean.txt reading     
-    ##  2 J1_2010_bean.txt first       
-    ##  3 J1_2010_bean.txt in          
-    ##  4 J1_2010_bean.txt pennsylvania
-    ##  5 J1_2010_bean.txt achievement 
-    ##  6 J1_2010_bean.txt findings    
-    ##  7 J1_2010_bean.txt after       
-    ##  8 J1_2010_bean.txt five        
-    ##  9 J1_2010_bean.txt years       
-    ## 10 J1_2010_bean.txt rita        
+    ##  1 J1_2010_bxxn.txt reading     
+    ##  2 J1_2010_bxxn.txt first       
+    ##  3 J1_2010_bxxn.txt in          
+    ##  4 J1_2010_bxxn.txt pennsylvania
+    ##  5 J1_2010_bxxn.txt achievement 
+    ##  6 J1_2010_bxxn.txt findings    
+    ##  7 J1_2010_bxxn.txt after       
+    ##  8 J1_2010_bxxn.txt five        
+    ##  9 J1_2010_bxxn.txt years       
+    ## 10 J1_2010_bxxn.txt rita        
     ## # … with 2,005,100 more rows
 
 ``` r
 #create a list of stopwords additionally to snowball (base from NLTK's to eliminate "giberish" and similar)
-My_stopwords <- c("rf", "ve", "ce", 'el', 'ww', "en", "los", "las", "la", "de", "del", "--", "---", "0o", "0s", "3a", "3b", "3d", "6b", "6o", "a", "a1", "a2", "a3", "a4", "ab", "ag", "aj", "0o", "0s", "3a", "3b", "3d", "6b", "6o", "a", "a1", "a2", "a3", "a4", "ab", "abst", "ac", "ad", "adj", "ae", "af", "ag", "ah", "ain", "aj", "al", "all", "ao", "ap", "ar", "av","aw", "ax", "ay", "az", "b", "b1", "b2", "b3", "ba", "bc", "bd", "be", "bi", "bj", "bk", "bl", "bn", "bp", "br", "bs", "bt", "bu", "bx", "by", "c", "c1", "c2", "c3", "ca", "cc", "cd", "ce", "cf", "cg", "ch", "ci", "cit", "cj", "cl", "cm",  "cn", "co", "com", "con", "cp", "cq", "cr", "cs", "c's", "ct", "cu", "cv", "cx", "cy", "cz", "d", "d2", "da", "dc", "dd", "de", "df", "di", "dj", "dk", "dl", "don", "dp", "dr", "ds", "dt", "du", "dx", "dy", "e", "e2", "e3", "ea", "ec", "ed", "edu", "ee", "ef", "eg", "ei", "ej", "el", "em", "en", "eo", "ep", "eq", "er", "es", "est", "et", "et-al", "etc", "eu", "ev", "ex", "ey", "f", "f2", "fa", "fc", "ff", "fi", "fj", "fl", "fn", "fo", "fr", "fs", "ft", "fu", "fy", "g", "ga", "ge", "gi", "gj", "gl", "go", "gr", "gs", "gy", "h", "h2", "h3", "hh", "hi", "hj", "ho", "hr", "hs", "http", "hu", "hy", "i", "i2", "i3", "i4", "i6", "i7", "i8", "ia", "ib", "ibid", "ic", "id", "i'd", "ie", "if", "ig", "ih", "ii", "ij", "il", "in", "inc", "io", "ip", "iq", "ir", "itd", "iv", "ix", "iy", "iz", "j", "jj", "jr", "js", "jt", "ju", "k", "ke", "kg", "kj", "km", "ko", "l", "l2", "la", "lb", "lc", "le", "les", "lf",  "lj", "ll", "ll", "ln", "lo", "los", "lr", "ls", "lt", "ltd", "m", "m2", "ma", "me", "mg", "ml", "mn", "mo", "mr", "mrs", "ms", "mt", "mu", "n", "n2", "na", "nc", "nd", "ne", "ng", "ni", "nj", "nl", "nn", "no", "nr", "ns", "nt", "ny", "o", "oa", "ob", "oc", "od", "of", "og", "oh", "oi", "oj", "ok", "okay", "ol", "om", "on", "oo", "op", "oq", "or", "ord", "os", "ot", "ou", "ow", "ox", "oz", "p", "p1", "p2", "p3", "pas", "pc", "pd", "pe", "per", "pf", "ph", "pi", "pj", "pk", "pl", "pm", "pn", "po", "pp", "pq", "pr", "ps", "pt", "pu", "put", "py", "q", "qj", "qu", "que", "qv", "r", "r2", "ra", "rc", "rd", "re", "ref", "refs", "rf", "rh", "ri", "rj", "rl", "rm", "rn", "ro", "rq", "rr", "rs", "rt", "ru", "run", "rv", "ry", "s", "s2", "sa", "sc", "sd", "se", "sec", "sf", "si", "sj", "sl", "sm", "sn", "so", "sp", "sq", "sr", "ss", "st", "sub", "sup", "sy", "sz", "t", "t1", "t2", "t3", "tb", "tc", "td", "te", "tf", "th", "ti", "til", "tip", "tj", "tl", "tm", "tn", "to", "tp", "tq", "tr", "ts", "t's", "tt", "tv", "tx", "u", "u201d", "ue", "ui", "uj", "uk", "um", "un", "unto", "uo",  "ups", "ur", "ut", "v", "va", "vd", "ve", "vj", "vo", "vol", "vols", "vq", "vs", "vt", "vu", "w", "wa", "wi", "wo", "www", "x", "x1", "x2", "x3", "xf", "xi", "xj", "xk", "xl", "xn", "xo", "xs", "xt", "xv", "xx", "y", "y2", "yes", "yet", "yj", "yl", "yr", "ys", "yt", "z", "zi", "zz", "doi", "pre", "rst", "dv", "uqlp")
+My_stopwords <- c("rf", "ve", "ce", 'el', 'ww', "en", "los", "las", "la", "de", "del", "--", "---", "0o", "0s", "3a", "3b", "3d", "6b", "6o", "a", "a1", "a2", "a3", "a4", "ab", "ag", "aj", "0o", "0s", "3a", "3b", "3d", "6b", "6o", "a", "a1", "a2", "a3", "a4", "ab", "abst", "ac", "ad", "adj", "ae", "af", "ag", "ah", "ain", "aj", "al", "all", "ao", "ap", "ar", "av","aw", "ax", "ay", "az", "b", "b1", "b2", "b3", "ba", "bc", "bd", "be", "bi", "bj", "bk", "bl", "bn", "bp", "br", "bs", "bt", "bu", "bx", "by", "c", "c1", "c2", "c3", "ca", "cc", "cd", "ce", "cf", "cg", "ch", "ci", "cit", "cj", "cl", "cm",  "cn", "co", "com", "con", "cp", "cq", "cr", "cs", "c's", "ct", "cu", "cv", "cx", "cy", "cz", "d", "d2", "da", "dc", "dd", "de", "df", "di", "dj", "dk", "dl", "don", "dp", "dr", "ds", "dt", "du", "dx", "dy", "e", "e2", "e3", "ea", "ec", "ed", "edu", "ee", "ef", "eg", "ei", "ej", "el", "em", "en", "eo", "ep", "eq", "er", "es", "est", "et", "et-al", "etc", "eu", "ev", "ex", "ey", "f", "f2", "fa", "fc", "ff", "fi", "fj", "fl", "fn", "fo", "fr", "fs", "ft", "fu", "fy", "g", "ga", "ge", "gi", "gj", "gl", "go", "gr", "gs", "gy", "h", "h2", "h3", "hh", "hi", "hj", "ho", "hr", "hs", "http", "hu", "hy", "i", "i2", "i3", "i4", "i6", "i7", "i8", "ia", "ib", "ibid", "ic", "id", "i'd", "ie", "if", "ig", "ih", "ii", "ij", "il", "in", "inc", "io", "ip", "iq", "ir", "itd", "iv", "ix", "iy", "iz", "j", "jj", "jr", "js", "jt", "ju", "k", "ke", "kg", "kj", "km", "ko", "l", "l2", "la", "lb", "lc", "le", "les", "lf",  "lj", "ll", "ll", "ln", "lo", "los", "lr", "ls", "lt", "ltd", "m", "m2", "ma", "me", "mg", "ml", "mn", "mo", "mr", "mrs", "ms", "mt", "mu", "n", "n2", "na", "nc", "nd", "ne", "ng", "ni", "nj", "nl", "nn", "no", "nr", "ns", "nt", "ny", "o", "oa", "ob", "oc", "od", "of", "og", "oh", "oi", "oj", "ok", "okay", "ol", "om", "on", "oo", "op", "oq", "or", "ord", "os", "ot", "ou", "ow", "ox", "oz", "p", "p1", "p2", "p3", "pas", "pc", "pd", "pe", "per", "pf", "ph", "pi", "pj", "pk", "pl", "pm", "pn", "po", "pp", "pq", "pr", "ps", "pt", "pu", "put", "py", "q", "qj", "qu", "que", "qv", "r", "r2", "ra", "rc", "rd", "re", "ref", "refs", "rf", "rh", "ri", "rj", "rl", "rm", "rn", "ro", "rq", "rr", "rs", "rt", "ru", "run", "rv", "ry", "s", "s2", "sa", "sc", "sd", "se", "sec", "sf", "si", "sj", "sl", "sm", "sn", "so", "sp", "sq", "sr", "ss", "st", "sub", "sup", "sy", "sz", "t", "t1", "t2", "t3", "tb", "tas", "tc", "td", "te", "tf", "th", "ti", "til", "tip", "tj", "tl", "tm", "tn", "to", "tp", "tq", "tr", "ts", "t's", "tt", "tv", "tx", "u", "u201d", "ue", "ui", "uj", "uk", "um", "un", "unto", "uo",  "ups", "ur", "ut", "v", "va", "vd", "ve", "vj", "vo", "vol", "vols", "vq", "vs", "vt", "vu", "w", "wa", "wi", "wo", "www", "x", "x1", "x2", "x3", "xf", "xi", "xj", "xk", "xl", "xn", "xo", "xs", "xt", "xv", "xx", "y", "y2", "yes", "yet", "yj", "yl", "yr", "ys", "yt", "z", "zi", "zz", "doi", "pre", "rst", "dv", "uqlp")
 
 #Apply stop words
 tidy_corpus10.19  <- tidy_corpus10.19 %>%
-   anti_join(stop_words, source = "snowball") %>% 
-    filter(str_detect(word, "[a-z']$"),
-         !word %in% My_stopwords) 
+   anti_join(stop_words %>% 
+               filter(lexicon=="snowball") %>% 
+               rbind(tibble(lexicon = "custom", word =My_stopwords)))
 ```
 
     ## Joining, by = "word"
 
-3.  ***Sample data***
+``` r
+head (tidy_corpus10.19)
+```
+
+    ## # A tibble: 6 × 2
+    ##   id               word        
+    ##   <chr>            <chr>       
+    ## 1 J1_2010_bxxn.txt reading     
+    ## 2 J1_2010_bxxn.txt first       
+    ## 3 J1_2010_bxxn.txt pennsylvania
+    ## 4 J1_2010_bxxn.txt achievement 
+    ## 5 J1_2010_bxxn.txt findings    
+    ## 6 J1_2010_bxxn.txt five
+
+3.  ***Rds***
 
 I saved the product of tokenization in an Rd file
 
 ``` r
-save(tidy_corpus10.19, file = "Data_samples/tidy_corpus10.19.Rds")
+save(tidy_corpus10.19, file = "Private/tidy_corpus10.19.Rds")
 ```
 
 ## Processing (test)
@@ -177,7 +153,7 @@ tidy_corpus10.19 %>%
   labs(y = NULL)
 ```
 
-![](Data_processing2_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+![](Data_processing2_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
 
 *Explanation*
 
