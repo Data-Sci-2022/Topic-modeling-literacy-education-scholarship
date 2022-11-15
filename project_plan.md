@@ -2,8 +2,8 @@
 
 Gianina Morales
 
-10/11/2022
-
+Original date: 10/11/2022
+Update: 11/15/2022
 ----------------
 
 # Project plan

@@ -8,9 +8,12 @@ output:
   github_document:
     toc: TRUE
 ---
-# Data processing - Progress report 2
+# Data processing (new replacement file) - Progress report 2
+
+---
 
 ## Pre-processing: Creating and tidying dataframes from the corpus
+
 ```{r setup, message=FALSE, warning=FALSE}
 library(tidytext)
 library(tidyverse)
@@ -18,9 +21,12 @@ library(tm)
 library(tidyr)
 library(stopwords)
 library(stringr)
+library(stringi)
+library(kableExtra)
+library(topicmodels)
 ```
 
-### 1. Turning raw data on data frames
+### Turning raw data on raw data frames
 
 ***Note***
 
@@ -30,118 +36,310 @@ library(stringr)
 * *I will have a more significant corpus to analyze trends over time in topics and language present in a community of literacy research (the leading association).*
 * *I will have more tools to comply with the ethics of avoiding individualization in the data analysis*. 
 
-I divided the data into decades. As I want to compare trends on topics over time, I need to apply the topic modeling method to each decade first and then compare the results. 
+I divided the data into decades. It was very difficult to manipulate the whole data (almost 3,200 `.txt` files), so I created individual data frames. 
 
-*1969-1979*
+*1. 1969-1979*
 
-**Note: I am considering the year in which the journal started to facilitate further comparison with previous content analysis studies.**
+**Note: I am considering data from the first year in which the two focal journals published, to facilitate further comparison with previous content analysis studies.**
 
-*1980-1989*
+* Reading the `.txt` files
 
-*1990-1999*
+```{r}
+# read all the content from one decade of .txt files into a data frame.
+raw_corpus69_79 <- tibble(file = dir("Private/1969-1979", full.names = TRUE))%>%
+    mutate(text = map(file, read_lines, skip = 2, skip_empty_rows = TRUE, n_max = Inf,locale = default_locale(), na = character(), num_threads = readr_threads())) %>%
+    transmute(id = basename(file), text) %>%
+    unnest(text) %>%
+#replace punctuation signs and numbers with spaces in column 'text'
+    mutate(text = str_replace_all(text, "[[:punct:]]+|[0-9]+", " ")) 
+  #replace spaces with underscore and other changes in column id
+raw_corpus69_79$id <- stri_replace_all_regex(raw_corpus69_79$id, pattern=c(" ","JLR","[aeiou]"), replacement=c("_","JY_","x"), vectorize=F)
 
-*2000-2009*
+#visualization 
+sample_n(raw_corpus69_79, 10) 
+```
 
-*2010-2019*
+*2. 1980-1989*
 
-*2020-2022*
+* Reading the `.txt` files
 
-**This is the remains and is not a decade, but it represents the most contemporary scholarship, so I am considering this set of articles as a piece.**
+```{r}
+# read all the content from one decade of .txt files into a data frame.
+raw_corpus80_89 <- tibble(file = dir("Private/1980-1989", full.names = TRUE))%>%
+    mutate(text = map(file, read_lines, skip = 2, skip_empty_rows = TRUE, n_max = Inf,locale = default_locale(), na = character(), num_threads = readr_threads())) %>%
+    transmute(id = basename(file), text) %>%
+    unnest(text) %>%
+#replace punctuation signs and numbers with spaces in column 'text'
+    mutate(text = str_replace_all(text, "[[:punct:]]+|[0-9]+", " ")) 
+  #replace spaces with underscore and other changes in column id
+raw_corpus80_89$id <- stri_replace_all_regex(raw_corpus80_89$id, pattern=c(" ","JLR","[aeiou]"), replacement=c("_","JY_","x"), vectorize=F)
+
+#visualization 
+sample_n(raw_corpus80_89, 10)
+```
+
+*3. 1990-1999*
+
+* Reading the `.txt` files
+
+```{r}
+# read all the content from one decade of .txt files into a data frame.
+raw_corpus90_99 <- tibble(file = dir("Private/1990-1999", full.names = TRUE))%>%
+    mutate(text = map(file, read_lines, skip = 2, skip_empty_rows = TRUE, n_max = Inf,locale = default_locale(), na = character(), num_threads = readr_threads())) %>%
+    transmute(id = basename(file), text) %>%
+    unnest(text) %>%
+#replace punctuation signs and numbers with spaces in column 'text'
+    mutate(text = str_replace_all(text, "[[:punct:]]+|[0-9]+", " ")) 
+  #replace spaces with underscore and other changes in column id
+raw_corpus90_99$id <- stri_replace_all_regex(raw_corpus90_99$id, pattern=c(" ","JLR","[aeiou]"), replacement=c("_","JY_","x"), vectorize=F)
+
+#visualization 
+sample_n(raw_corpus90_99, 10)
+```
+
+*4. 2000-2009*
+
+* Reading the `.txt` files
+
+```{r}
+# read all the content from one decade of .txt files into a data frame.
+raw_corpus00_09 <- tibble(file = dir("Private/2000-2009", full.names = TRUE))%>%
+    mutate(text = map(file, read_lines, skip = 2, skip_empty_rows = TRUE, n_max = Inf,locale = default_locale(), na = character(), num_threads = readr_threads())) %>%
+    transmute(id = basename(file), text) %>%
+    unnest(text) %>%
+#replace punctuation signs and numbers with spaces in column 'text'
+    mutate(text = str_replace_all(text, "[[:punct:]]+|[0-9]+", " ")) 
+  #replace spaces with underscore and other changes in column id
+raw_corpus00_09$id <- stri_replace_all_regex(raw_corpus00_09$id, pattern=c(" ","JLR","[aeiou]"), replacement=c("_","JY_","x"), vectorize=F) 
+
+#visualization 
+sample_n(raw_corpus00_09, 10)
+```
+
+*5. 2010-2019*
+
+* Reading the `.txt` files
 
 ```{r}
 # read all the content from one decade of .txt files into a data frame.
 raw_corpus10_19 <- tibble(file = dir("Private/2010-2019", full.names = TRUE))%>%
-    mutate(text = map(file, read_lines, skip = 1, skip_empty_rows = TRUE, n_max = Inf,locale = default_locale(), na = character(), num_threads = readr_threads(), progress = show_progress())) %>%
+     mutate(text = map(file, read_lines, skip = 2, skip_empty_rows = TRUE, n_max = Inf,locale = default_locale(), na = character(), num_threads = readr_threads())) %>%
     transmute(id = basename(file), text) %>%
     unnest(text) %>%
-#replace dots, underscore and numbers with spaces in column 'text'
-    mutate(text = str_replace_all(text, "_|\\.|[0-9]+", "")) 
+#replace punctuation signs and numbers with spaces in column 'text'
+    mutate(text = str_replace_all(text, "[[:punct:]]+|[0-9]+", " ")) 
   #replace spaces with underscore and other changes in column id
-raw_corpus10_19$id <- gsub(" ", "_", raw_corpus10_19$id) 
-raw_corpus10_19$id <- gsub("JLR", "JY_", raw_corpus10_19$id)
-raw_corpus10_19$id <- gsub("[aeiou]", "x", raw_corpus10_19$id)
-  
-head(raw_corpus10_19) 
+raw_corpus10_19$id <- stri_replace_all_regex(raw_corpus10_19$id, pattern=c(" ","JLR","[aeiou]"), replacement=c("_","JY_","x"), vectorize=F)
+
+#visualization
+sample_n(raw_corpus10_19, 10) 
 ```
 
+*6. 2020-2022*
 
+**This is the remains and is not a decade, but it represents the most contemporary scholarship, so I am considering this set of articles as a piece.**
 
-
-### 2. "Tokenizing" and cleaning the data
-
-As am interested in working by decade, I created an object with the different data frames. Each data frame is tokenized and cleaned to have tidy data. 
+* Reading the `.txt` files
 
 ```{r}
-#Tokens of one word by row
-tidy_corpus10.19 <- raw_corpus10_19 %>%
-  unnest_tokens(word, text) 
-  
-head(tidy_corpus10.19)
-tidy_corpus10.19
+# read all the content from one decade of .txt files into a data frame.
+raw_corpus20_22 <- tibble(file = dir("Private/2020-2022", full.names = TRUE))%>%
+    mutate(text = map(file, read_lines, skip = 2, skip_empty_rows = TRUE, n_max = Inf,locale = default_locale(), na = character(), num_threads = readr_threads())) %>%
+    transmute(id = basename(file), text) %>%
+    unnest(text) %>%
+#replace punctuation signs and numbers with spaces in column 'text'
+    mutate(text = str_replace_all(text, "[[:punct:]]+|[0-9]+", " ")) 
+  #replace spaces with underscore and other changes in column id
+raw_corpus20_22$id <- stri_replace_all_regex(raw_corpus20_22$id, pattern=c(" ","JLR","[aeiou]"), replacement=c("_","JY_","x"), vectorize=F)
 
-#create a list of stopwords additionally to snowball (base from NLTK's to eliminate "giberish" and similar)
-My_stopwords <- c("rf", "ve", "ce", 'el', 'ww', "en", "los", "las", "la", "de", "del", "--", "---", "0o", "0s", "3a", "3b", "3d", "6b", "6o", "a", "a1", "a2", "a3", "a4", "ab", "ag", "aj", "0o", "0s", "3a", "3b", "3d", "6b", "6o", "a", "a1", "a2", "a3", "a4", "ab", "abst", "ac", "ad", "adj", "ae", "af", "ag", "ah", "ain", "aj", "al", "all", "ao", "ap", "ar", "av","aw", "ax", "ay", "az", "b", "b1", "b2", "b3", "ba", "bc", "bd", "be", "bi", "bj", "bk", "bl", "bn", "bp", "br", "bs", "bt", "bu", "bx", "by", "c", "c1", "c2", "c3", "ca", "cc", "cd", "ce", "cf", "cg", "ch", "ci", "cit", "cj", "cl", "cm",  "cn", "co", "com", "con", "cp", "cq", "cr", "cs", "c's", "ct", "cu", "cv", "cx", "cy", "cz", "d", "d2", "da", "dc", "dd", "de", "df", "di", "dj", "dk", "dl", "don", "dp", "dr", "ds", "dt", "du", "dx", "dy", "e", "e2", "e3", "ea", "ec", "ed", "edu", "ee", "ef", "eg", "ei", "ej", "el", "em", "en", "eo", "ep", "eq", "er", "es", "est", "et", "et-al", "etc", "eu", "ev", "ex", "ey", "f", "f2", "fa", "fc", "ff", "fi", "fj", "fl", "fn", "fo", "fr", "fs", "ft", "fu", "fy", "g", "ga", "ge", "gi", "gj", "gl", "go", "gr", "gs", "gy", "h", "h2", "h3", "hh", "hi", "hj", "ho", "hr", "hs", "http", "hu", "hy", "i", "i2", "i3", "i4", "i6", "i7", "i8", "ia", "ib", "ibid", "ic", "id", "i'd", "ie", "if", "ig", "ih", "ii", "ij", "il", "in", "inc", "io", "ip", "iq", "ir", "itd", "iv", "ix", "iy", "iz", "j", "jj", "jr", "js", "jt", "ju", "k", "ke", "kg", "kj", "km", "ko", "l", "l2", "la", "lb", "lc", "le", "les", "lf",  "lj", "ll", "ll", "ln", "lo", "los", "lr", "ls", "lt", "ltd", "m", "m2", "ma", "me", "mg", "ml", "mn", "mo", "mr", "mrs", "ms", "mt", "mu", "n", "n2", "na", "nc", "nd", "ne", "ng", "ni", "nj", "nl", "nn", "no", "nr", "ns", "nt", "ny", "o", "oa", "ob", "oc", "od", "of", "og", "oh", "oi", "oj", "ok", "okay", "ol", "om", "on", "oo", "op", "oq", "or", "ord", "os", "ot", "ou", "ow", "ox", "oz", "p", "p1", "p2", "p3", "pas", "pc", "pd", "pe", "per", "pf", "ph", "pi", "pj", "pk", "pl", "pm", "pn", "po", "pp", "pq", "pr", "ps", "pt", "pu", "put", "py", "q", "qj", "qu", "que", "qv", "r", "r2", "ra", "rc", "rd", "re", "ref", "refs", "rf", "rh", "ri", "rj", "rl", "rm", "rn", "ro", "rq", "rr", "rs", "rt", "ru", "run", "rv", "ry", "s", "s2", "sa", "sc", "sd", "se", "sec", "sf", "si", "sj", "sl", "sm", "sn", "so", "sp", "sq", "sr", "ss", "st", "sub", "sup", "sy", "sz", "t", "t1", "t2", "t3", "tb", "tas", "tc", "td", "te", "tf", "th", "ti", "til", "tip", "tj", "tl", "tm", "tn", "to", "tp", "tq", "tr", "ts", "t's", "tt", "tv", "tx", "u", "u201d", "ue", "ui", "uj", "uk", "um", "un", "unto", "uo",  "ups", "ur", "ut", "v", "va", "vd", "ve", "vj", "vo", "vol", "vols", "vq", "vs", "vt", "vu", "w", "wa", "wi", "wo", "www", "x", "x1", "x2", "x3", "xf", "xi", "xj", "xk", "xl", "xn", "xo", "xs", "xt", "xv", "xx", "y", "y2", "yes", "yet", "yj", "yl", "yr", "ys", "yt", "z", "zi", "zz", "doi", "pre", "rst", "dv", "uqlp")
-
-#Apply stop words
-tidy_corpus10.19  <- tidy_corpus10.19 %>%
-   anti_join(stop_words %>% 
-               filter(lexicon=="snowball") %>% 
-               rbind(tibble(lexicon = "custom", word =My_stopwords)))
-
-head (tidy_corpus10.19)
+#visualization
+sample_n(raw_corpus20_22, 10) 
 ```
 
-## Processing 
+### Turning raw data frames on tidy data frames of tokens
+
+```{r}
+# preparing list of the data frames by decade
+raw_corpus_all =list(raw_corpus69_79, raw_corpus80_89, raw_corpus90_99, raw_corpus00_09 , raw_corpus10_19, raw_corpus20_22)
+#names
+names(raw_corpus_all) <- c("tidy_corpus69_79", "tidy_corpus80_89", "tidy_corpus90_99", "tidy_corpus00_09" , "tidy_corpus10_19", "tidy_corpus20_22")
+#results
+raw_corpus_all %>% str(1)
+
+#Loading custom stopwords
+My_stopwords <- read_lines("My_stopwords.csv")
+
+#tokenizing across data frames
+tidy_corpus_all <- raw_corpus_all %>% 
+  map(~ .x %>% 
+    unnest_tokens(word, text))
+#Apply stop words
+tidy_corpus_all <- tidy_corpus_all %>% 
+  map(~ .x %>% 
+        anti_join(stop_words %>% 
+               filter(lexicon=="snowball") %>% 
+               rbind(tibble(lexicon = "custom", word = My_stopwords)))) %>%
+  #Creating a column with the year of the data and sorting columns
+              map(~ .x %>% 
+                    mutate (year = str_extract(id, "\\d+")) %>% 
+                    relocate(year, id, word)) 
+#final tidy corpus object
+tidy_corpus_all %>% str(1)
+
+#Individual tidy data frames saved as Rds. Almost all of them are too big for GitHub, so I only can share the file with less than 25 MB in Data_product_samples
+##size
+tidy_corpus_all %>%
+  map_chr(~ .x %>% 
+            object.size() %>% 
+            format("Mb")) 
+##saving individual data frames as Rds  
+if (!dir.exists("Private/tidy_corpus_all")) {
+  dir.create("Private/tidy_corpus_all")
+}
+tidy_corpus_all%>%
+  iwalk(~ write_rds(.x, paste0("Private/tidy_corpus_all/", .y, ".Rds")))
+```
+
+* creating singles data frames for further use
+
+*Data frame corpus 1969 to 1979*
+
+```{r}
+#Data frame
+tidy_corpus69_79 <- tidy_corpus_all$tidy_corpus69_79
+
+#Visualization
+kbl(sample_n(tidy_corpus69_79, 100)) %>% 
+   kable_paper() %>%
+  scroll_box(height = "300px")
+```
+
+*Data frame corpus 1980 to 1989*
+
+```{r}
+#Data frame
+tidy_corpus80_89 <- tidy_corpus_all$tidy_corpus80_89
+
+#Visualization
+kbl(sample_n(tidy_corpus80_89, 100)) %>% 
+   kable_paper() %>%
+  scroll_box(height = "300px")
+```
+
+*Data frame corpus 1990 to 1999*
+
+```{r}
+#Data frame
+tidy_corpus90_99 <- tidy_corpus_all$tidy_corpus90_99
+
+#Visualization
+kbl(sample_n(tidy_corpus90_99, 100)) %>% 
+   kable_paper() %>%
+  scroll_box(height = "300px")
+```
+
+*Data frame corpus 2000 to 2010*
+
+```{r}
+#Data frame
+tidy_corpus00_09 <- tidy_corpus_all$tidy_corpus00_09
+
+#Visualization
+kbl(sample_n(tidy_corpus00_09, 100)) %>% 
+   kable_paper() %>%
+  scroll_box(height = "300px")
+```
+
+*Data frame corpus 2010 to 2019*
+
+```{r}
+#Data frame
+tidy_corpus10_19 <- tidy_corpus_all$tidy_corpus10_19
+
+#Visualization
+kbl(sample_n(tidy_corpus10_19, 100)) %>% 
+   kable_paper() %>%
+  scroll_box(height = "300px")
+```
+
+*Data frame corpus 2020 to 2022*
+
+```{r}
+#Data frame 
+tidy_corpus20_22 <- tidy_corpus_all$tidy_corpus20_22
+
+#Visualization
+kbl(sample_n(tidy_corpus20_22, 100)) %>% 
+   kable_paper() %>%
+  scroll_box(height = "300px")
+```
+
+---
+## Initial processing
+---
 
 ### General sense of the data by decade
 
-To understand some generalities of the data, I manipulated the data frames to look at trends over time. With that purpose, I created a unique data frame with all the tokens.
+To understand some generalities of the data, I combine the data frames into one master data frame with all the tokens. Then, I manipulated the data to look at trends over time. 
 
+* Master data frame
+```{r}
+# Combining data frames
+master_tidy_corpus <- bind_rows(tidy_corpus69_79, tidy_corpus80_89, tidy_corpus90_99, tidy_corpus00_09 , tidy_corpus10_19, tidy_corpus20_22)
 
+#generalities
+## word count
+kbl(master_tidy_corpus %>% 
+    count(word, sort = TRUE)) %>% 
+   kable_paper() %>%
+  scroll_box(height = "300px")
+ 
+##summary
+summary(master_tidy_corpus)  
 
+```
 
-* Word count and plot
+* Plot
 
 ```{r}
-tidy_corpus10.19 %>%
+master_tidy_corpus %>%
   count(word, sort = TRUE)%>%
-  filter(n > 3000) %>%
+  filter(n > 30000) %>%
   mutate(word = reorder(word, n)) %>%
   ggplot(aes(n, word)) +
   geom_col() +
   labs(y = NULL)
-
 ```
 
-*Explanation*
+### Description of my data so far
 
-The data frame `tidy_corpus10.19` represents all the words (minus the "stop words") from the articles published by a leading journal in the field of literacy education between the years 2010 and 2019. This data frame is composed by 38,562 unique words. In the chart, it is displayed the words that appears more than 3,000 in the corpus. At first sight it identifies clearly the focus of the journal: literacy research and teaching in school settings. Although interesting, this analysis is not enough to answer my research questions. To advance further, I need to use this data, and the data from the other decades of the journal, to apply a topic modeling methodology. This exercise only represents the first step in the analysis of my data.
+After all the processes to tidy my data, I finally have a data frame useful for applying topic modeling. My master data frame consists of 10,506,625 tokens representing the "cleaning" words from 3,131 articles published between 1969 and 2022 in two literacy education journals&mdash;a leading research journal and a conference papers journal, both from the same disciplinary association. 
+The master data frame has 131,611 unique words. The plot above indicates the words repeated over 30,000 across the data frame. In general, it seems to represent the scope of the focal journals, anchored in literacy education research. More significance will be identified through the topic modeling analysis.  
 
-2. Creating a column with the year of the data
+---
 
-```{r}
-tidy_corpus10.19 <- 
-tidy_corpus10.19 %>%
-  mutate (year = str_extract(id, "\\d+"))
+## Topic modeling
 
-tidy_corpus10.19
-
-```
-
-3. ***Rds***
-
-I saved the product of tidy tokenization in an Rd file
-```{r}
-save(tidy_corpus10.19, file = "Private/tidy_corpus10.19.Rds")
-```
+For this report, I tried to start testing the codes for topic modeling explained in the book [Text Mining with R](https://www.tidytextmining.com/index.html). However, I had many problems with the codes. As the pre-processing and initial processing of my data was unexpectadly slow, I could not present topic modeling analysis this time.
+---
 
 ## Next steps
 
-1. "Troubleshoting" to see how to work with all the data by once and not by decade-group
+1. Finishing the testing and publishing the general topic modeling analysis.
 
-2. Run topic modeling coding with the data. 
+2. Apply the model to analyze in deep each decade.
 
-3. Test parameters to prepare the final model for analysis.
+3. Compare results of topics between decades with more detail.
+
+4. Create the final report of my results.
+
+5. Discuss the results in relation to my research questions:
+
+* What are the trends in topics of literacy education research and scholarship over more than five decades (1969-2021) of the focal journals?
+
+* How do the topics have changed over time?
+
+
 
 
 ```{r}
