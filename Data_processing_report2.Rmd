@@ -22,7 +22,6 @@ library(tidyr)
 library(stopwords)
 library(stringr)
 library(stringi)
-library(kableExtra)
 library(topicmodels)
 ```
 
@@ -38,9 +37,9 @@ library(topicmodels)
 
 I divided the data into decades. It was very difficult to manipulate the whole data (almost 3,200 `.txt` files), so I created individual data frames. 
 
-*1. 1969-1979*
+**1. 1969-1979**
 
-**Note: I am considering data from the first year in which the two focal journals published, to facilitate further comparison with previous content analysis studies.**
+*Note: I am considering data from the first year in which the two focal journals published, to facilitate further comparison with previous content analysis studies.*
 
 * Reading the `.txt` files
 
@@ -58,8 +57,7 @@ raw_corpus69_79$id <- stri_replace_all_regex(raw_corpus69_79$id, pattern=c(" ","
 #visualization 
 sample_n(raw_corpus69_79, 10) 
 ```
-
-*2. 1980-1989*
+**2. 1980-1989**
 
 * Reading the `.txt` files
 
@@ -78,7 +76,7 @@ raw_corpus80_89$id <- stri_replace_all_regex(raw_corpus80_89$id, pattern=c(" ","
 sample_n(raw_corpus80_89, 10)
 ```
 
-*3. 1990-1999*
+**3. 1990-1999**
 
 * Reading the `.txt` files
 
@@ -97,7 +95,7 @@ raw_corpus90_99$id <- stri_replace_all_regex(raw_corpus90_99$id, pattern=c(" ","
 sample_n(raw_corpus90_99, 10)
 ```
 
-*4. 2000-2009*
+**4. 2000-2009**
 
 * Reading the `.txt` files
 
@@ -116,7 +114,7 @@ raw_corpus00_09$id <- stri_replace_all_regex(raw_corpus00_09$id, pattern=c(" ","
 sample_n(raw_corpus00_09, 10)
 ```
 
-*5. 2010-2019*
+**5. 2010-2019**
 
 * Reading the `.txt` files
 
@@ -135,9 +133,9 @@ raw_corpus10_19$id <- stri_replace_all_regex(raw_corpus10_19$id, pattern=c(" ","
 sample_n(raw_corpus10_19, 10) 
 ```
 
-*6. 2020-2022*
+**6. 2020-2022**
 
-**This is the remains and is not a decade, but it represents the most contemporary scholarship, so I am considering this set of articles as a piece.**
+*This is the remains and is not a decade, but it represents the most contemporary scholarship, so I am considering this set of articles as a piece.*
 
 * Reading the `.txt` files
 
@@ -199,101 +197,90 @@ if (!dir.exists("Private/tidy_corpus_all")) {
 tidy_corpus_all%>%
   iwalk(~ write_rds(.x, paste0("Private/tidy_corpus_all/", .y, ".Rds")))
 ```
+*Note: as files are heavy, I only could share in GitHub the last one*
 
-* creating singles data frames for further use
+* **creating singles data frames for further use**
 
-*Data frame corpus 1969 to 1979*
+**Data frame corpus 1969 to 1979**
 
 ```{r}
 #Data frame
 tidy_corpus69_79 <- tidy_corpus_all$tidy_corpus69_79
 
 #Visualization
-kbl(sample_n(tidy_corpus69_79, 100)) %>% 
-   kable_paper() %>%
-  scroll_box(height = "300px")
+sample_n(tidy_corpus69_79, 20)
 ```
 
-*Data frame corpus 1980 to 1989*
+**Data frame corpus 1980 to 1989**
 
 ```{r}
 #Data frame
 tidy_corpus80_89 <- tidy_corpus_all$tidy_corpus80_89
 
 #Visualization
-kbl(sample_n(tidy_corpus80_89, 100)) %>% 
-   kable_paper() %>%
-  scroll_box(height = "300px")
+sample_n(tidy_corpus80_89, 20)
 ```
-
-*Data frame corpus 1990 to 1999*
+**Data frame corpus 1990 to 1999**
 
 ```{r}
 #Data frame
 tidy_corpus90_99 <- tidy_corpus_all$tidy_corpus90_99
 
 #Visualization
-kbl(sample_n(tidy_corpus90_99, 100)) %>% 
-   kable_paper() %>%
-  scroll_box(height = "300px")
+sample_n(tidy_corpus90_99, 100)
 ```
 
-*Data frame corpus 2000 to 2010*
+**Data frame corpus 2000 to 2010**
 
 ```{r}
 #Data frame
 tidy_corpus00_09 <- tidy_corpus_all$tidy_corpus00_09
 
 #Visualization
-kbl(sample_n(tidy_corpus00_09, 100)) %>% 
-   kable_paper() %>%
-  scroll_box(height = "300px")
+sample_n(tidy_corpus00_09, 100)
 ```
 
-*Data frame corpus 2010 to 2019*
+**Data frame corpus 2010 to 2019**
 
 ```{r}
 #Data frame
 tidy_corpus10_19 <- tidy_corpus_all$tidy_corpus10_19
 
 #Visualization
-kbl(sample_n(tidy_corpus10_19, 100)) %>% 
-   kable_paper() %>%
-  scroll_box(height = "300px")
+sample_n(tidy_corpus10_19, 100)
 ```
 
-*Data frame corpus 2020 to 2022*
+**Data frame corpus 2020 to 2022**
 
 ```{r}
 #Data frame 
 tidy_corpus20_22 <- tidy_corpus_all$tidy_corpus20_22
 
 #Visualization
-kbl(sample_n(tidy_corpus20_22, 100)) %>% 
-   kable_paper() %>%
-  scroll_box(height = "300px")
+sample_n(tidy_corpus20_22, 100)
 ```
 
 ---
+
 ## Initial processing
+
 ---
+
 
 ### General sense of the data by decade
 
 To understand some generalities of the data, I combine the data frames into one master data frame with all the tokens. Then, I manipulated the data to look at trends over time. 
 
 * Master data frame
+
 ```{r}
 # Combining data frames
 master_tidy_corpus <- bind_rows(tidy_corpus69_79, tidy_corpus80_89, tidy_corpus90_99, tidy_corpus00_09 , tidy_corpus10_19, tidy_corpus20_22)
 
 #generalities
 ## word count
-kbl(master_tidy_corpus %>% 
-    count(word, sort = TRUE)) %>% 
-   kable_paper() %>%
-  scroll_box(height = "300px")
- 
+head(master_tidy_corpus %>% 
+    count(word, sort = TRUE), 30)
 ##summary
 summary(master_tidy_corpus)  
 
@@ -314,13 +301,16 @@ master_tidy_corpus %>%
 ### Description of my data so far
 
 After all the processes to tidy my data, I finally have a data frame useful for applying topic modeling. My master data frame consists of 10,506,625 tokens representing the "cleaning" words from 3,131 articles published between 1969 and 2022 in two literacy education journals&mdash;a leading research journal and a conference papers journal, both from the same disciplinary association. 
-The master data frame has 131,611 unique words. The plot above indicates the words repeated over 30,000 across the data frame. In general, it seems to represent the scope of the focal journals, anchored in literacy education research. More significance will be identified through the topic modeling analysis.  
+The master data frame has 131,611 unique words. The plot above indicates the words repeated over 30,000 times across the data frame. In general, it seems to represent the scope of the focal journals, anchored in literacy education research. More significance will be identified through the topic modeling analysis.  
 
 ---
 
+
 ## Topic modeling
 
-For this report, I tried to start testing the codes for topic modeling explained in the book [Text Mining with R](https://www.tidytextmining.com/index.html). However, I had many problems with the codes. As the pre-processing and initial processing of my data was unexpectadly slow, I could not present topic modeling analysis this time.
+For this report, I tried to start testing the codes for topic modeling explained in the book [Text Mining with R](https://www.tidytextmining.com/index.html). However, I had many problems with the codes. As the pre-processing and initial processing of my data was unexpectedly slow, I could not present topic modeling analysis this time.
+
+
 ---
 
 ## Next steps
