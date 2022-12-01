@@ -3,12 +3,12 @@ title: "Final project; Data processing - Data Science for Linguists (LING 2340)
 Fall 2022"
 subtitle: "Data Processing - Progress report 2"
 author: "Gianina Morales"
-date: "11/15/2022"
+date: "11/15/2022 (version 1) - 12/1/2022 (version 2)"
 output:
   github_document:
     toc: TRUE
 ---
-# Data processing (new replacement file) - Progress report 2
+# Data processing - Progress report 2 (new replacement file - CORRECTED for progress report 3)
 
 ---
 
@@ -18,9 +18,7 @@ output:
 library(tidytext)
 library(tidyverse)
 library(tm)
-library(tidyr)
 library(stopwords)
-library(stringr)
 library(stringi)
 library(topicmodels)
 ```
@@ -57,6 +55,7 @@ raw_corpus69_79$id <- stri_replace_all_regex(raw_corpus69_79$id, pattern=c(" ","
 #visualization 
 sample_n(raw_corpus69_79, 10) 
 ```
+
 **2. 1980-1989**
 
 * Reading the `.txt` files
@@ -175,12 +174,13 @@ tidy_corpus_all <- raw_corpus_all %>%
 tidy_corpus_all <- tidy_corpus_all %>% 
   map(~ .x %>% 
         anti_join(stop_words %>% 
-               filter(lexicon=="snowball") %>% 
+               filter(lexicon=="onix") %>% 
                rbind(tibble(lexicon = "custom", word = My_stopwords)))) %>%
   #Creating a column with the year of the data and sorting columns
               map(~ .x %>% 
                     mutate (year = str_extract(id, "\\d+")) %>% 
                     relocate(year, id, word)) 
+
 #final tidy corpus object
 tidy_corpus_all %>% str(1)
 
@@ -196,76 +196,15 @@ if (!dir.exists("Private/tidy_corpus_all")) {
 }
 tidy_corpus_all%>%
   iwalk(~ write_rds(.x, paste0("Private/tidy_corpus_all/", .y, ".Rds")))
+
 ```
 *Note: as files are heavy, I only could share in GitHub the last one*
-
-* **creating singles data frames for further use**
-
-**Data frame corpus 1969 to 1979**
-
-```{r}
-#Data frame
-tidy_corpus69_79 <- tidy_corpus_all$tidy_corpus69_79
-
-#Visualization
-sample_n(tidy_corpus69_79, 20)
-```
-
-**Data frame corpus 1980 to 1989**
-
-```{r}
-#Data frame
-tidy_corpus80_89 <- tidy_corpus_all$tidy_corpus80_89
-
-#Visualization
-sample_n(tidy_corpus80_89, 20)
-```
-**Data frame corpus 1990 to 1999**
-
-```{r}
-#Data frame
-tidy_corpus90_99 <- tidy_corpus_all$tidy_corpus90_99
-
-#Visualization
-sample_n(tidy_corpus90_99, 100)
-```
-
-**Data frame corpus 2000 to 2010**
-
-```{r}
-#Data frame
-tidy_corpus00_09 <- tidy_corpus_all$tidy_corpus00_09
-
-#Visualization
-sample_n(tidy_corpus00_09, 100)
-```
-
-**Data frame corpus 2010 to 2019**
-
-```{r}
-#Data frame
-tidy_corpus10_19 <- tidy_corpus_all$tidy_corpus10_19
-
-#Visualization
-sample_n(tidy_corpus10_19, 100)
-```
-
-**Data frame corpus 2020 to 2022**
-
-```{r}
-#Data frame 
-tidy_corpus20_22 <- tidy_corpus_all$tidy_corpus20_22
-
-#Visualization
-sample_n(tidy_corpus20_22, 100)
-```
 
 ---
 
 ## Initial processing
 
 ---
-
 
 ### General sense of the data by decade
 
@@ -275,7 +214,13 @@ To understand some generalities of the data, I combine the data frames into one 
 
 ```{r}
 # Combining data frames
-master_tidy_corpus <- bind_rows(tidy_corpus69_79, tidy_corpus80_89, tidy_corpus90_99, tidy_corpus00_09 , tidy_corpus10_19, tidy_corpus20_22)
+master_tidy_corpus <- bind_rows(tidy_corpus_all$tidy_corpus69_79, tidy_corpus_all$tidy_corpus80_89, tidy_corpus_all$tidy_corpus90_99, tidy_corpus_all$tidy_corpus00_09 , tidy_corpus_all$tidy_corpus10_19, tidy_corpus_all$tidy_corpus20_22)
+
+# Saving the master data frame as an Rds with less than 25 MB to share as a sample in Github
+set.seed(170)
+  write_rds (master_tidy_corpus %>% 
+  sample_n(900000), "Data_product_samples/master_tidycorpus_sample.Rds"   
+)
 
 #generalities
 ## word count

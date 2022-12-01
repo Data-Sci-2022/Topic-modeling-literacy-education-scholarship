@@ -2,11 +2,13 @@ Final project; Data processing - Data Science for Linguists (LING 2340)
 Fall 2022
 ================
 Gianina Morales
-11/15/2022
+11/15/2022 (version 1) - 12/1/2022 (version 2)
 
-- <a href="#data-processing-new-replacement-file---progress-report-2"
-  id="toc-data-processing-new-replacement-file---progress-report-2">Data
-  processing (new replacement file) - Progress report 2</a>
+- <a
+  href="#data-processing---progress-report-2-new-replacement-file---corrected-for-progress-report-3"
+  id="toc-data-processing---progress-report-2-new-replacement-file---corrected-for-progress-report-3">Data
+  processing - Progress report 2 (new replacement file - CORRECTED for
+  progress report 3)</a>
   - <a
     href="#pre-processing-creating-and-tidying-dataframes-from-the-corpus"
     id="toc-pre-processing-creating-and-tidying-dataframes-from-the-corpus">Pre-processing:
@@ -27,7 +29,7 @@ Gianina Morales
   - <a href="#topic-modeling" id="toc-topic-modeling">Topic modeling</a>
   - <a href="#next-steps" id="toc-next-steps">Next steps</a>
 
-# Data processing (new replacement file) - Progress report 2
+# Data processing - Progress report 2 (new replacement file - CORRECTED for progress report 3)
 
 ------------------------------------------------------------------------
 
@@ -37,9 +39,7 @@ Gianina Morales
 library(tidytext)
 library(tidyverse)
 library(tm)
-library(tidyr)
 library(stopwords)
-library(stringr)
 library(stringi)
 library(topicmodels)
 ```
@@ -94,16 +94,16 @@ sample_n(raw_corpus69_79, 10)
     ## # A tibble: 10 × 2
     ##    id                  text                                                     
     ##    <chr>               <chr>                                                    
-    ##  1 JY_1978_brxdlxy.txt ""                                                       
-    ##  2 Y1969_Trxmxntx.txt  "alive  cherished  and confirmeci "                      
-    ##  3 Y1973_sxngxr.txt    "pressing issues to contend with  Indeed  in satisfying …
-    ##  4 Y1971_xndxrsxn.txt  "students  Junior College Journal            "           
-    ##  5 JY_1975_cxrvxrB.txt "RP High  C                         "                    
-    ##  6 Y1972_swxlm.txt     "continued for several chapters and then one period was …
-    ##  7 Y1972_xhnmxcht.txt  "   "                                                    
-    ##  8 Y1974_cxmpbxll.txt  "for developing vocabulary skills       Plan and impleme…
-    ##  9 Y1970_bxhx.txt      "Word Attack Skills"                                     
-    ## 10 Y1972_chrxst.txt    "degree and three years teaching experience  fifth year …
+    ##  1 Y1972_xxrxn.txt     "and teachers "                                          
+    ##  2 Y1978_Arnxld.txt    "for  a  one  second  exposure   Then   an   array  of  …
+    ##  3 Y1977_Bxldwxn.txt   "study   The  first  is  a  statement  with  the  basic …
+    ##  4 JY_1975_mxyxr.txt   "  � patient collection VIOLETS "                        
+    ##  5 Y1969_Schmxdt.txt   "  "                                                     
+    ##  6 Y1979_Grxvxs.txt    "  ers  behavior and that of radar operators is the find…
+    ##  7 Y1970_sxngxr.txt    "to do well on another task  When Gates     p     admini…
+    ##  8 Y1970_rxxlsbxck.txt "Basic Edtication"                                       
+    ##  9 JY_1977_brxscxx.txt "On days three and four  the children were exposed to th…
+    ## 10 Y1973_Txrnxr.txt    " demic  areas   While  listening  to  the  tapes   note…
 
 **2. 1980-1989**
 
@@ -125,18 +125,18 @@ sample_n(raw_corpus80_89, 10)
 ```
 
     ## # A tibble: 10 × 2
-    ##    id                    text                                                   
-    ##    <chr>                 <chr>                                                  
-    ##  1 Y1981_Bxrkxwxtz.txt   "erroneous  statements  about  text  content    and   …
-    ##  2 JY_1982_schwxntxs.txt "Frederick M  Schwantes "                              
-    ##  3 Y1981_Vxnxzky.txt     "    Kantowitz   Ed   Human  information  processing  …
-    ##  4 Y1984_Pxtnxm.txt      "sion  making  is  described   Third   the  critical  …
-    ##  5 JY_1989_nxwxll.txt    "Words                       "                         
-    ##  6 Y1983_Ottx.txt        "      Child       turns to page     Now he can t find…
-    ##  7 JY_1988_rxxnkxng.txt  "t� "                                                  
-    ##  8 Y1989_hxnry.txt       "the metacognitive interview indicated that English pr…
-    ##  9 Y1985_McCxxn.txt      "                                                     …
-    ## 10 Y1985_Rxxnxng.txt     "                Monologic storytelling   "
+    ##    id                 text                                                      
+    ##    <chr>              <chr>                                                     
+    ##  1 Y1986_Lxpsxn.txt   " performance on the most difficult passage   The absolut…
+    ##  2 Y1988_hxxd2.txt    "Teacher "                                                
+    ##  3 JY_1981_pxrxs.txt  "Third  Fifth  Third  Fifth  "                            
+    ##  4 Y1988_hxxd2.txt    "Subjects in the Self Select Group chose an array of stra…
+    ##  5 Y1980_Nxlxs.txt    "on  a specific level of information   "                  
+    ##  6 Y1987_Frxxdmxn.txt "contributing to  cohesive harmony   However   they  come…
+    ##  7 Y1989_vxlxncxx.txt "   "                                                     
+    ##  8 Y1980_Rxnkxn.txt   " n=  words  "                                            
+    ##  9 Y1982_Lxxbxrt.txt  "                                        REFERENCES  "    
+    ## 10 Y1985_Bxrns.txt    "Smith   F        The  creative  achievement  of literacy…
 
 **3. 1990-1999**
 
@@ -158,18 +158,18 @@ sample_n(raw_corpus90_99, 10)
 ```
 
     ## # A tibble: 10 × 2
-    ##    id                   text                                                    
-    ##    <chr>                <chr>                                                   
-    ##  1 Y1993_myxrs.txt      " EILlOO              Note    Re  Article    "          
-    ##  2 JY_1995_gxllxnx.txt  "Suzanne Terry "                                        
-    ##  3 Y1992_bxttxn.txt     "provided focus and direction during data collection an…
-    ##  4 JY_1995_mxkx.txt     "An example of this is when Keith approached while Bob …
-    ##  5 JY_1999_chrxstxx.txt "dren who chose to play in the play center  On some day…
-    ##  6 JY_1993_dxhl.txt     "ABSTRACT "                                             
-    ##  7 Y1995_mxxrx.txt      "at their various sites  Ina  a kindergarten teacher  b…
-    ##  8 Y1992_hxnk.txt       "In the field of reading  perceived self efficacy has r…
-    ##  9 JY_1998_xx.txt       "Proposition  The school literacy learning of students …
-    ## 10 Y1993_stxwxrt.txt    "PARTICIPANTS AND METHODS"
+    ##    id                        text                                               
+    ##    <chr>                     <chr>                                              
+    ##  1 Y1995_blxxdgxxd.txt       "  "                                               
+    ##  2 Y1991_dxhl.txt            "writing fairly regularly in the latter part of th…
+    ##  3 Y1997_xllxngtxn.txt       "time organizing the converging evidence  from met…
+    ##  4 Y1991_bxxr2.txt           "their way to becoming proficient readers  At prim…
+    ##  5 JY_1998_sxpx.txt          "Glaser  B    Strauss  A      The discovery ofgrou…
+    ##  6 Y1999_xx.txt              "Given the uniqueness of their home and school lit…
+    ##  7 Y1991_mcKxnnx.txt         "proportions of students report their use  delinea…
+    ##  8 JY_1997_fxrnxndxzfxxn.txt "boat  goat  head  bed  hair  bell  "              
+    ##  9 Y1993_wxlsxn.txt          "Miles  M  B    Huberman  A M      Qualitative dat…
+    ## 10 Y1997_xl-Hxndx.txt        "RESULTS"
 
 **4. 2000-2009**
 
@@ -197,18 +197,18 @@ sample_n(raw_corpus00_09, 10)
 ```
 
     ## # A tibble: 10 × 2
-    ##    id                  text                                                     
-    ##    <chr>               <chr>                                                    
-    ##  1 JY_2000_wxlf.txt    "scan the  boring SRA cards to find the obvious answers …
-    ##  2 Y2008_rxmxx.txt     "   "                                                    
-    ##  3 Y2004_Hxrmxn.txt    "processing  demands  they  may  place  on  readers   Fo…
-    ##  4 JY_2001_hxffmxn.txt "The validity of the two systems  STAS I and Fountas Pin…
-    ##  5 JY_2005_xx.txt      "A lesson I learned from these larger scale efforts is t…
-    ##  6 Y2000_kxnnxr.txt    "\f "                                                    
-    ##  7 JY_2003_mxssxy.txt  "Goswami  D    Stillman  P      Reclaiming the classroom…
-    ##  8 Y2005_Fxng.txt      "Cox   B   Fang   Z      Otto   B        Preschoolers   …
-    ##  9 Y2008_mxlxch.txt    " vii viii  New York  Teachers College Press "           
-    ## 10 Y2002_pxrxz.txt     "English and often reject the non English native languag…
+    ##    id                   text                                                    
+    ##    <chr>                <chr>                                                   
+    ##  1 Y2004_Nx.txt         "factors    Wertsch      p      of how utterances  are …
+    ##  2 Y2005_Evxns.txt      "not a single RF  proposal  addressed  the  importance …
+    ##  3 JY_2002_kxrxt.txt    "Tom  HSES group "                                      
+    ##  4 Y2001_lxzxr.txt      "I hypothesized that weaving these principles of divers…
+    ##  5 Y2007_Bxmxr.txt      "Hutchins   E       K ausen   T         Distributed  co…
+    ##  6 JY_2000_gxx.txt      "played a major role in current debates about reading  …
+    ##  7 Y2004_Gxndxrsxn.txt  "popular  press  focused  uncritically  on  the  findin…
+    ##  8 JY_2007_bxkxr.txt    "Basal skills approaches Newsletters with such informat…
+    ##  9 JY_2003_pxnx.txt     "Many studies focus on the semantic and phonetic compon…
+    ## 10 Y2007_Blxchxwxcz.txt "extension of word meaning   Do you know any other word…
 
 **5. 2010-2019**
 
@@ -230,18 +230,18 @@ sample_n(raw_corpus10_19, 10)
 ```
 
     ## # A tibble: 10 × 2
-    ##    id                             text                                          
-    ##    <chr>                          <chr>                                         
-    ##  1 Y2013_lxxbfrxxnd.txt           "student and background variables for reading…
-    ##  2 Y2012_fxlxy.txt                "\f "                                         
-    ##  3 JY_2014_wxlsxn.txt             "Siskin  L  S      Realms of knowledge  Acade…
-    ##  4 Y2014_bxxch.txt                "Hull  G  A  Stornaiuolo  A    Sahni  U      …
-    ##  5 Y2013_fxng.txt                 "work has examined applications of their mode…
-    ##  6 Y2011_mxrgxn.txt               "Graham  S  Harris  K  R    Fink  B    MacArt…
-    ##  7 Y2011_txylxr.txt               "From Looking Back To Looking Forward"        
-    ##  8 Y2012_smxth.txt                "Hidalgo and Cameron counties in east Texas  …
-    ##  9 Y2015_Cxssxnx_Schxckxndxnz.txt "Literacy Panel  Washington  DC  National Ins…
-    ## 10 Y2014_mxllxr.txt               "In both examples  children used Spanish and …
+    ##    id                  text                                                     
+    ##    <chr>               <chr>                                                    
+    ##  1 Y2012_hxffmxn.txt   "Construction of meaning "                               
+    ##  2 JY_2012_pxrsxns.txt "Another adaptation occurred in the seventh observation …
+    ##  3 Y2012_spxncx.txt    "Lorenzo s"                                              
+    ##  4 JY_2019_wxtzxl.txt  "Eight articles explored the experiences of PTs of color…
+    ##  5 Y2015_nx.txt        "Oxford  England  Elsevier "                             
+    ##  6 Y2012_hxthxwxy.txt  "examined in the larger study  As such  this paper focus…
+    ##  7 Y2013_rxdxy.txt     "to create presentations using digital tools to infuse a…
+    ##  8 Y2013_bxxch.txt     "Girls > boys"                                           
+    ##  9 Y2011_gxxdwxn.txt   "   "                                                    
+    ## 10 JY_2016_mxssxrx.txt "Of       "
 
 **6. 2020-2022**
 
@@ -272,18 +272,18 @@ sample_n(raw_corpus20_22, 10)
 ```
 
     ## # A tibble: 10 × 2
-    ##    id                   text                                                    
-    ##    <chr>                <chr>                                                   
-    ##  1 Y2021_fxntxnxllx.txt "Figure    Kristoff�s drawing demonstrating that �polic…
-    ##  2 JY_2021_spxrxs.txt   "Student interview"                                     
-    ##  3 Y2021_cxppxlx.txt    ""                                                      
-    ##  4 Y2021_dxxz.txt       "were curated by instructors that explored issues inclu…
-    ##  5 JY_2020_kxblxr.txt   "   "                                                   
-    ##  6 JY_2020_cxllxn.txt   "In the real world  the act of framing�the act of descr…
-    ##  7 Y2020_wxtzxl.txt     "Heather   Yeah   "                                     
-    ##  8 JY_2021_hsxn.txt     "Engaging in Religious Activities and Indigenous Ceremo…
-    ##  9 Y2020_sxh.txt        "between learners� agency enactment as college students…
-    ## 10 JY_2020_bxxchxr.txt  "Yeah  "
+    ##    id                          text                                             
+    ##    <chr>                       <chr>                                            
+    ##  1 Y2021_DELOSRIOS.txt         "We extend our deepest gratitude to the students…
+    ##  2 JY_2020_cxllxn.txt          "Collin  R      Activism  emotion  and genre  Yo…
+    ##  3 JY_2021_wxtzxl.txt          ""                                               
+    ##  4 JY_2020_thxxl.txt           "Re turning to this same data scene again and ag…
+    ##  5 Y2021_lxtxrxcyfxtxrxsms.txt "Closing Thoughts "                              
+    ##  6 JY_2020_wxxdxrd.txt         "Introduction "                                  
+    ##  7 JY_2021_vxhxbxvxc.txt       "Dawit also built on his experience to respond t…
+    ##  8 Y2020_smxth.txt             "I assert that the aforementioned nuances surrou…
+    ##  9 JY_2020_kxblxr.txt          "Natalia Palacios  a Latinx bilingual immigrant …
+    ## 10 JY_2021_sxnchxz.txt         "Abstract "
 
 ### Turning raw data frames on tidy data frames of tokens
 
@@ -316,7 +316,7 @@ tidy_corpus_all <- raw_corpus_all %>%
 tidy_corpus_all <- tidy_corpus_all %>% 
   map(~ .x %>% 
         anti_join(stop_words %>% 
-               filter(lexicon=="snowball") %>% 
+               filter(lexicon=="onix") %>% 
                rbind(tibble(lexicon = "custom", word = My_stopwords)))) %>%
   #Creating a column with the year of the data and sorting columns
               map(~ .x %>% 
@@ -337,12 +337,12 @@ tidy_corpus_all %>% str(1)
 ```
 
     ## List of 6
-    ##  $ tidy_corpus69_79: tibble [1,478,797 × 3] (S3: tbl_df/tbl/data.frame)
-    ##  $ tidy_corpus80_89: tibble [1,623,946 × 3] (S3: tbl_df/tbl/data.frame)
-    ##  $ tidy_corpus90_99: tibble [2,453,682 × 3] (S3: tbl_df/tbl/data.frame)
-    ##  $ tidy_corpus00_09: tibble [2,348,781 × 3] (S3: tbl_df/tbl/data.frame)
-    ##  $ tidy_corpus10_19: tibble [2,096,013 × 3] (S3: tbl_df/tbl/data.frame)
-    ##  $ tidy_corpus20_22: tibble [505,406 × 3] (S3: tbl_df/tbl/data.frame)
+    ##  $ tidy_corpus69_79: tibble [1,283,446 × 3] (S3: tbl_df/tbl/data.frame)
+    ##  $ tidy_corpus80_89: tibble [1,411,180 × 3] (S3: tbl_df/tbl/data.frame)
+    ##  $ tidy_corpus90_99: tibble [2,116,324 × 3] (S3: tbl_df/tbl/data.frame)
+    ##  $ tidy_corpus00_09: tibble [2,036,441 × 3] (S3: tbl_df/tbl/data.frame)
+    ##  $ tidy_corpus10_19: tibble [1,841,573 × 3] (S3: tbl_df/tbl/data.frame)
+    ##  $ tidy_corpus20_22: tibble [450,618 × 3] (S3: tbl_df/tbl/data.frame)
 
 ``` r
 #Individual tidy data frames saved as Rds. Almost all of them are too big for GitHub, so I only can share the file with less than 25 MB in Data_product_samples
@@ -354,9 +354,9 @@ tidy_corpus_all %>%
 ```
 
     ## tidy_corpus69_79 tidy_corpus80_89 tidy_corpus90_99 tidy_corpus00_09 
-    ##        "36.4 Mb"        "39.3 Mb"        "59.5 Mb"        "57.2 Mb" 
+    ##        "31.9 Mb"        "34.4 Mb"        "51.7 Mb"          "50 Mb" 
     ## tidy_corpus10_19 tidy_corpus20_22 
-    ##        "51.1 Mb"        "13.2 Mb"
+    ##        "45.2 Mb"        "11.9 Mb"
 
 ``` r
 ##saving individual data frames as Rds  
@@ -368,176 +368,6 @@ tidy_corpus_all%>%
 ```
 
 *Note: as files are heavy, I only could share in GitHub the last one*
-
-- **creating singles data frames for further use**
-
-**Data frame corpus 1969 to 1979**
-
-``` r
-#Data frame
-tidy_corpus69_79 <- tidy_corpus_all$tidy_corpus69_79
-
-#Visualization
-sample_n(tidy_corpus69_79, 20)
-```
-
-    ## # A tibble: 20 × 3
-    ##    year  id                   word       
-    ##    <chr> <chr>                <chr>      
-    ##  1 1975  JY_1975_cxrvxrC.txt  research   
-    ##  2 1979  JY_1979_dxxlxcxs.txt provided   
-    ##  3 1976  JY_1976_wxlfrxm.txt  five       
-    ##  4 1977  Y1977_Allxngtxn.txt  mcnees     
-    ##  5 1978  Y1978_Sxmmxrs.txt    acceptance 
-    ##  6 1976  Y1976_Nxckx.txt      relegated  
-    ##  7 1975  JY_1975_pxrk.txt     range      
-    ##  8 1976  JY_1976_mxrtxn.txt   paragraph  
-    ##  9 1978  JY_1978_fxshmxn.txt  phrase     
-    ## 10 1976  JY_1976_knxflx.txt   think      
-    ## 11 1977  Y1977_Shxffxr.txt    quarterly  
-    ## 12 1973  Y1973_kxngstxn.txt   table      
-    ## 13 1970  JY_1970_gxyxr.txt    eye        
-    ## 14 1972  Y1972_txxnmxn.txt    temporal   
-    ## 15 1971  JY_1971_gxllxxly.txt past       
-    ## 16 1974  Y1974_xrxcksxn.txt   variance   
-    ## 17 1975  Y1975_gxlxb.txt      involvement
-    ## 18 1979  JY_1979_xvxns.txt    children   
-    ## 19 1971  Y1971_mcdxnxld.txt   deficient  
-    ## 20 1976  JY_1976_sxmxn.txt    comparisons
-
-**Data frame corpus 1980 to 1989**
-
-``` r
-#Data frame
-tidy_corpus80_89 <- tidy_corpus_all$tidy_corpus80_89
-
-#Visualization
-sample_n(tidy_corpus80_89, 20)
-```
-
-    ## # A tibble: 20 × 3
-    ##    year  id                     word       
-    ##    <chr> <chr>                  <chr>      
-    ##  1 1989  Y1989_xlvxrmxnn.txt    also       
-    ##  2 1987  JY_1987_zxckxr.txt     one        
-    ##  3 1989  JY_1989_gxswxmx.txt    words      
-    ##  4 1989  Y1989_bxrr.txt         programs   
-    ##  5 1984  JY_1984_grxbx.txt      ability    
-    ##  6 1984  Y1984_Hxnschx.txt      criterion  
-    ##  7 1982  JY_1982_cxzdxn.txt     attribute  
-    ##  8 1986  Y1986_Brxxn.txt        reading    
-    ##  9 1983  Y1983_Stxxtzxl.txt     instruction
-    ## 10 1985  Y1985_Schwxrtz.txt     told       
-    ## 11 1986  Y1986_Wxnxgrxd.txt     adding     
-    ## 12 1989  Y1989_hxrrmxnn.txt     teachers   
-    ## 13 1986  Y1986_Kxnzxr.txt       practical  
-    ## 14 1982  Y1982_Gxldsmxth.txt    result     
-    ## 15 1985  Y1985_Slxtxr.txt       consisted  
-    ## 16 1981  JY_1981_mcnxxghtxn.txt primary    
-    ## 17 1985  Y1985_Cxrrxck.txt      used       
-    ## 18 1985  Y1985_Sxdxskx.txt      carry      
-    ## 19 1987  JY_1987_dxvxy.txt      individual 
-    ## 20 1988  JY_1988_mcgxx.txt      color
-
-**Data frame corpus 1990 to 1999**
-
-``` r
-#Data frame
-tidy_corpus90_99 <- tidy_corpus_all$tidy_corpus90_99
-
-#Visualization
-sample_n(tidy_corpus90_99, 100)
-```
-
-    ## # A tibble: 100 × 3
-    ##    year  id                    word       
-    ##    <chr> <chr>                 <chr>      
-    ##  1 1997  Y1997_dxvxnrxy.txt    volume     
-    ##  2 1992  JY_1992_schxmm.txt    perceptions
-    ##  3 1996  JY_1996_wxlf.txt      struck     
-    ##  4 1991  Y1991_xmxry.txt       groups     
-    ##  5 1998  JY_1998_fxwcxtt.txt   determine  
-    ##  6 1995  JY_1995_schrxw.txt    differed   
-    ##  7 1992  JY_1992_mccxrthxy.txt teacher    
-    ##  8 1996  Y1996_rxxnkxng.txt    one        
-    ##  9 1994  Y1994_brxck.txt       finding    
-    ## 10 1999  JY_1999_chrxstxx.txt  peers      
-    ## # … with 90 more rows
-
-**Data frame corpus 2000 to 2010**
-
-``` r
-#Data frame
-tidy_corpus00_09 <- tidy_corpus_all$tidy_corpus00_09
-
-#Visualization
-sample_n(tidy_corpus00_09, 100)
-```
-
-    ## # A tibble: 100 × 3
-    ##    year  id                  word      
-    ##    <chr> <chr>               <chr>     
-    ##  1 2004  JY_2004_lx.txt      learned   
-    ##  2 2001  Y2001_bxrr.txt      chavan    
-    ##  3 2007  Y2007_Hxnxs.txt     growing   
-    ##  4 2009  Y2009_dxxlxy.txt    annual    
-    ##  5 2005  JY_2005_xx.txt      helpful   
-    ##  6 2000  JY_2000_mxllxr.txt  remained  
-    ##  7 2007  Y2007_Dxmxcx.txt    quo       
-    ##  8 2008  Y2008_dxffy.txt     understand
-    ##  9 2002  JY_2002_sxmxrx.txt  deeply    
-    ## 10 2003  Y2003_Mxsxnthxl.txt seatwork  
-    ## # … with 90 more rows
-
-**Data frame corpus 2010 to 2019**
-
-``` r
-#Data frame
-tidy_corpus10_19 <- tidy_corpus_all$tidy_corpus10_19
-
-#Visualization
-sample_n(tidy_corpus10_19, 100)
-```
-
-    ## # A tibble: 100 × 3
-    ##    year  id                    word         
-    ##    <chr> <chr>                 <chr>        
-    ##  1 2012  JY_2012_chrxst.txt    strategies   
-    ##  2 2018  JY_2018_pxrry.txt     social       
-    ##  3 2019  JY_2019_hxffmxn.txt   allowed      
-    ##  4 2014  JY_2014_hxnxyfxrd.txt improving    
-    ##  5 2017  JY_2017_mxsxs.txt     language     
-    ##  6 2013  Y2013_lxxbfrxxnd.txt  percent      
-    ##  7 2019  Y2019_cxppxllx.txt    constructed  
-    ##  8 2018  JY_2018_kxxhnx.txt    first        
-    ##  9 2016  Y2016_Edmxstxn.txt    opportunities
-    ## 10 2011  JY_2011_nxxmxn.txt    instructional
-    ## # … with 90 more rows
-
-**Data frame corpus 2020 to 2022**
-
-``` r
-#Data frame 
-tidy_corpus20_22 <- tidy_corpus_all$tidy_corpus20_22
-
-#Visualization
-sample_n(tidy_corpus20_22, 100)
-```
-
-    ## # A tibble: 100 × 3
-    ##    year  id                     word            
-    ##    <chr> <chr>                  <chr>           
-    ##  1 2022  JY_2022_mxllxr.txt     allegedly       
-    ##  2 2020  Y2020_lxmmxrt.txt      teaching        
-    ##  3 2021  Y2021_jxrdxn.txt       transformational
-    ##  4 2020  JY_2020_yxxn.txt       world           
-    ##  5 2021  JY_2021_lxwrxncx.txt   resemble        
-    ##  6 2021  JY_2021_lxvxnx.txt     others          
-    ##  7 2021  JY_2021_lxwrxncx.txt   real            
-    ##  8 2020  JY_2020_nxxgxbxxxr.txt pronunciation   
-    ##  9 2022  JY_2022_jxcxbsxn.txt   contributes     
-    ## 10 2020  Y2020_pxrclx.txt       reading         
-    ## # … with 90 more rows
 
 ------------------------------------------------------------------------
 
@@ -555,7 +385,13 @@ data to look at trends over time.
 
 ``` r
 # Combining data frames
-master_tidy_corpus <- bind_rows(tidy_corpus69_79, tidy_corpus80_89, tidy_corpus90_99, tidy_corpus00_09 , tidy_corpus10_19, tidy_corpus20_22)
+master_tidy_corpus <- bind_rows(tidy_corpus_all$tidy_corpus69_79, tidy_corpus_all$tidy_corpus80_89, tidy_corpus_all$tidy_corpus90_99, tidy_corpus_all$tidy_corpus00_09 , tidy_corpus_all$tidy_corpus10_19, tidy_corpus_all$tidy_corpus20_22)
+
+# Saving the master data frame as an Rds with less than 25 MB to share as a sample in Github
+set.seed(170)
+  write_rds (master_tidy_corpus %>% 
+  sample_n(900000), "Data_product_samples/master_tidycorpus_sample.Rds"   
+)
 
 #generalities
 ## word count
@@ -572,10 +408,10 @@ head(master_tidy_corpus %>%
     ##  4 children  61047
     ##  5 research  59529
     ##  6 teachers  54463
-    ##  7 one       46639
-    ##  8 study     45779
-    ##  9 teacher   43348
-    ## 10 language  41600
+    ##  7 study     45779
+    ##  8 teacher   43348
+    ##  9 language  41600
+    ## 10 text      40838
     ## # … with 20 more rows
 
 ``` r
@@ -584,7 +420,7 @@ summary(master_tidy_corpus)
 ```
 
     ##      year                id                word          
-    ##  Length:10506625    Length:10506625    Length:10506625   
+    ##  Length:9139582     Length:9139582     Length:9139582    
     ##  Class :character   Class :character   Class :character  
     ##  Mode  :character   Mode  :character   Mode  :character
 
@@ -600,7 +436,7 @@ master_tidy_corpus %>%
   labs(y = NULL)
 ```
 
-![](Data_processing_report2_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
+![](Data_processing_report2_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
 ### Description of my data so far
 
