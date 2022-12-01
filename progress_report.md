@@ -48,4 +48,18 @@ I have saved the product of my processing so far in several Rd files. Unfortunat
 
 * *Licensing*
 
-I opted for a creative common licence [Attribution-NonCommercial-ShareAlike 4.0 International](LICENSE.md). This licence allows sharing and adapt the material but only for noncommercial purposes and always attributing credit. I selected a semi-restrictive licence because my project is part of a major research project which has its own clauses and licence and I do not want to interfere with that.   
+I opted for a creative common licence [Attribution-NonCommercial-ShareAlike 4.0 International](LICENSE.md). This licence allows sharing and adapt the material but only for noncommercial purposes and always attributing credit. I selected a semi-restrictive licence because my project is part of a major research project which has its own clauses and licence and I do not want to interfere with that. 
+
+------
+# Third Progress Report
+
+## December 1st 2022
+
+For this report, I applied the topic modeling package to identify probabilistic topics and terms by topics in my data. I had many problems with my computer trying to run the model with the master data frame (that comprises the words from all the articles of my corpus). I even applied another stopwords (Onix) sample to diminish the size. I reduced the tokens by 1 million (now, I have more than 9,000,000 tokens). Ultimately, I decided only to run the models for decades. I also had problems knitting, so my report only shows raw data because I could not have time to do written analyses.
+Finally, I have applied feedback and corrected my file from the report 2. 
+
+---
+
+
+
+
