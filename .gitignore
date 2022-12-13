@@ -42,3 +42,8 @@ vignettes/*.pdf
 
 #Private
 Private/
+
+#Cache
+Data_processes1_cache/
+Data_processes2_cache/
+Data_processes3_cache/
