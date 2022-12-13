@@ -1,6 +1,7 @@
 **Final Project - Data Science for Linguists (LING 2340) Fall 2022**
 
-Gianina Morales  
+Gianina Morales
+
 Last update: 11/15/2022
 
 ---
