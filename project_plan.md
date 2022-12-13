@@ -1,14 +1,13 @@
 **Final Project - Data Science for Linguists (LING 2340) Fall 2022**
 
 Gianina Morales
+Last update: 11/15/2022
 
-Original date: 10/11/2022
-Update: 11/15/2022
-----------------
+---
 
 # Project plan
 
-----------------
+---
 
 ## Topic modeling of Literacy Education articles: five decades of scholarship
 
