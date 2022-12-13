@@ -3,11 +3,6 @@
 Gianina Morales
 Last update: 11/15/2022
 
-<<<<<<< HEAD
-Last update: 11/15/2022
-
-=======
->>>>>>> 556a0c7c4e810995a83fdb573e13b679064341d8
 ---
 
 # Project plan
