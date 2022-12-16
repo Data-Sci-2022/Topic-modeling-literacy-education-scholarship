@@ -73,7 +73,7 @@ In this decade, the model with 12 topics includes the themes in table 1.
 
 **Table 1: topics 1969 to 1979**
 
-![](Images/Data_processes2/topics_name_1969-1979.png)
+![](Images/Data_processes2/topics_name_1969-1979.PNG)
 
 Figure 3 represents the ten most probable terms for each topic. 
 
@@ -95,7 +95,7 @@ In this decade, the model with 12 topics includes the themes in table 2.
 
 **Table 2: topics 1980 to 1989**
 
-![](Images/Data_processes2/topics_name_1980-1989.png)
+![](Images/Data_processes2/topics_name_1980-1989.PNG)
 
 Figure 5 represents the ten most probable terms for each topic. 
 
@@ -117,7 +117,7 @@ In this decade, the model with 12 topics includes the themes in table 3.
 
 **Table 3: topics 1990 to 1999**
 
-![](Images/Data_processes2/topics_name_1990-1999.png)
+![](Images/Data_processes2/topics_name_1990-1999.PNG)
 
 Figure 7 represents the ten most probable terms for each topic.
 
