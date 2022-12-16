@@ -1,6 +1,6 @@
 # Topic modeling of Literacy Education articles: five decades of scholarship
 
-**Gianina Morales ** 
+**Gianina Morales** 
 
 University of Pittsburgh
 
