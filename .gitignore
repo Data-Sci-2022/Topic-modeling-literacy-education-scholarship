@@ -20,6 +20,7 @@
 # RStudio files
 .Rproj.user/
 *.Rproj
+Topic-modeling-literacy-research-.Rproj
 
 # produced vignettes
 vignettes/*.html
