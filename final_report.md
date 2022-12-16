@@ -170,7 +170,7 @@ Figure 11 represents the ten most probable terms for each topic.
 
 **Figure 11**
 
-![](Images/Data_processes2/top_terms_2010-2019-1.png)
+![](Images/Data_processes1/top_terms_2010_2019.png)
 
 Similar to the decade of 1990, the topics in this decade show the birth of new lines, such as critical literacy (topic 11), digital literacies (topic 10), and disciplinary literacy (topic 2). Additionally, it returns the interest to bilingualism and multilingualism (topic 9) and family and community literacy (topic 1). Regarding the change in topics over time, figure 12 shows how the topics are represented in the articles across the years
 
@@ -192,7 +192,7 @@ Figure 13 represents the ten most probable terms for each topic.
 
 **Figure 13**
 
-![](Images/Data_processes2/top_terms2020-2022-1.png)
+![](Images/Data_processes1/top_terms_2020_2022.png)
 
 The share of topics in this period cannot be considered representative of the decade because it only includes the beginning. That may explain why some topics do not appear. However, it suggests a tendency. Some topics that appeared in the previous decade are still present, such as *Digital literacies* (topic 3) and *Critical literacy* (topic 10). Regarding the change in topics over time, figure 14 shows how the topics are represented in the articles across the years.
 
