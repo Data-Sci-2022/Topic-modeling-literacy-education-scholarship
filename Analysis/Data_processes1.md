@@ -39,7 +39,7 @@ library(tm)
 library(stopwords)
 library(stringi)
 library(topicmodels)
-knitr::opts_chunk$set(fig.fullwidth=TRUE, fig.path = "Images/Data_processes1/", cache=TRUE)
+knitr::opts_chunk$set(fig.fullwidth=TRUE, fig.path = "../Images/Data_processes1/", cache=TRUE)
 ```
 
 ### Turning raw data on raw data frames
@@ -76,7 +76,7 @@ content analysis studies.*
 
 ``` r
 # read all the content from one decade of .txt files into a data frame.
-raw_corpus69_79 <- tibble(file = dir("Private/1969-1979", full.names = TRUE))%>%
+raw_corpus69_79 <- tibble(file = dir("../Private/1969-1979", full.names = TRUE))%>%
     mutate(text = map(file, read_lines, skip = 2, skip_empty_rows = TRUE, n_max = Inf,locale = default_locale(), na = character(), num_threads = readr_threads())) %>%
     transmute(id = basename(file), text) %>%
     unnest(text) %>%
@@ -92,18 +92,18 @@ sample_n(raw_corpus69_79, 10)
 ```
 
     ## # A tibble: 10 × 3
-    ##    decade  id                   text                                            
-    ##    <chr>   <chr>                <chr>                                           
-    ##  1 decade1 1973-dxslxndx.txt    "Its extreme simplicity is deceiving  Just try …
-    ##  2 decade1 1974-lxtxn.txt       ""                                              
-    ##  3 decade1 1977-Rxplxy.txt      "alpha at            or more    p       Further…
-    ##  4 decade1 1970-pxlxttxxrx.txt  "Time"                                          
-    ##  5 decade1 1977-Clxxr.txt       "cated and facile readers   "                   
-    ##  6 decade1 1972-whxtstxnx.txt   "DRT Form"                                      
-    ##  7 decade1 1977-Allxngtxn.txt   "     The  reliability  of the  experimental  t…
-    ##  8 decade1 1972-xthxy.txt       "again promises to be a long and arduous  but r…
-    ##  9 decade1 1969-Bxrgxr.txt      "and  Vechsler Jntelligence Scale for Children "
-    ## 10 decade1 1970-fxrtxnbxrry.txt "REFERENCES"
+    ##    decade  id                  text                                             
+    ##    <chr>   <chr>               <chr>                                            
+    ##  1 decade1 1970-pxlxttxxrx.txt "student "                                       
+    ##  2 decade1 1979-McMxrrxy.txt   "meaning  Although  only two students said  anyt…
+    ##  3 decade1 1974-mxys.txt       "REFERENCES"                                     
+    ##  4 decade1 1970-xttx.txt       "   "                                            
+    ##  5 decade1 1972-rxtxkxn.txt    "Cloze  "                                        
+    ##  6 decade1 1975-rxmsxy.txt     "correctly spell a word pronounced by the examin…
+    ##  7 decade1 1972-wxrdrxp.txt    "whether a child can read and  comprehend  one o…
+    ##  8 decade1 1970-txshxw.txt     "INSTRUCTIONAL AND RECREATIONAL ~"               
+    ##  9 decade1 1975-blxntxn.txt    "average readers every fifth word deletion provi…
+    ## 10 decade1 1974-xlxkx.txt      "Washington  D  C  Fall    "
 
 **Decade 2. 1980-1989**
 
@@ -111,7 +111,7 @@ sample_n(raw_corpus69_79, 10)
 
 ``` r
 # read all the content from one decade of .txt files into a data frame.
-raw_corpus80_89 <- tibble(file = dir("Private/1980-1989", full.names = TRUE))%>%
+raw_corpus80_89 <- tibble(file = dir("../Private/1980-1989", full.names = TRUE))%>%
     mutate(text = map(file, read_lines, skip = 2, skip_empty_rows = TRUE, n_max = Inf,locale = default_locale(), na = character(), num_threads = readr_threads())) %>%
     transmute(id = basename(file), text) %>%
     unnest(text) %>%
@@ -129,16 +129,16 @@ sample_n(raw_corpus80_89, 10)
     ## # A tibble: 10 × 3
     ##    decade  id                 text                                              
     ##    <chr>   <chr>              <chr>                                             
-    ##  1 decade2 1980-grxbx.txt     "Low         "                                    
-    ##  2 decade2 1988-nxxmxn.txt    "question type  cued vs  noncued  as the other "  
-    ##  3 decade2 1989-wxllxnsky.txt "Table  "                                         
-    ##  4 decade2 1987-Fxrrxlx.txt   " administered only at the end of first grade  Th…
-    ##  5 decade2 1987-Gxmxrrx.txt   "Bachman    L   F          Performance  on  cloze…
-    ##  6 decade2 1987-Txxlx.txt     "Downing   J   Ayers   D      Schaefer   B       …
-    ##  7 decade2 1988-sxmmxns.txt   "SD =     was significantly less than that of   y…
-    ##  8 decade2 1985-Schwxrtz.txt  "without  supporting context  sentences  and  wro…
-    ##  9 decade2 1988-pxkxlskx.txt  " "                                               
-    ## 10 decade2 1989-kxbby.txt     "a  "
+    ##  1 decade2 1988-bxrnhxrt.txt  "caterpillar"                                     
+    ##  2 decade2 1986-Blxck.txt     "﻿   Second   the  use  of certain  strategies  se…
+    ##  3 decade2 1980-Mxyxrs.txt    "  teachers   "                                   
+    ##  4 decade2 1985-Bxldwxn.txt   "students to guess profitlessly when they encount…
+    ##  5 decade2 1989-hxrrmxnn.txt  "Beth Ann Herrmann"                               
+    ##  6 decade2 1988-rxddxll.txt   "school  Unpublished research proposal  Berkeley …
+    ##  7 decade2 1987-Mxsxnthxl.txt "displayed no consistent ability to process infor…
+    ##  8 decade2 1988-hxxd2.txt     "strategies to organize instruction for a wide ra…
+    ##  9 decade2 1988-bxrnhxrt.txt  "Applebee  A      The child s concept of story  C…
+    ## 10 decade2 1986-Brxnnxn.txt   " particular  study behavior   "
 
 **Decade 3. 1990-1999**
 
@@ -146,7 +146,7 @@ sample_n(raw_corpus80_89, 10)
 
 ``` r
 # read all the content from one decade of .txt files into a data frame.
-raw_corpus90_99 <- tibble(file = dir("Private/1990-1999", full.names = TRUE))%>%
+raw_corpus90_99 <- tibble(file = dir("../Private/1990-1999", full.names = TRUE))%>%
     mutate(text = map(file, read_lines, skip = 2, skip_empty_rows = TRUE, n_max = Inf,locale = default_locale(), na = character(), num_threads = readr_threads())) %>%
     transmute(id = basename(file), text) %>%
     unnest(text) %>%
@@ -162,18 +162,18 @@ sample_n(raw_corpus90_99, 10)
 ```
 
     ## # A tibble: 10 × 3
-    ##    decade  id                 text                                              
-    ##    <chr>   <chr>              <chr>                                             
-    ##  1 decade3 1994-mcCxrthxy.txt "about each teacher "                             
-    ##  2 decade3 1992-mcCxrthxy.txt "Rogoff  B      Adult assistance of children s le…
-    ##  3 decade3 1999-mxrtxn.txt    "Electronic Expression"                           
-    ##  4 decade3 1995-txdwxll.txt   "Other was adapted to two voices  the Other voice…
-    ##  5 decade3 1999-gxx.txt       "young children getting scaffolded socialization …
-    ##  6 decade3 1998-drxhxr2.txt   "population  The   fourth graders at School  cons…
-    ##  7 decade3 1991-mcLxrxn.txt   "For Freire  the most important sites for resisti…
-    ##  8 decade3 1993-schxrxr.txt   "Neutral"                                         
-    ##  9 decade3 1995-mcxntyrx.txt  "literature  celebration of texts "               
-    ## 10 decade3 1991-flxxd.txt     " "
+    ##    decade  id                  text                                             
+    ##    <chr>   <chr>               <chr>                                            
+    ##  1 decade3 1995-gxskxns.txt    "Year         "                                  
+    ##  2 decade3 1995-wxtts.txt      "For new words  it was most common for the teach…
+    ##  3 decade3 1996-mxsxnthxl.txt  "Design and Procedures"                          
+    ##  4 decade3 1999-chrxstxx.txt   "Total        "                                  
+    ##  5 decade3 1995-hxll.txt       "Multilevel"                                     
+    ##  6 decade3 1997-stxnxlxs.txt   "attending conferences  These experiences are wh…
+    ##  7 decade3 1994-mcCxrgxr.txt   "SK"                                             
+    ##  8 decade3 1997-xdwxrds.txt    "Perhaps by the fourth child  the teacher had le…
+    ##  9 decade3 1996-kxmbxrxlxs.txt "bridges between personally and culturally famil…
+    ## 10 decade3 1996-dxllxn.txt     "socializing  As teachers  we move around the ro…
 
 **Decade 4. 2000-2009**
 
@@ -181,7 +181,7 @@ sample_n(raw_corpus90_99, 10)
 
 ``` r
 # read all the content from one decade of .txt files into a data frame.
-raw_corpus00_09 <- tibble(file = dir("Private/2000-2009", full.names = TRUE))%>%
+raw_corpus00_09 <- tibble(file = dir("../Private/2000-2009", full.names = TRUE))%>%
     mutate(text = map(file, read_lines, skip = 2, skip_empty_rows = TRUE, n_max = Inf,locale = default_locale(), na = character(), num_threads = readr_threads())) %>%
     transmute(id = basename(file), text) %>%
     unnest(text) %>%
@@ -197,18 +197,18 @@ sample_n(raw_corpus00_09, 10)
 ```
 
     ## # A tibble: 10 × 3
-    ##    decade  id                text                                               
-    ##    <chr>   <chr>             <chr>                                              
-    ##  1 decade4 2006-xng.txt      "helped promote positive  emotions toward learning…
-    ##  2 decade4 2005-Knxbxl.txt   "                                       Montclair …
-    ##  3 decade4 2001-phxllxps.txt "changing patterns of verbal response in their dic…
-    ##  4 decade4 2004-Smxth2.txt   "        Urbana  IL   National  Council of Teacher…
-    ##  5 decade4 2001-lxxdlxw.txt  "structure notions of teaching  learning  within l…
-    ##  6 decade4 2009-wxhlwxnd.txt "texts  transforming meanings  improvising practic…
-    ##  7 decade4 2001-kxstx.txt    "National Reading Conference Yearbook     pp      "
-    ##  8 decade4 2001-clxrk.txt    ""                                                 
-    ##  9 decade4 2003-bxrxnx.txt   "Maria  +   Lucero  +   "                          
-    ## 10 decade4 2008-zhxng.txt    "Narrows down query words and re searches     "
+    ##    decade  id               text                                                
+    ##    <chr>   <chr>            <chr>                                               
+    ##  1 decade4 2007-Dxnxvxn.txt " a  butterfly  fully  grown   first   it lays  an …
+    ##  2 decade4 2006-Bxrxnx.txt  "      September   diamante poems   journals   Octo…
+    ##  3 decade4 2004-Kxdd.txt    "                                           Julie K…
+    ##  4 decade4 2001-shxxrxr.txt "End of week and   week interval VSS test results w…
+    ##  5 decade4 2000-mxlzx.txt   "school for   or fewer years and who were in the pr…
+    ##  6 decade4 2002-kxdd.txt    "on her child and her goals and needs helped me to …
+    ##  7 decade4 2007-Mxslxy.txt  "         the best teachers  of all  students   Tea…
+    ##  8 decade4 2002-pxng.txt    "R  Go ahead "                                      
+    ##  9 decade4 2005-Wxlkxr.txt  "       Phyllis  connected nonfiction books with hi…
+    ## 10 decade4 2008-dwyxr.txt   "+home"
 
 **Decade 5. 2010-2019**
 
@@ -216,7 +216,7 @@ sample_n(raw_corpus00_09, 10)
 
 ``` r
 # read all the content from one decade of .txt files into a data frame.
-raw_corpus10_19 <- tibble(file = dir("Private/2010-2019", full.names = TRUE))%>%
+raw_corpus10_19 <- tibble(file = dir("../Private/2010-2019", full.names = TRUE))%>%
      mutate(text = map(file, read_lines, skip = 2, skip_empty_rows = TRUE, n_max = Inf,locale = default_locale(), na = character(), num_threads = readr_threads())) %>%
     transmute(id = basename(file), text) %>%
     unnest(text) %>%
@@ -232,18 +232,18 @@ sample_n(raw_corpus10_19, 10)
 ```
 
     ## # A tibble: 10 × 3
-    ##    decade  id                     text                                          
-    ##    <chr>   <chr>                  <chr>                                         
-    ##  1 decade5 2015-Wxsx_OByrnx.txt   "characteristics associated with presented id…
-    ##  2 decade5 2017-mxchxdx.txt       "in examinations of children s literacy  e g …
-    ##  3 decade5 2018-rxbxn.txt         "evidence from Jain knowledge  offers the opp…
-    ##  4 decade5 2013-dxnnxs.txt        "Abstract "                                   
-    ##  5 decade5 2019-bxchhxlz.txt      "When I first started I was just a player and…
-    ##  6 decade5 2015-Gxxdmxn.txt       "language appropriately based on social conte…
-    ##  7 decade5 2010-hxtchxsxn.txt     "teachers  pedagogical approaches matched the…
-    ##  8 decade5 2011-lxwxs.txt         "or cable goes out "                          
-    ##  9 decade5 2012-nxgxxrón-Lxx.txt  "  communicate with all of my family who live…
-    ## 10 decade5 2016-Lxwxnxg-xt-xl.txt "Written Text"
+    ##    decade  id                       text                                        
+    ##    <chr>   <chr>                    <chr>                                       
+    ##  1 decade5 2015-nx.txt              "Negative"                                  
+    ##  2 decade5 2011-lxx.txt             "Reading Teacher         "                  
+    ##  3 decade5 2012-grxgxry.txt         "his book  Mind and Nature      says   We c…
+    ##  4 decade5 2010-jxrdxn2.txt         "the efficacy and effectiveness of students…
+    ##  5 decade5 2013-xmxndxm.txt         "Xue  Y    Meisels  S  J      Early literac…
+    ##  6 decade5 2016-sxltxrxgxnzxlxz.txt "Notes "                                    
+    ##  7 decade5 2012-wxtzxl.txt          "Deanna reflected   It s truly amazing how …
+    ##  8 decade5 2015-Shxrmx_Pxng.txt     "Conclusions"                               
+    ##  9 decade5 2013-rxdxy.txt           "it out  Please describe "                  
+    ## 10 decade5 2011-jxnks.txt           "Binyavanga  Wainainina   How to write abou…
 
 **Decade 6. 2020-2022**
 
@@ -255,7 +255,7 @@ piece.*
 
 ``` r
 # read all the content from one decade of .txt files into a data frame.
-raw_corpus20_22 <- tibble(file = dir("Private/2020-2022", full.names = TRUE))%>%
+raw_corpus20_22 <- tibble(file = dir("../Private/2020-2022", full.names = TRUE))%>%
     mutate(text = map(file, read_lines, skip = 2, skip_empty_rows = TRUE, n_max = Inf,locale = default_locale(), na = character(), num_threads = readr_threads())) %>%
     transmute(id = basename(file), text) %>%
     unnest(text) %>%
@@ -271,18 +271,18 @@ sample_n(raw_corpus20_22, 10)
 ```
 
     ## # A tibble: 10 × 3
-    ##    decade  id                 text                                              
-    ##    <chr>   <chr>              <chr>                                             
-    ##  1 decade6 2021-wxng.txt      "   I feel like I make friends with people in goo…
-    ##  2 decade6 2021-wxssmxn.txt   "Thomas  E  E      Stories still matter  Rethinki…
-    ##  3 decade6 2020-mxchxdx.txt   "� "                                              
-    ##  4 decade6 2020-kxchxrsky.txt "Barnard  M      Approaches to understanding visu…
-    ##  5 decade6 2021-lxvxnx.txt    "Here is an example of UDBW  In one study in a hi…
-    ##  6 decade6 2021-pxckxrd.txt   "Manuscript submitted    November   Manuscript ac…
-    ##  7 decade6 2021-xmxgxn.txt    "strategically author herself throughout the text…
-    ##  8 decade6 2020-kxchxrsky.txt "Dani Kachorsky  College of Education and Human D…
-    ##  9 decade6 2020-kxblxr.txt    "�he was tired and he felt he ought to be getting…
-    ## 10 decade6 2020-wxllxs.txt    "Now picture this    children in an urban third g…
+    ##    decade  id                         text                                      
+    ##    <chr>   <chr>                      <chr>                                     
+    ##  1 decade6 2020-kxnlxch.txt           "In addition  schools must create spaces …
+    ##  2 decade6 2022-mxplxthxrpx.txt       "Roehling  J  V  Hebert  M  Nelson  R  J …
+    ##  3 decade6 2021-xnrxght.txt           "Note  ELA  English language arts  DAL  D…
+    ##  4 decade6 2021-lxtxrxcyfxtxrxsms.txt "As racialized members of society  the di…
+    ##  5 decade6 2021-rxgxrs.txt            ""                                        
+    ##  6 decade6 2021-cxppxlx.txt           "  "                                      
+    ##  7 decade6 2021-prxsxxdx.txt          ""                                        
+    ##  8 decade6 2020-hxydxn.txt            ""                                        
+    ##  9 decade6 2020-hxydxn.txt            "Perspectives "                           
+    ## 10 decade6 2020-nxxgxbxxxr.txt        ""
 
 ### Turning raw data frames on tidy data frames of tokens
 
@@ -356,11 +356,11 @@ tidy_corpus_all %>%
 
 ``` r
 ##saving individual data frames as Rds  
-if (!dir.exists("Private/tidy_corpus_all")) {
-  dir.create("Private/tidy_corpus_all")
+if (!dir.exists("../Private/tidy_corpus_all")) {
+  dir.create("../Private/tidy_corpus_all")
 }
 tidy_corpus_all%>%
-  iwalk(~ write_rds(.x, paste0("Private/tidy_corpus_all/", .y, ".Rds")))
+  iwalk(~ write_rds(.x, paste0("../Private/tidy_corpus_all/", .y, ".Rds")))
 ```
 
 *Note: as files are heavy, I only could share in GitHub the last one*
@@ -397,11 +397,11 @@ head(master_tidy_corpus)
 ``` r
 #Saving as Rds
 master_tidy_corpus%>%
-  write_rds("Private/master_tidy_corpus.Rds")
+  write_rds("../Private/master_tidy_corpus.Rds")
 # Saving the master data frame as an Rds with less than 25 MB to share as a sample in Github
 set.seed(170)
   write_rds (master_tidy_corpus %>% 
-  sample_n(900000), "Data_product_samples/master_tidycorpus_sample.Rds")
+  sample_n(900000), "../Data_product_samples/master_tidycorpus_sample.Rds")
 ```
 
 - Generalities
@@ -445,11 +445,11 @@ master_tidy_corpus %>%
   filter(n > 25000) %>%
   mutate(word = reorder(word, n)) %>%
   ggplot(aes(n, word, fill=word)) +
-  geom_col() +
+  geom_col(show.legend=F) +
   labs(y = NULL)
 ```
 
-![](Images/Data_processes1/unnamed-chunk-11-1.png)<!-- -->
+![](../Images/Data_processes1/unnamed-chunk-11-1.png)<!-- -->
 
 ### Description of my data so far
 
@@ -506,10 +506,11 @@ sessionInfo()
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## other attached packages:
-    ##  [1] topicmodels_0.2-12 stringi_1.7.8      stopwords_2.3      tm_0.7-9          
-    ##  [5] NLP_0.2-1          forcats_0.5.2      stringr_1.4.1      dplyr_1.0.9       
-    ##  [9] purrr_0.3.4        readr_2.1.2        tidyr_1.2.0        tibble_3.1.8      
-    ## [13] ggplot2_3.3.6      tidyverse_1.3.2    tidytext_0.3.4    
+    ##  [1] topicmodels_0.2-12  stringi_1.7.8       stopwords_2.3      
+    ##  [4] tm_0.7-9            NLP_0.2-1           forcats_0.5.2      
+    ##  [7] stringr_1.4.1       dplyr_1.0.9         purrr_0.3.4        
+    ## [10] readr_2.1.2         tidyr_1.2.0         tibble_3.1.8       
+    ## [13] ggplot2_3.3.6       tidyverse_1.3.2     tidytext_0.3.4.9000
     ## 
     ## loaded via a namespace (and not attached):
     ##  [1] httr_1.4.4          bit64_4.0.5         vroom_1.5.7        
@@ -522,7 +523,7 @@ sessionInfo()
     ## [22] pkgconfig_2.0.3     broom_1.0.1         haven_2.5.1        
     ## [25] scales_1.2.1        tzdb_0.3.0          googledrive_2.0.0  
     ## [28] farver_2.1.1        generics_0.1.3      ellipsis_0.3.2     
-    ## [31] withr_2.5.0         cli_3.3.0           magrittr_2.0.3     
+    ## [31] withr_2.5.0         cli_3.4.1           magrittr_2.0.3     
     ## [34] crayon_1.5.1        readxl_1.4.1        evaluate_0.16      
     ## [37] tokenizers_0.2.3    janeaustenr_1.0.0   fs_1.5.2           
     ## [40] fansi_1.0.3         SnowballC_0.7.0     xml2_1.3.3         

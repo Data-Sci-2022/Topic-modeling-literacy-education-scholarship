@@ -21,7 +21,7 @@ library(tm)
 library(stopwords)
 library(stringi)
 library(topicmodels)
-knitr::opts_chunk$set(fig.fullwidth=TRUE, fig.path = "Images/Data_processes1/", cache=TRUE)
+knitr::opts_chunk$set(fig.fullwidth=TRUE, fig.path = "../Images/Data_processes1/", cache=TRUE)
 ```
 
 ### Turning raw data on raw data frames
@@ -44,7 +44,7 @@ I divided the data into decades. It was very difficult to manipulate the whole d
 
 ```{r}
 # read all the content from one decade of .txt files into a data frame.
-raw_corpus69_79 <- tibble(file = dir("Private/1969-1979", full.names = TRUE))%>%
+raw_corpus69_79 <- tibble(file = dir("../Private/1969-1979", full.names = TRUE))%>%
     mutate(text = map(file, read_lines, skip = 2, skip_empty_rows = TRUE, n_max = Inf,locale = default_locale(), na = character(), num_threads = readr_threads())) %>%
     transmute(id = basename(file), text) %>%
     unnest(text) %>%
@@ -65,7 +65,7 @@ sample_n(raw_corpus69_79, 10)
 
 ```{r}
 # read all the content from one decade of .txt files into a data frame.
-raw_corpus80_89 <- tibble(file = dir("Private/1980-1989", full.names = TRUE))%>%
+raw_corpus80_89 <- tibble(file = dir("../Private/1980-1989", full.names = TRUE))%>%
     mutate(text = map(file, read_lines, skip = 2, skip_empty_rows = TRUE, n_max = Inf,locale = default_locale(), na = character(), num_threads = readr_threads())) %>%
     transmute(id = basename(file), text) %>%
     unnest(text) %>%
@@ -86,7 +86,7 @@ sample_n(raw_corpus80_89, 10)
 
 ```{r}
 # read all the content from one decade of .txt files into a data frame.
-raw_corpus90_99 <- tibble(file = dir("Private/1990-1999", full.names = TRUE))%>%
+raw_corpus90_99 <- tibble(file = dir("../Private/1990-1999", full.names = TRUE))%>%
     mutate(text = map(file, read_lines, skip = 2, skip_empty_rows = TRUE, n_max = Inf,locale = default_locale(), na = character(), num_threads = readr_threads())) %>%
     transmute(id = basename(file), text) %>%
     unnest(text) %>%
@@ -107,7 +107,7 @@ sample_n(raw_corpus90_99, 10)
 
 ```{r warning=FALSE}
 # read all the content from one decade of .txt files into a data frame.
-raw_corpus00_09 <- tibble(file = dir("Private/2000-2009", full.names = TRUE))%>%
+raw_corpus00_09 <- tibble(file = dir("../Private/2000-2009", full.names = TRUE))%>%
     mutate(text = map(file, read_lines, skip = 2, skip_empty_rows = TRUE, n_max = Inf,locale = default_locale(), na = character(), num_threads = readr_threads())) %>%
     transmute(id = basename(file), text) %>%
     unnest(text) %>%
@@ -128,7 +128,7 @@ sample_n(raw_corpus00_09, 10)
 
 ```{r warning=FALSE}
 # read all the content from one decade of .txt files into a data frame.
-raw_corpus10_19 <- tibble(file = dir("Private/2010-2019", full.names = TRUE))%>%
+raw_corpus10_19 <- tibble(file = dir("../Private/2010-2019", full.names = TRUE))%>%
      mutate(text = map(file, read_lines, skip = 2, skip_empty_rows = TRUE, n_max = Inf,locale = default_locale(), na = character(), num_threads = readr_threads())) %>%
     transmute(id = basename(file), text) %>%
     unnest(text) %>%
@@ -151,7 +151,7 @@ sample_n(raw_corpus10_19, 10)
 
 ```{r warning=FALSE}
 # read all the content from one decade of .txt files into a data frame.
-raw_corpus20_22 <- tibble(file = dir("Private/2020-2022", full.names = TRUE))%>%
+raw_corpus20_22 <- tibble(file = dir("../Private/2020-2022", full.names = TRUE))%>%
     mutate(text = map(file, read_lines, skip = 2, skip_empty_rows = TRUE, n_max = Inf,locale = default_locale(), na = character(), num_threads = readr_threads())) %>%
     transmute(id = basename(file), text) %>%
     unnest(text) %>%
@@ -201,11 +201,11 @@ tidy_corpus_all %>%
             object.size() %>% 
             format("Mb")) 
 ##saving individual data frames as Rds  
-if (!dir.exists("Private/tidy_corpus_all")) {
-  dir.create("Private/tidy_corpus_all")
+if (!dir.exists("../Private/tidy_corpus_all")) {
+  dir.create("../Private/tidy_corpus_all")
 }
 tidy_corpus_all%>%
-  iwalk(~ write_rds(.x, paste0("Private/tidy_corpus_all/", .y, ".Rds")))
+  iwalk(~ write_rds(.x, paste0("../Private/tidy_corpus_all/", .y, ".Rds")))
 ```
 *Note: as files are heavy, I only could share in GitHub the last one*
 
@@ -227,11 +227,11 @@ master_tidy_corpus <- bind_rows(tidy_corpus_all$tidy_corpus69_79, tidy_corpus_al
 head(master_tidy_corpus)
 #Saving as Rds
 master_tidy_corpus%>%
-  write_rds("Private/master_tidy_corpus.Rds")
+  write_rds("../Private/master_tidy_corpus.Rds")
 # Saving the master data frame as an Rds with less than 25 MB to share as a sample in Github
 set.seed(170)
   write_rds (master_tidy_corpus %>% 
-  sample_n(900000), "Data_product_samples/master_tidycorpus_sample.Rds")
+  sample_n(900000), "../Data_product_samples/master_tidycorpus_sample.Rds")
 ```
 
 * Generalities
@@ -252,7 +252,7 @@ master_tidy_corpus %>%
   filter(n > 25000) %>%
   mutate(word = reorder(word, n)) %>%
   ggplot(aes(n, word, fill=word)) +
-  geom_col() +
+  geom_col(show.legend=F) +
   labs(y = NULL)
 ```
 

@@ -1,0 +1,889 @@
+---
+title: "Final project; Data processing - Data Science for Linguists (LING 2340)
+Fall 2022"
+subtitle: "Data Processes 2"
+author: "Gianina Morales"
+date: "12/1/2022 (version 1) - 12/15/2022 (version 2)"
+output:
+  github_document:
+    toc: TRUE
+always_allow_html: true
+---
+
+# Data processing (NEW CONTINUING - Part 2) 
+
+---
+
+```{r setup, message=FALSE, warning=FALSE}
+library(tidytext)
+library(tidyverse)
+library(tm)
+library(stopwords)
+library(stringi)
+library(topicmodels)
+library(lda)
+library(stm)
+library(ldatuning)
+library(rmarkdown)
+library(kableExtra)
+knitr::opts_chunk$set(fig.path = "../Images/Data_processes2/", cache=TRUE)
+```
+
+---
+
+## Topic modeling by decade
+
+**Method**
+
+**Latent Dirichlet allocation (LDA)** is a mathematical method for finding topic probabilities in a corpus. The mechanism includes two elements:
+
+* LDA allows finding topics in a series of documents automatically. The number of topics responds to a parameter set by the researcher (*n*=x). The topics listed are weighted by their relative importance in the corpus, informed by the frequency and distribution of words.
+
+* Each topic includes a series of words that the algorithm *estimates* is part of the topic. The automatic process implies probabilities of word-topic association. That is why some words appear in different topics.
+
+I have applied the method following primarily the book [Text Mining with R](https://www.tidytextmining.com/index.html), in addition to other sources, such as [Julia Silge's YouTube channel](https://www.youtube.com/@JuliaSilge) and two other data mining books: [Text Mining for Social and Behavioral Research Using R](https://books.psychstat.org/textmining/topic-models.html) and 
+[Text as Data Methods in R - Applications for Automated Analyses of News Content](https://bookdown.org/valerie_hase/TextasData_HS2021/tutorial-13-topic-modeling.html)
+
+**Number of topics (`k`)**
+
+I have used `FindTopicsNumber()` from the `ldatuning` package to asses the amount of topics recommended for my models. It is a time consuming function, so I executed the command with the lighter data frame: decade 6 (it took 1 hour with the document term matrix based on the 11.8 Mb object). I used the results as references for the entire data set. This method indicated that a `k` between 8 and 13 represents a "balance", considering density, within-topic divergence and across topic divergence. Given that the data frames for the other decades include more documents, I decided to use a `k` of 12. My main sources for this method are pages: [Select number of topics for LDA model (Murzintcev Nikita)](https://rpubs.com/nikita-moor/107657) and [Topic Models(Chelsey Hill)](https://rpubs.com/chelseyhill/672546)
+
+To facilitate the organization of this document, the calculations are in the space of the [decade 6](#decade-6:-corpus-of-2020-to-2022).  
+
+### Decade 1 - Corpus of 1969 to 1979
+
+**1.1. Topic model**
+
+* Document term matrix
+
+```{r }
+#Loading Rds
+tidy_corpus69_79 <- read_rds("../Private/tidy_corpus_all/tidy_corpus69_79.Rds")
+#creating document-term matrix (necessary to apply the package)
+corpus69_79_dtm <- tidy_corpus69_79 %>%
+#joining decade and id column
+    mutate(document= paste(decade, id, sep= "_"))%>%
+    count(document, word) %>% 
+    cast_dtm(document, word, n)
+#results
+corpus69_79_dtm
+```
+
+* Topic model
+
+```{r}
+# creating a model with 12 topics
+corpus69_79_topicmodel <- 
+LDA(corpus69_79_dtm, k = 12, control = list(seed = 5178652))
+#results
+corpus69_79_topicmodel%>%
+  write_rds("../Data_product_samples/topicmodels/topicmodel69_79.Rds")
+```
+
+The result is a model that I will use as a base in the next steps
+
+**1.2. Word-topic probability**
+
+This estimation indicates the probability of each term being present in each topic. 
+
+```{r}
+# per topic per word probabilities
+corpus69_79_topics <- tidy(corpus69_79_topicmodel, matrix = "beta")
+head(corpus69_79_topics, 20)
+```
+
+I ranked the terms to find the words with more probability in each topic. They are also called "top words." I decided to look at the 30 top terms to analyze the topics qualitatively. This process is commonly called "tea-leaves-reading" because it implies the researcher's interpretation in search of meaningful patterns.  
+
+```{r}
+#Identifying the 30 terms more weighted to analyze the topics
+corpus69_79_terms <- corpus69_79_topics %>%
+  group_by(topic) %>%
+  slice_max(beta, n = 30) %>% 
+  ungroup() %>%
+  arrange(topic, -beta) %>% 
+  add_column(decade = "d1_1969-1979")
+#results  
+head(corpus69_79_terms, 10)
+#Saving the data frame as a csv
+write_csv(corpus69_79_terms, "../Data_product_samples/topicmodel_lists/corpus69_79_terms.csv", append = FALSE, col_names = TRUE)
+```
+
+*Analysis*
+
+Looking at the topics qualitatively, I have inferred themes for each topic. I have used my literature review of previous analyses of trends in literacy scholarship (with the methodology "content analysis") as a guide in this task. As a result, I have new names for each topic in a `csv` file. I plot the topics with the top ten terms.  
+
+```{r message=FALSE, warning=FALSE}
+#Loading csv with topics named
+corpus69_79_terms_id<- read_csv("../Data_product_samples/topicmodel_listsanalyzed/corpus69_79_terms2.csv")
+```
+
+
+```{r}
+#List of topics
+Topics69_79 <- corpus69_79_terms_id %>% 
+  select (c("topic", "topic_name", "decade")) %>% 
+  distinct()
+Topics69_79k <- Topics69_79 %>%
+  select (c("topic", "topic_name")) %>% 
+  knitr::kable(booktabs = T, col.names = c("Topic", "Topic names 1969 to 1979"), align = c("l", "l")) %>% 
+  kable_classic (full_width = F)
+ Topics69_79k
+ Topics69_79k %>% 
+    save_kable("../Images/Data_processes2/topics_name_1969-1979.png")
+```
+
+Plot
+
+```{r top_terms_1969-1979}
+#visualization of ten most common words by topic
+decade1_10topics <- corpus69_79_terms %>%
+  group_by(topic) %>%
+  slice_max(beta, n = 10) %>% 
+  ungroup() %>%
+  mutate(topic =paste("Topic", topic), term= reorder_within(term, beta, topic)) %>% 
+  ggplot(aes(beta, term, fill = factor(topic))) +
+  geom_col(show.legend = FALSE) +
+  labs(title = "Top terms per topic, 1969 to 1979", x = expression(beta), y = NULL) +
+  facet_wrap(~ topic, ncol=4, scales = "free_y") +
+  scale_y_reordered() +
+   scale_x_continuous(guide = guide_axis(check.overlap = TRUE))
+ 
+#results
+decade1_10topics
+```
+
+**1.3 Probability of topics by year: per-year-per-topic probability**
+
+This measure will help me to see if there are changes in the presence of each topic by year. I am using the technique to estimate the "per-document-per-topic probability," considering each year as a unique document. 
+
+```{r}
+# per-document-per-topic probabilities
+decade1_gamma <- tidy(corpus69_79_topicmodel, matrix="gamma")
+sample_n(decade1_gamma, 10)
+```
+
+The values are a proportion of words from each topic in each document (document=journal article). Now, I will estimate the presence of topics per year.
+
+```{r Topic_probability_decade1969-1979, message=FALSE, warning=FALSE}
+#separation of title name between year and article id
+decade1_gamma <- decade1_gamma %>% 
+  separate(document, c("year", "article"), sep = "-", convert = TRUE)
+#Probability of topic per year
+decade1_gamma_plot <- decade1_gamma %>%
+  mutate(topic=factor(topic)) %>% 
+  group_by(year, topic) %>% 
+  summarise(gamma_mean=mean(gamma)) %>% 
+  ggplot(aes(gamma_mean, topic, fill=topic))+
+  geom_col(show.legend=FALSE)+
+  facet_wrap(vars(year), ncol=4, scales = "free_y")+
+  labs(x=expression(gamma), y="Topic")+
+  scale_y_discrete()+
+  theme(strip.text=element_text(size=10))
+ #Results
+decade1_gamma_plot
+```
+
+### Decade 2 - Corpus of 1980 to 1989
+
+**2.1. Topic model**
+
+* Document term matrix
+
+```{r}
+#Loading Rds
+tidy_corpus80_89 <- read_rds("../Private/tidy_corpus_all/tidy_corpus80_89.Rds")
+
+#creating document-term matrix (necessary to apply the package)
+corpus80_89_dtm <- tidy_corpus80_89 %>%
+#joining decade and id column
+    mutate(document= paste(decade, id, sep= "_"))%>%
+    count(document, word) %>% 
+    cast_dtm(document, word, n)
+#results
+corpus80_89_dtm
+```
+
+* Topic model
+
+```{r}
+# creating a model with 12 topics
+corpus80_89_topicmodel <- 
+LDA(corpus80_89_dtm, k = 12, control = list(seed = 6245))
+#results
+corpus80_89_topicmodel%>%
+  write_rds("../Data_product_samples/topicmodels/topicmodel80_99.Rds")
+```
+The result is a model that I will use as a base in the next steps
+
+**2.2. Word-topic probability**
+
+This estimation indicates the probability of each term being present in each topic. 
+
+```{r}
+# per topic per word probabilities
+corpus80_89_topics <- tidy(corpus80_89_topicmodel, matrix = "beta")
+head(corpus80_89_topics, 20)
+```
+
+I ranked the terms to find the words with more probability in each topic. They are also called "top words." I decided to look at the 30 top terms to analyze the topics qualitatively. This process is commonly called "tea-leaves-reading" because it implies the researcher's interpretation in search of meaningful patterns.  
+
+```{r}
+#Identifying the 30 terms more weighted to analyze the topics
+corpus80_89_terms <- corpus80_89_topics %>%
+  group_by(topic) %>%
+  slice_max(beta, n = 30) %>% 
+  ungroup() %>%
+  arrange(topic, -beta) %>% 
+  add_column(decade = "d2_1980-1989")
+#results  
+head(corpus80_89_terms, 10)
+#Saving the data frame as a csv
+write_csv(corpus80_89_terms, "../Data_product_samples/topicmodel_lists/corpus80_89_terms.csv", append = FALSE, col_names = TRUE)
+```
+
+*Analysis*
+
+Looking at the topics qualitatively, I have inferred themes for each topic. I have used my literature review of previous analyses of trends in literacy scholarship (with the methodology "content analysis") as a guide in this task. As a result, I have new names for each topic in a `csv` file. I plot the topics with the top ten terms.  
+
+```{r message=FALSE, warning=FALSE}
+#Loading csv with topics named
+corpus80_89_terms_id<- read_csv("../Data_product_samples/topicmodel_listsanalyzed/corpus80_89_terms2.csv")
+```
+
+
+```{r}
+#List of topics
+Topics80_89 <- corpus80_89_terms_id %>% 
+  select (c("topic", "topic_name", "decade")) %>% 
+  distinct() 
+Topics80_89k <- Topics80_89 %>% 
+  select (c("topic", "topic_name")) %>% 
+  knitr::kable(booktabs = T, col.names = c("Topic", "Topic names 1980 to 1989"), align = c("l", "l")) %>% 
+  kable_classic (full_width = F)
+Topics80_89k
+ Topics80_89k %>% 
+    save_kable("../Images/Data_processes2/topics_name_1980-1989.png")
+```
+
+* Plot
+
+```{r top_terms_1980-1989}
+#visualization of ten most common words by topic
+decade2_10topics <- corpus80_89_terms%>%
+  group_by(topic) %>%
+  slice_max(beta, n = 10) %>% 
+  ungroup() %>%
+  mutate(topic =paste("Topic", topic), term= reorder_within(term, beta, topic)) %>% 
+  ggplot(aes(beta, term, fill = factor(topic))) +
+  geom_col(show.legend = FALSE) +
+  labs(title = "Top terms per topic, 1980 to 1989", x = expression(beta), y = NULL) +
+  facet_wrap(~ topic, ncol=4, scales = "free_y") +
+  scale_y_reordered() +
+   scale_x_continuous(guide = guide_axis(check.overlap = TRUE))
+#results
+decade2_10topics
+```
+
+**2.3 Probability of topics by year: per-year-per-topic probability**
+
+This measure will help me to see if there are changes in the presence of each topic by year. I am using the technique to estimate the "per-document-per-topic probability," considering each year as a unique document. 
+
+```{r}
+# per-document-per-topic probabilities
+decade2_gamma <- tidy(corpus80_89_topicmodel, matrix="gamma")
+sample_n(decade2_gamma, 10)
+```
+
+The values are a proportion of words from each topic in each document (document=journal article). Now, I will estimate the presence of topics per year and create a visualization.
+
+```{r Topic_probability_decade1980-1989, message=FALSE, warning=FALSE}
+#separation of title name between year and article id
+decade2_gamma <- decade2_gamma %>% 
+  separate(document, c("year", "article"), sep = "-", convert = TRUE)
+#Probability of topic per year
+decade2_gamma_plot <- decade2_gamma %>%
+ mutate(topic=factor(topic)) %>% 
+  group_by(year, topic) %>% 
+  summarise(gamma_mean=mean(gamma)) %>% 
+  ggplot(aes(gamma_mean, topic, fill=topic))+
+  geom_col(show.legend=FALSE)+
+  facet_wrap(vars(year), ncol=4, scales = "free_y")+
+  scale_x_continuous()+
+  labs(x=expression(gamma), y="Topic")
+ #Results
+decade2_gamma_plot
+```
+
+### Decade 3 - Corpus of 1990 to 1999
+
+**3.1. Topic model**
+
+* Document term matrix
+
+```{r}
+#Loading Rds
+tidy_corpus90_99 <- read_rds("../Private/tidy_corpus_all/tidy_corpus90_99.Rds")
+#creating document-term matrix (necessary to apply the package)
+corpus90_99_dtm <- tidy_corpus90_99 %>%
+#joining decade and id column
+    mutate(document= paste(decade, id, sep= "_"))%>%
+    count(document, word) %>% 
+    cast_dtm(document, word, n)
+#results
+corpus90_99_dtm
+```
+
+* Topic model
+
+```{r}
+# creating a model with 12 topics
+corpus90_99_topicmodel <- 
+LDA(corpus90_99_dtm, k = 12, control = list(seed = 852))
+
+#results
+corpus90_99_topicmodel%>%
+  write_rds("../Data_product_samples/topicmodels/topicmodel90_99.Rds")
+```
+
+The result is a model that I will use as a base in the next steps
+
+**3.2. Word-topic probability**
+
+This estimation indicates the probability of each term being present in each topic. 
+
+```{r}
+# per topic per word probabilities
+corpus90_99_topics <- tidy(corpus90_99_topicmodel, matrix = "beta")
+head(corpus90_99_topics, 20)
+```
+
+I ranked the terms to find the words with more probability in each topic. They are also called "top words." I decided to look at the 30 top terms to analyze the topics qualitatively. This process is commonly called "tea-leaves-reading" because it implies the researcher's interpretation in search of meaningful patterns.  
+
+```{r}
+#Identifying the 30 terms more weighted to analyze the topics
+corpus90_99_terms <- corpus90_99_topics %>%
+  group_by(topic) %>%
+  slice_max(beta, n = 30) %>% 
+  ungroup() %>%
+  arrange(topic, -beta) %>% 
+  add_column(decade = "d3_1990-1999")
+#results  
+head(corpus90_99_terms, 10)
+#Saving the data frame as a csv
+write_csv(corpus90_99_terms, "../Data_product_samples/topicmodel_lists/corpus90_99_terms.csv", append = FALSE, col_names = TRUE)
+```
+
+*Analysis*
+
+Looking at the topics qualitatively, I have inferred themes for each topic. I have used my literature review of previous analyses of trends in literacy scholarship (with the methodology "content analysis") as a guide in this task. As a result, I have new names for each topic in a `csv` file. I plot the topics with the top ten terms.  
+
+```{r message=FALSE, warning=FALSE}
+#Loading csv with topics named
+corpus90_99_terms_id<- read_csv("../Data_product_samples/topicmodel_listsanalyzed/corpus90_99_terms2.csv")
+```
+
+
+```{r}
+#List of topics
+Topics90_99 <- corpus90_99_terms_id %>% 
+  select (c("topic", "topic_name", "decade")) %>% 
+  distinct() 
+Topics90_99k <- Topics90_99 %>%
+  select (c("topic", "topic_name")) %>% 
+    knitr::kable(booktabs = T, col.names = c("Topic", "Topic names 1990 to 1999"), align = c("l", "l")) %>% 
+  kable_classic (full_width = F)
+  Topics90_99k
+  Topics90_99k %>% 
+    save_kable("../Images/Data_processes2/topics_name_1990-1999.png")
+```
+
+* Plot
+
+```{r  top_terms_1990-1999}
+#visualization of ten most common words by topic
+decade3_10topics <- corpus90_99_terms %>%
+  group_by(topic) %>%
+  slice_max(beta, n = 10) %>% 
+  ungroup() %>%
+  mutate(topic =paste("Topic", topic), term= reorder_within(term, beta, topic)) %>% 
+  ggplot(aes(beta, term, fill = factor(topic))) +
+  geom_col(show.legend = FALSE) +
+  labs(title = "Top terms per topic, 1990 to 1999", x = expression(beta), y = NULL) +
+  facet_wrap(~ topic, ncol=4, scales = "free_y") +
+  scale_y_reordered() +
+   scale_x_continuous(guide = guide_axis(check.overlap = TRUE))
+#results
+decade3_10topics
+```
+
+**3.3 Probability of topics by year: per-year-per-topic probability**
+
+This measure will help me to see if there are changes in the presence of each topic by year. I am using the technique to estimate the "per-document-per-topic probability," considering each year as a unique document. 
+
+```{r}
+# per-document-per-topic probabilities
+decade3_gamma <- tidy(corpus90_99_topicmodel, matrix="gamma")
+sample_n(decade3_gamma, 10)
+```
+
+The values are a proportion of words from each topic in each document (document=journal article). Now, I will estimate the presence of topics per year.
+
+```{r Topic_probability_decade1990-1999, message=FALSE, warning=FALSE}
+#separation of title name between year and article id
+decade3_gamma <- decade3_gamma %>% 
+  separate(document, c("year", "article"), sep = "-", convert = TRUE)
+#Probability of topic per year
+decade3_gamma_plot <- decade3_gamma %>%
+  mutate(topic=factor(topic)) %>% 
+  group_by(year, topic) %>% 
+  summarise(gamma_mean=mean(gamma)) %>% 
+  ggplot(aes(gamma_mean, topic, fill=topic))+
+  geom_col(show.legend=FALSE)+
+  facet_wrap(vars(year), ncol=4, scales = "free_y")+
+  scale_x_continuous()+
+  labs(x=expression(gamma), y="Topic")
+ #Results
+decade3_gamma_plot
+```
+
+### Decade 4 - Corpus of 2000 to 2009
+
+**4.1. Topic model**
+
+* Document term matrix
+
+```{r}
+#Loading Rds
+tidy_corpus00_09 <- read_rds("../Private/tidy_corpus_all/tidy_corpus00_09.Rds")
+#creating document-term matrix (necessary to apply the package)
+corpus00_09_dtm <- tidy_corpus00_09 %>%
+#joining decade and id column
+    mutate(document= paste(decade, id, sep= "_"))%>%
+    count(document, word) %>% 
+    cast_dtm(document, word, n)
+#results
+corpus00_09_dtm
+```
+
+* Topic model
+
+```{r}
+# creating a model with 12 topics
+corpus00_09_topicmodel <- 
+LDA(corpus00_09_dtm, k = 12, control = list(seed = 5178652))
+#results
+corpus00_09_topicmodel%>%
+  write_rds("../Data_product_samples/topicmodels/topicmodel00_09.Rds")
+```
+
+The result is a model that I will use as a base in the next steps
+
+**4.2. Word-topic probability**
+
+This estimation indicates the probability of each term being present in each topic. 
+
+```{r}
+# per topic per word probabilities
+corpus00_09_topics <- tidy(corpus00_09_topicmodel, matrix = "beta")
+head(corpus00_09_topics, 20)
+```
+
+I ranked the terms to find the words with more probability in each topic. They are also called "top words." I decided to look at the 30 top terms to analyze the topics qualitatively. This process is commonly called "tea-leaves-reading" because it implies the researcher's interpretation in search of meaningful patterns.  
+
+```{r}
+#Identifying the 30 terms more weighted to analyze the topics
+corpus00_09_terms <- corpus00_09_topics %>%
+  group_by(topic) %>%
+  slice_max(beta, n = 30) %>% 
+  ungroup() %>%
+  arrange(topic, -beta) %>% 
+  add_column(decade = "d4_2000-2009")
+#results  
+head(corpus00_09_terms, 10)
+#Saving the data frame as a csv
+write_csv(corpus00_09_terms, "../Data_product_samples/topicmodel_lists/corpus00_09_terms.csv", append = FALSE, col_names = TRUE)
+```
+
+*Analysis*
+
+Looking at the topics qualitatively, I have inferred themes for each topic. I have used my literature review of previous analyses of trends in literacy scholarship (with the methodology "content analysis") as a guide in this task. As a result, I have new names for each topic in a `csv` file. I plot the topics with the top ten terms.  
+
+```{r message=FALSE, warning=FALSE}
+#Loading csv with topics named
+corpus00_09_terms_id<- read_csv("../Data_product_samples/topicmodel_listsanalyzed/corpus00_09_terms2.csv")
+```
+
+
+```{r}
+#List of topics
+Topics00_09 <- corpus00_09_terms_id %>% 
+  select (c("topic", "topic_name", "decade")) %>% 
+  distinct() 
+Topics00_09k <- Topics00_09 %>% 
+    select (c("topic", "topic_name")) %>% 
+    knitr::kable(booktabs = T, col.names = c("Topic", "Topic names 2000 to 2009"), align = c("l", "l")) %>% 
+  kable_classic (full_width = F)
+  Topics00_09k
+Topics00_09k %>% 
+    save_kable("../Images/Data_processes2/topics_name_2000-2009.png")
+```
+
+* Plot
+
+```{r top_terms_2000-2009}
+#visualization of ten most common words by topic
+decade4_10topics <- corpus00_09_terms %>%
+  group_by(topic) %>%
+  slice_max(beta, n = 10) %>% 
+  ungroup() %>%
+  mutate(topic =paste("Topic", topic), term= reorder_within(term, beta, topic)) %>% 
+  ggplot(aes(beta, term, fill = factor(topic))) +
+  geom_col(show.legend = FALSE) +
+  labs(title = "Top terms per topic, 2000 to 2009", x = expression(beta), y = NULL) +
+  facet_wrap(~ topic, ncol=4, scales = "free_y") +
+  scale_y_reordered() +
+   scale_x_continuous(guide = guide_axis(check.overlap = TRUE))+
+  theme(strip.text=element_text(size=10))
+#results
+decade4_10topics
+```
+
+**4.3 Probability of topics by year: per-year-per-topic probability**
+
+This measure will help me to see if there are changes in the presence of each topic by year. I am using the technique to estimate the "per-document-per-topic probability," considering each year as a unique document. 
+
+```{r}
+# per-document-per-topic probabilities
+decade4_gamma <- tidy(corpus00_09_topicmodel, matrix="gamma")
+sample_n(decade4_gamma, 10)
+```
+
+The values are a proportion of words from each topic in each document (document=journal article). Now, I will estimate the presence of topics per year.
+
+```{r Topic_probability_decade2000-2009, message=FALSE, warning=FALSE}
+#separation of title name between year and article id
+decade4_gamma <- decade4_gamma %>% 
+  separate(document, c("year", "article"), sep = "-", convert = TRUE)
+#Probability of topic per year
+decade4_gamma_plot <- decade4_gamma %>%
+ mutate(topic=factor(topic)) %>% 
+  group_by(year, topic) %>% 
+  summarise(gamma_mean=mean(gamma)) %>% 
+  ggplot(aes(gamma_mean, topic, fill=topic))+
+  geom_col(show.legend=FALSE)+
+  facet_wrap(vars(year), ncol=4, scales = "free_y")+
+  scale_x_continuous()+
+  labs(x=expression(gamma), y="Topic")
+ #Results
+decade4_gamma_plot
+```
+
+### Decade 5 - Corpus of 2010 to 2019
+
+**5.1. Topic model**
+
+* Document term matrix
+
+```{r}
+#Loading Rds
+tidy_corpus10_19 <- read_rds("../Private/tidy_corpus_all/tidy_corpus10_19.Rds")
+#creating document-term matrix (necessary to apply the package)
+corpus10_19_dtm <- tidy_corpus10_19 %>%
+#joining decade and id column
+    mutate(document= paste(decade, id, sep= "_"))%>%
+    count(document, word) %>% 
+    cast_dtm(document, word, n)
+#results
+corpus10_19_dtm
+```
+
+* Topic model
+
+```{r}
+# creating a model with 12 topics
+corpus10_19_topicmodel <- 
+LDA(corpus10_19_dtm, k = 12, control = list(seed = 123))
+#results
+corpus10_19_topicmodel%>%
+  write_rds("../Data_product_samples/topicmodels/topicmodel10_19.Rds")
+```
+
+The result is a model that I will use as a base in the next steps
+
+**5.2. Word-topic probability**
+
+This estimation indicates the probability of each term being present in each topic. 
+
+```{r}
+# per topic per word probabilities
+corpus10_19_topics <- tidy(corpus10_19_topicmodel, matrix = "beta")
+head(corpus10_19_topics, 20)
+```
+
+I ranked the terms to find the words with more probability in each topic. They are also called "top words." I decided to look at the 30 top terms to analyze the topics qualitatively. This process is commonly called "tea-leaves-reading" because it implies the researcher's interpretation in search of meaningful patterns.  
+
+```{r}
+#Identifying the 30 terms more weighted to analyze the topics
+corpus10_19_terms <- corpus10_19_topics %>%
+  group_by(topic) %>%
+  slice_max(beta, n = 30) %>% 
+  ungroup() %>%
+  arrange(topic, -beta) %>% 
+  add_column(decade = "d5_2010-2019")
+#results  
+head(corpus10_19_terms, 10)
+#Saving the data frame as a csv
+write_csv(corpus10_19_terms, "../Data_product_samples/topicmodel_lists/corpus10_19_terms.csv", append = FALSE, col_names = TRUE)
+```
+
+*Analysis*
+
+Looking at the topics qualitatively, I have inferred themes for each topic. I have used my literature review of previous analyses of trends in literacy scholarship (with the methodology "content analysis") as a guide in this task. As a result, I have new names for each topic in a `csv` file. I plot the topics with the top ten terms.  
+
+```{r message=FALSE, warning=FALSE}
+#Loading csv with topics named
+corpus10_19_terms_id<- read_csv("../Data_product_samples/topicmodel_listsanalyzed/corpus10_19_terms2.csv")
+```
+
+
+```{r}
+#List of topics
+Topics10_19 <- corpus10_19_terms_id %>% 
+  select (c("topic", "topic_name", "decade")) %>% 
+  distinct() 
+Topics10_19k <- Topics10_19 %>%  
+  select (c("topic", "topic_name")) %>% 
+  knitr::kable(booktabs = T, col.names = c("Topic", "Topic names 2010 to 2019"), align = c("l", "l")) %>% 
+  kable_classic (full_width = F)
+Topics10_19k
+Topics10_19k %>% 
+    save_kable("../Images/Data_processes2/topics_name_2010-2019.png")
+```
+
+* Plot
+
+```{r Top_terms_2010-2019}
+#visualization of ten most common words by topic
+decade5_10topics <- corpus10_19_terms %>%
+  group_by(topic) %>%
+  slice_max(beta, n = 10) %>% 
+  ungroup() %>%
+  mutate(topic =paste("Topic", topic), term= reorder_within(term, beta, topic)) %>% 
+  ggplot(aes(beta, term, fill = factor(topic))) +
+  geom_col(show.legend = FALSE) +
+  labs(title = "Top terms per topic, 2010 to 2019", x = expression(beta), y = NULL) +
+  facet_wrap(~ topic, ncol=4, scales = "free_y") +
+  scale_y_reordered() +
+   scale_x_continuous(guide = guide_axis(check.overlap = TRUE))
+#results
+decade5_10topics
+```
+
+**5.3 Probability of topics by year: per-year-per-topic probability**
+
+This measure will help me to see if there are changes in the presence of each topic by year. I am using the technique to estimate the "per-document-per-topic probability," considering each year as a unique document. 
+
+```{r}
+# per-document-per-topic probabilities
+decade5_gamma <- tidy(corpus10_19_topicmodel, matrix="gamma")
+sample_n(decade5_gamma, 10)
+```
+
+The values are a proportion of words from each topic in each document (document=journal article). Now, I will estimate the presence of topics per year and present it in a visualization.
+
+```{r Topic_probability_decade2010-2019, message=FALSE, warning=FALSE}
+
+#separation of title name between year and article id
+decade5_gamma <- decade5_gamma %>% 
+  separate(document, c("year", "article"), sep = "-", convert = TRUE)
+#Probability of topic per year
+decade5_gamma_plot <- decade5_gamma %>%
+  mutate(topic=factor(topic)) %>% 
+  group_by(year, topic) %>% 
+  summarise(gamma_mean=mean(gamma)) %>% 
+  ggplot(aes(gamma_mean, topic, fill=topic))+
+  geom_col(show.legend=FALSE)+
+  facet_wrap(vars(year), ncol=4, scales = "free_y")+
+  scale_x_continuous()+
+  labs(x=expression(gamma), y="Topic")
+ #Results
+decade5_gamma_plot
+```
+
+### Decade 6: Corpus of 2020 to 2022
+
+**6.1. Topic model**
+
+* Document term matrix
+
+```{r}
+#Loading Rds
+tidy_corpus20_22 <- read_rds("../Private/tidy_corpus_all/tidy_corpus20_22.Rds")
+#creating document-term matrix (necessary to apply the package)
+corpus20_22_dtm <- tidy_corpus20_22 %>%
+#joining decade and id column
+    mutate(document= paste(decade, id, sep= "_"))%>%
+    count(document, word) %>% 
+    cast_dtm(document, word, n)
+#results
+corpus20_22_dtm
+```
+* Assessing the recommended number of topics for the corpus (`k`)
+
+```{r evaluation_of_k , message=FALSE, warning=FALSE}
+#Assessing the recommended number of topics for the corpus (`k`)
+topicsnumber <- FindTopicsNumber(corpus20_22_dtm,
+  topics = seq(from = 5, to = 25, by = 1),
+  metrics = c("CaoJuan2009", "Arun2010", "Deveaud2014"),
+  method = "Gibbs",
+  control = list(seed = 77),
+  mc.cores = 2L,
+  verbose = TRUE)
+FindTopicsNumber_plot(topicsnumber)
+```
+
+* Topic model
+
+```{r}
+# creating a model with 12 topics
+corpus20_22_topicmodel <- 
+LDA(corpus20_22_dtm, k = 12, control = list(seed = 524))
+
+#results
+corpus20_22_topicmodel%>%
+  write_rds("../Data_product_samples/topicmodels/topicmodel20_22.Rds")
+```
+
+The result is a model that I will use as a base in the next steps
+
+**6.2. Word-topic probability**
+
+This estimation indicates the probability of each term being present in each topic. 
+
+```{r}
+# per topic per word probabilities
+corpus20_22_topics <- tidy(corpus20_22_topicmodel, matrix = "beta")
+head(corpus20_22_topics, 20)
+```
+
+I ranked the terms to find the words with more probability in each topic. They are also called "top words." I decided to look at the 30 top terms to analyze the topics qualitatively. This process is commonly called "tea-leaves-reading" because it implies the researcher's interpretation in search of meaningful patterns.  
+
+```{r}
+#Identifying the 30 terms more weighted to analyze the topics
+corpus20_22_terms <- corpus20_22_topics %>%
+  group_by(topic) %>%
+  slice_max(beta, n = 30) %>% 
+  ungroup() %>%
+  arrange(topic, -beta) %>% 
+  add_column(decade = "d6_2020-2022")
+#results  
+head(corpus20_22_terms, 10)
+#Saving the data frame as a csv
+write_csv(corpus20_22_terms, "../Data_product_samples/topicmodel_lists/corpus20_22_terms.csv", append = FALSE, col_names = TRUE)
+```
+
+*Analysis*
+
+Looking at the topics qualitatively, I have inferred themes for each topic. I have used my literature review of previous analyses of trends in literacy scholarship (with the methodology "content analysis") as a guide in this task. As a result, I have new names for each topic in a `csv` file. I plot the topics with the top ten terms.  
+
+```{r message=FALSE, warning=FALSE}
+#Loading csv with topics named
+corpus20_22_terms_id<- read_csv("../Data_product_samples/topicmodel_listsanalyzed/corpus20_22_terms2.csv")
+```
+
+
+```{r}
+#List of topics
+Topics20_22 <- corpus20_22_terms_id %>%
+  select (c("topic", "topic_name", "decade")) %>% 
+  distinct() 
+Topics20_22k <- Topics20_22 %>%  
+  select (c("topic", "topic_name")) %>% 
+  knitr::kable(booktabs = T, col.names = c("Topic", "Topic names 2020 to 2022"), align = c("l", "l")) %>% 
+  kable_classic (full_width = F)
+Topics20_22k
+Topics20_22k%>% 
+    save_kable("../Images/Data_processes2/topics_name_2020-2022.png")
+```
+
+* Plot
+
+```{r Top_terms2020-2022}
+#visualization of ten most common words by topic
+decade6_10topics <- corpus20_22_terms %>%
+  group_by(topic) %>%
+  slice_max(beta, n = 10) %>% 
+  ungroup() %>%
+  mutate(topic =paste("Topic", topic), term= reorder_within(term, beta, topic)) %>% 
+  ggplot(aes(beta, term, fill = factor(topic))) +
+  geom_col(show.legend = FALSE) +
+  labs(title = "Top terms per topic, 2020 to 2022", x = expression(beta), y = NULL) +
+  facet_wrap(~ topic, ncol=4, scales = "free_y") +
+  scale_y_reordered() +
+   scale_x_continuous(guide = guide_axis(check.overlap = TRUE))
+#results
+decade6_10topics
+```
+
+**6.3 Probability of topics by year: per-year-per-topic probability**
+
+This measure will help me to see if there are changes in the presence of each topic by year. I am using the technique to estimate the "per-document-per-topic probability," considering each year as a unique document. 
+
+```{r}
+# per-document-per-topic probabilities
+decade6_gamma <- tidy(corpus20_22_topicmodel, matrix="gamma")
+sample_n(decade6_gamma, 10)
+```
+
+The values are a proportion of words from each topic in each document (document=journal article). Now, I will estimate the presence of topics per year and present it in a visualization.
+
+```{r Topic_probability_2020-2022, message=FALSE, warning=FALSE}
+#separation of title name between year and article id
+decade6_gamma <- decade6_gamma %>% 
+  separate(document, c("year", "article"), sep = "-", convert = TRUE)
+#Probability of topic per year
+decade6_gamma_plot2 <- 
+  decade6_gamma %>%
+  mutate(topic=factor(topic)) %>% 
+  group_by(year, topic) %>% 
+  summarise(gamma_mean=mean(gamma)) %>% 
+  ggplot(aes(gamma_mean, topic, fill=topic))+
+  geom_col(show.legend=FALSE)+
+  facet_wrap(vars(year), ncol=3, scales = "free_y")+
+  scale_x_continuous()+
+  labs(x=expression(gamma), y="Topic")
+ #Results
+decade6_gamma_plot2
+```
+
+This last set set only considers three years and could explain why in 2022 it seems that some topics have not been touched by literacy scholars.  
+
+---
+
+## Trends over decades
+
+### Qualitative analysis
+
+```{r Topics_over_years}
+#loading manual analysis
+all_topics <- rbind(Topics69_79, Topics80_89, Topics90_99, Topics00_09, Topics10_19, Topics20_22)
+#plot
+all_topics_accross <-  
+  all_topics %>%
+  mutate(decade = str_replace_all(decade, ".*_", "")) %>%   
+  select(c("topic_name", "decade"))%>%
+  group_by(decade) %>% 
+  arrange(desc(topic_name)) %>%
+  #to mantain the order of my df in the plot
+  mutate(topic_name = forcats::fct_inorder(topic_name)) %>%
+  ggplot(aes(decade, topic_name, color= topic_name)) +
+  geom_point(show.legend=F) +
+  labs(x = "Decade", y = "Topics", title = "LDA Topics over decades")+ 
+  theme(axis.text.x = element_text(angle = 30, hjust = 1))
+all_topics_accross
+```
+
+```{r}
+sessionInfo()
+```
+

@@ -47,3 +47,9 @@ Private/
 Data_processes1_cache/
 Data_processes2_cache/
 Data_processes3_cache/
+Analysis/Data_processes1_cache/
+Analysis/Data_processes2_cache/
+Analysis/Data_processes3_cache/
+
+#Backup files
+Data_product_samples/topicmodels/

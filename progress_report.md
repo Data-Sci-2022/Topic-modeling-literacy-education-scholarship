@@ -30,14 +30,14 @@ For this progress report, I collect, pre-processing the data and prepared a data
 
 * *sharing plan*
 
-My sharing plan does not have so much change from what I described in my [Project plan](project_plan.md). I still cannot share the data publicly. However, I plan to consult about the possibility of sharing a sample of open access articles in my repository. This plan will be resolved in the next days. In the meantime, I shared a sample of what will be my base data frame in an `.Rds` file inside [Data_samples](/Data_samples).
+My sharing plan does not have so much change from what I described in my [Project plan](project_plan.md). I still cannot share the data publicly. However, I plan to consult about the possibility of sharing a sample of open access articles in my repository. This plan will be resolved in the next days. In the meantime, I shared a sample of what will be my base data frame in an `.Rds` file inside [Data_samples](/Data_product_samples).
 
 ------
 # Second Progress Report
 
 ## November 15th 2022
 
-For this progress report, I have finished all the initial [processing of my data](Data_processing_report2.md). As a result, I have a tidy data frame ready for advancing with the topic modeling part of my research.
+For this progress report, I have finished all the initial [processing of my data](Analysis/Data_processes1.md). As a result, I have a tidy data frame ready for advancing with the topic modeling part of my research.
 The pre-processing and initial processing of my data took me an incredibly tremendous amount of time. For that reason, I am still in the early stage of the second part (and more properly "investigative") of my work. 
 
 * *Sharing scheme for the "found" portion of the data*

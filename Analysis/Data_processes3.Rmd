@@ -1,0 +1,230 @@
+---
+title: "Final project; Data processing - Data Science for Linguists (LING 2340)
+Fall 2022"
+subtitle: "Data Processes 3"
+author: "Gianina Morales"
+date: "12/15/2022"
+output:
+  github_document:
+    toc: TRUE
+always_allow_html: true
+---
+# Data processing - Part 3 (final report)
+
+---
+
+```{r setup, message=FALSE, warning=FALSE}
+library(tidytext)
+library(tidyverse)
+library(tm)
+library(stopwords)
+library(stringi)
+library(topicmodels)
+library(lda)
+library(stm)
+library(ldatuning)
+library(rmarkdown)
+library(kableExtra)
+knitr::opts_chunk$set(fig.fullwidth=TRUE, fig.path = "../Images/Data_processes3/", cache=TRUE)
+```
+
+# Trends over decades
+
+## Applying a new method: Structured Topic Models (STM)
+
+
+
+**Preparing the data**
+
+```{r}
+#Loading Rds with all the corpus
+total_corpus <- read_rds("../Private/master_tidy_corpus.Rds")
+
+# preparing data frame for topic modeling
+total_corpus_sparse <- total_corpus %>% 
+  mutate(document= paste(decade, id, sep= "_")) %>% 
+# creating DTM
+  count(document, word) %>% 
+  cast_sparse(document,word,n)
+```
+
+### Topic model
+
+```{r Ranking_of_STM_topics}
+set.seed(123)
+topic_model_corpus <- stm(total_corpus_sparse, K=25)
+#Summary
+summary(topic_model_corpus)
+#Ranking of topics
+topics_rank <- plot(topic_model_corpus, "summary", n=5, text.cex= 0.6, main= "Topic shares of the entire corpus", xlab= "estimated share of topics")
+  
+```
+
+### Results 
+
+**1. Beta metric**
+
+Top probability words by topic
+
+```{r Beta_matrix}
+#topic- word probability
+betaSTM <- tidy(topic_model_corpus, matrix ="beta") %>% 
+  group_by(topic) %>% 
+  slice_max(beta, n=50) %>% 
+  arrange(-beta) %>% 
+  mutate(rank= row_number()) %>% 
+  ungroup() %>% 
+  select(-beta) %>%
+  arrange(topic) %>% 
+  pivot_wider(names_from = "topic", 
+              names_glue = "topic {.name}",
+              values_from = "term") %>% 
+    select(-rank)
+knitr::kable(betaSTM , options = list(rows.print=20))
+```
+
+**2. FREX**
+
+FREX is a matrix that presents a balance between words that are frequent in probability but exclusive to the topic of interest.
+
+```{r Frex_matrix, message=FALSE, warning=FALSE}
+#FREX metric
+devtools::install_github("juliasilge/tidytext")
+frexSTM <- tidy(topic_model_corpus, matrix= "frex")%>% 
+  group_by(topic) %>% 
+  slice_head(n=20) %>% 
+  mutate(rank= row_number()) %>% 
+  ungroup() %>% 
+  pivot_wider(names_from = "topic", 
+              names_glue = "topic {.name}",
+              values_from = "term") %>% 
+    select(-rank)
+knitr::kable(frexSTM, options = list(rows.print=20))
+```
+
+Useful only in some cases. Sometimes the words are related to authors.
+
+I applied also the Lift metric (words calculated by dividing the topic-word distribution--beta-- by the word count probability distribution in each topic), but the result were not very useful because of the amount of words from other languages and names without format included.
+
+### Analysis
+
+**1. Topics named**
+
+Considering the words in each metric, I analyzed the topics qualitatively, comparing the results from STM with my results by decade with the LDA method. My identification of topics is in the table.
+
+```{r STM_topics_identified_table}
+#Loading Rds with my qualitative identification of STM topics
+STM_topics <- read_csv("../Private/all_topics.csv")
+STM_topics_table <- STM_topics %>% 
+  select(c("Topic_names", "STM_topic")) %>% 
+  knitr::kable(booktabs = T, col.names = c("Topic names", "STM topic"), align = c("l", "l")) %>% 
+  kable_classic (full_width = F)
+STM_topics_table
+STM_topics_table %>% 
+    save_kable("../Images/Data_processes3/topicsSTM.png")
+```
+
+**2. Topics by decade**
+
+I applied the gamma distribution to observe the decade per topic probability.
+
+```{r Probability_topics_1969-1979, message=FALSE, warning=FALSE}
+#gamma matrix
+alldecades_gamma <- tidy(topic_model_corpus, matrix="gamma", document_names=rownames(total_corpus_sparse)) %>% 
+  #separation of document name between decade and article id
+   separate(document, c("decade", "article"), sep = "_", convert = TRUE)
+#visualization decade 1
+alldecades_gamma %>%
+  filter(decade == "decade1") %>% 
+  mutate(topic=factor(topic)) %>% 
+  ggplot(aes(topic, gamma, fill=topic))+
+  geom_boxplot(alpha=0.7, show.legend=F)+
+  facet_wrap(vars(decade), ncol=1)+
+  labs(title = "Probability of topics per decade, 1969 to 1979", y = expression(gamma))
+```
+
+Each dot is a document marking the document-topic probabilities in the decade.
+
+```{r Probability_topics_1980-1989}
+#visualization decade 2
+alldecades_gamma %>%
+  filter(decade == "decade2") %>% 
+  mutate(topic=factor(topic)) %>% 
+  ggplot(aes(topic, gamma, fill=topic))+
+  geom_boxplot(alpha=0.7, show.legend=F)+
+  facet_wrap(vars(decade), ncol=1)+
+  labs(title = "Probability of topics per decade, 1980 to 1989", y = expression(gamma))
+```
+
+Each dot is a document marking the document-topic probabilities in the decade.
+
+```{r Probability_topics_1990-1999}
+#visualization decade 3
+alldecades_gamma %>%
+  filter(decade == "decade3") %>% 
+  mutate(topic=factor(topic)) %>% 
+  ggplot(aes(topic, gamma, fill=topic))+
+  geom_boxplot(alpha=0.7, show.legend=F)+
+  facet_wrap(vars(decade), ncol=1)+
+  labs(title = "Probability of topics per decade, 1990 to 1999", y = expression(gamma))
+```
+
+Each dot is a document marking the document-topic probabilities in the decade.
+
+```{r Probability_topics_2000-2009}
+#visualization decade 4
+alldecades_gamma %>%
+  filter(decade == "decade4") %>% 
+  mutate(topic=factor(topic)) %>% 
+  ggplot(aes(topic, gamma, fill=topic))+
+  geom_boxplot(alpha=0.7, show.legend=F)+
+  facet_wrap(vars(decade), ncol=1)+
+  labs(title = "Probability of topics per decade, 2000 to 2009", y = expression(gamma))
+```
+
+Each dot is a document marking the document-topic probabilities in the decade.
+
+```{r Probability_topics_2010-2019}
+#visualization decade 5
+alldecades_gamma %>%
+  filter(decade == "decade5") %>% 
+  mutate(topic=factor(topic)) %>% 
+  ggplot(aes(topic, gamma, fill=topic))+
+  geom_boxplot(alpha=0.7, show.legend=F)+
+  facet_wrap(vars(decade), ncol=1)+
+  labs(title = "Probability of topics per decade, 2010 to 2019", y = expression(gamma))
+```
+
+Each dot is a document marking the document-topic probabilities in the decade.
+
+```{r Probability_topics_2020-2022}
+#visualization decade 6
+alldecades_gamma %>%
+  filter(decade == "decade6") %>% 
+  mutate(topic=factor(topic)) %>% 
+  ggplot(aes(topic, gamma, fill=topic))+
+  geom_boxplot(alpha=0.7, show.legend=F)+
+  facet_wrap(vars(decade), ncol=1)+
+  labs(title = "Probability of topics per decade, 2020 to 2022", y = expression(gamma))
+```
+
+Only two and a half year.That explain the difference in some topics.
+
+**3. Regression**
+
+```{r estimate_effect}
+#Documents
+effects <-
+  estimateEffect(
+    1:25 ~ as.factor(decade),
+    topic_model_corpus,
+    total_corpus %>% distinct(id, decade)%>% arrange(id)
+  )
+summary(effects)
+tidy(effects)
+```
+
+```{r}
+sessionInfo()
+```
+

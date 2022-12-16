@@ -1,0 +1,361 @@
+topic,term,beta,decade,topic_name
+1,literacy,0.01692019,d6_2020-2022,Instructional programs and interventions
+1,research,0.011617441,d6_2020-2022,Instructional programs and interventions
+1,students,0.009723677,d6_2020-2022,Instructional programs and interventions
+1,reading,0.006747906,d6_2020-2022,Instructional programs and interventions
+1,english,0.006091255,d6_2020-2022,Instructional programs and interventions
+1,language,0.006044703,d6_2020-2022,Instructional programs and interventions
+1,identities,0.005589692,d6_2020-2022,Instructional programs and interventions
+1,practices,0.005310113,d6_2020-2022,Instructional programs and interventions
+1,classroom,0.005215588,d6_2020-2022,Instructional programs and interventions
+1,learners,0.005019622,d6_2020-2022,Instructional programs and interventions
+1,study,0.004681859,d6_2020-2022,Instructional programs and interventions
+1,journal,0.004497321,d6_2020-2022,Instructional programs and interventions
+1,student,0.004409873,d6_2020-2022,Instructional programs and interventions
+1,youth,0.004321238,d6_2020-2022,Instructional programs and interventions
+1,class,0.004293987,d6_2020-2022,Instructional programs and interventions
+1,teacher,0.004203161,d6_2020-2022,Instructional programs and interventions
+1,journals,0.003990751,d6_2020-2022,Instructional programs and interventions
+1,learning,0.003961589,d6_2020-2022,Instructional programs and interventions
+1,data,0.003957314,d6_2020-2022,Instructional programs and interventions
+1,noriah,0.003826814,d6_2020-2022,Instructional programs and interventions
+1,school,0.003823822,d6_2020-2022,Instructional programs and interventions
+1,literate,0.003762551,d6_2020-2022,Instructional programs and interventions
+1,teachers,0.003635685,d6_2020-2022,Instructional programs and interventions
+1,loss,0.003534939,d6_2020-2022,Instructional programs and interventions
+1,education,0.003464135,d6_2020-2022,Instructional programs and interventions
+1,sharing,0.003274127,d6_2020-2022,Instructional programs and interventions
+1,teaching,0.003222596,d6_2020-2022,Instructional programs and interventions
+1,college,0.003140778,d6_2020-2022,Instructional programs and interventions
+1,based,0.003133359,d6_2020-2022,Instructional programs and interventions
+1,analysis,0.003091176,d6_2020-2022,Instructional programs and interventions
+2,literacy,0.010075041,d6_2020-2022,Children's literacy instruction
+2,reading,0.009491008,d6_2020-2022,Children's literacy instruction
+2,school,0.007463343,d6_2020-2022,Children's literacy instruction
+2,children,0.007294194,d6_2020-2022,Children's literacy instruction
+2,writing,0.006618765,d6_2020-2022,Children's literacy instruction
+2,research,0.006550434,d6_2020-2022,Children's literacy instruction
+2,black,0.005586874,d6_2020-2022,Children's literacy instruction
+2,students,0.005174049,d6_2020-2022,Children's literacy instruction
+2,bodies,0.004758567,d6_2020-2022,Children's literacy instruction
+2,refugee,0.004490243,d6_2020-2022,Children's literacy instruction
+2,language,0.004106656,d6_2020-2022,Children's literacy instruction
+2,read,0.004103436,d6_2020-2022,Children's literacy instruction
+2,fluency,0.003881601,d6_2020-2022,Children's literacy instruction
+2,data,0.003775151,d6_2020-2022,Children's literacy instruction
+2,people,0.003699914,d6_2020-2022,Children's literacy instruction
+2,experiences,0.003390564,d6_2020-2022,Children's literacy instruction
+2,education,0.003357109,d6_2020-2022,Children's literacy instruction
+2,study,0.003275417,d6_2020-2022,Children's literacy instruction
+2,social,0.003267321,d6_2020-2022,Children's literacy instruction
+2,learning,0.00303523,d6_2020-2022,Children's literacy instruction
+2,text,0.002960054,d6_2020-2022,Children's literacy instruction
+2,time,0.002908568,d6_2020-2022,Children's literacy instruction
+2,analysis,0.002826155,d6_2020-2022,Children's literacy instruction
+2,english,0.00278205,d6_2020-2022,Children's literacy instruction
+2,journal,0.002649133,d6_2020-2022,Children's literacy instruction
+2,teachers,0.002641362,d6_2020-2022,Children's literacy instruction
+2,girls,0.002563999,d6_2020-2022,Children's literacy instruction
+2,practices,0.002523381,d6_2020-2022,Children's literacy instruction
+2,class,0.002494846,d6_2020-2022,Children's literacy instruction
+2,home,0.002392436,d6_2020-2022,Children's literacy instruction
+3,literacy,0.010482002,d6_2020-2022,Digital literacies
+3,students,0.009904498,d6_2020-2022,Digital literacies
+3,critical,0.009148899,d6_2020-2022,Digital literacies
+3,research,0.007722529,d6_2020-2022,Digital literacies
+3,civic,0.006906252,d6_2020-2022,Digital literacies
+3,social,0.005775898,d6_2020-2022,Digital literacies
+3,digital,0.005410814,d6_2020-2022,Digital literacies
+3,malcolm,0.005117921,d6_2020-2022,Digital literacies
+3,writing,0.004873707,d6_2020-2022,Digital literacies
+3,multimodal,0.00480943,d6_2020-2022,Digital literacies
+3,language,0.004795125,d6_2020-2022,Digital literacies
+3,learning,0.00457525,d6_2020-2022,Digital literacies
+3,practices,0.004449475,d6_2020-2022,Digital literacies
+3,study,0.004317118,d6_2020-2022,Digital literacies
+3,texts,0.004119712,d6_2020-2022,Digital literacies
+3,educators,0.004112173,d6_2020-2022,Digital literacies
+3,education,0.003310695,d6_2020-2022,Digital literacies
+3,analysis,0.003165725,d6_2020-2022,Digital literacies
+3,people,0.003007673,d6_2020-2022,Digital literacies
+3,literacies,0.002966358,d6_2020-2022,Digital literacies
+3,paula,0.002929074,d6_2020-2022,Digital literacies
+3,composing,0.0028701,d6_2020-2022,Digital literacies
+3,culture,0.002855836,d6_2020-2022,Digital literacies
+3,youth,0.002802391,d6_2020-2022,Digital literacies
+3,teachers,0.002772581,d6_2020-2022,Digital literacies
+3,text,0.002678697,d6_2020-2022,Digital literacies
+3,english,0.002605314,d6_2020-2022,Digital literacies
+3,data,0.002597367,d6_2020-2022,Digital literacies
+3,becky,0.002559085,d6_2020-2022,Digital literacies
+3,school,0.002555992,d6_2020-2022,Digital literacies
+4,reading,0.011238634,d6_2020-2022,Readers' characterization based on measures
+4,education,0.010980971,d6_2020-2022,Readers' characterization based on measures
+4,research,0.00956584,d6_2020-2022,Readers' characterization based on measures
+4,black,0.008820364,d6_2020-2022,Readers' characterization based on measures
+4,children,0.00713181,d6_2020-2022,Readers' characterization based on measures
+4,language,0.007077197,d6_2020-2022,Readers' characterization based on measures
+4,students,0.006811992,d6_2020-2022,Readers' characterization based on measures
+4,race,0.006618583,d6_2020-2022,Readers' characterization based on measures
+4,dyslexia,0.00617872,d6_2020-2022,Readers' characterization based on measures
+4,immigrant,0.006080154,d6_2020-2022,Readers' characterization based on measures
+4,resources,0.005714125,d6_2020-2022,Readers' characterization based on measures
+4,teacher,0.005398839,d6_2020-2022,Readers' characterization based on measures
+4,youth,0.005350425,d6_2020-2022,Readers' characterization based on measures
+4,teachers,0.00527549,d6_2020-2022,Readers' characterization based on measures
+4,writing,0.005253004,d6_2020-2022,Readers' characterization based on measures
+4,literacy,0.004995371,d6_2020-2022,Readers' characterization based on measures
+4,school,0.004212034,d6_2020-2022,Readers' characterization based on measures
+4,student,0.00417757,d6_2020-2022,Readers' characterization based on measures
+4,ability,0.004091358,d6_2020-2022,Readers' characterization based on measures
+4,achievement,0.003907931,d6_2020-2022,Readers' characterization based on measures
+4,english,0.003723103,d6_2020-2022,Readers' characterization based on measures
+4,american,0.003483967,d6_2020-2022,Readers' characterization based on measures
+4,dis,0.003470517,d6_2020-2022,Readers' characterization based on measures
+4,literacies,0.003415955,d6_2020-2022,Readers' characterization based on measures
+4,special,0.00324218,d6_2020-2022,Readers' characterization based on measures
+4,learning,0.003207581,d6_2020-2022,Readers' characterization based on measures
+4,social,0.003169272,d6_2020-2022,Readers' characterization based on measures
+4,educational,0.003131755,d6_2020-2022,Readers' characterization based on measures
+4,practices,0.00302868,d6_2020-2022,Readers' characterization based on measures
+4,instruction,0.003000418,d6_2020-2022,Readers' characterization based on measures
+5,students,0.015429179,d6_2020-2022,Writing
+5,writing,0.009102527,d6_2020-2022,Writing
+5,research,0.007896658,d6_2020-2022,Writing
+5,teacher,0.005955119,d6_2020-2022,Writing
+5,coaching,0.005236365,d6_2020-2022,Writing
+5,literacy,0.005183577,d6_2020-2022,Writing
+5,student,0.00484666,d6_2020-2022,Writing
+5,video,0.004826056,d6_2020-2022,Writing
+5,teachers,0.004704894,d6_2020-2022,Writing
+5,learning,0.004700421,d6_2020-2022,Writing
+5,studies,0.004546649,d6_2020-2022,Writing
+5,school,0.004502013,d6_2020-2022,Writing
+5,futures,0.004376991,d6_2020-2022,Writing
+5,argument,0.0040852,d6_2020-2022,Writing
+5,arguments,0.003884695,d6_2020-2022,Writing
+5,study,0.003664241,d6_2020-2022,Writing
+5,youth,0.003564422,d6_2020-2022,Writing
+5,social,0.003449462,d6_2020-2022,Writing
+5,knowledge,0.003415041,d6_2020-2022,Writing
+5,future,0.003395057,d6_2020-2022,Writing
+5,analysis,0.00333467,d6_2020-2022,Writing
+5,evidence,0.003262892,d6_2020-2022,Writing
+5,instructional,0.003226737,d6_2020-2022,Writing
+5,based,0.003077196,d6_2020-2022,Writing
+5,change,0.003024365,d6_2020-2022,Writing
+5,modes,0.002908552,d6_2020-2022,Writing
+5,education,0.002824045,d6_2020-2022,Writing
+5,feedback,0.00276478,d6_2020-2022,Writing
+5,narratives,0.002749657,d6_2020-2022,Writing
+5,reading,0.002675591,d6_2020-2022,Writing
+6,literacy,0.015650115,d6_2020-2022,Research and theory
+6,research,0.007500009,d6_2020-2022,Research and theory
+6,reading,0.007091783,d6_2020-2022,Research and theory
+6,literacies,0.006246579,d6_2020-2022,Research and theory
+6,ethics,0.006192881,d6_2020-2022,Research and theory
+6,students,0.005230935,d6_2020-2022,Research and theory
+6,people,0.004751818,d6_2020-2022,Research and theory
+6,experiences,0.004447431,d6_2020-2022,Research and theory
+6,social,0.00433855,d6_2020-2022,Research and theory
+6,practices,0.003885401,d6_2020-2022,Research and theory
+6,writing,0.00382687,d6_2020-2022,Research and theory
+6,world,0.003802602,d6_2020-2022,Research and theory
+6,diana,0.003687026,d6_2020-2022,Research and theory
+6,studies,0.003459137,d6_2020-2022,Research and theory
+6,questions,0.003449565,d6_2020-2022,Research and theory
+6,learning,0.003235783,d6_2020-2022,Research and theory
+6,education,0.003222415,d6_2020-2022,Research and theory
+6,theory,0.00319611,d6_2020-2022,Research and theory
+6,text,0.003164651,d6_2020-2022,Research and theory
+6,university,0.003089787,d6_2020-2022,Research and theory
+6,knowledge,0.003081856,d6_2020-2022,Research and theory
+6,press,0.002841934,d6_2020-2022,Research and theory
+6,sgq,0.002736464,d6_2020-2022,Research and theory
+6,critical,0.002679877,d6_2020-2022,Research and theory
+6,ability,0.00260682,d6_2020-2022,Research and theory
+6,practice,0.002489476,d6_2020-2022,Research and theory
+6,own,0.002472792,d6_2020-2022,Research and theory
+6,school,0.002398544,d6_2020-2022,Research and theory
+6,ethical,0.002308633,d6_2020-2022,Research and theory
+6,life,0.002256515,d6_2020-2022,Research and theory
+7,children,0.01053389,d6_2020-2022,Literature
+7,learning,0.00750404,d6_2020-2022,Literature
+7,literacy,0.006942192,d6_2020-2022,Literature
+7,practices,0.006552681,d6_2020-2022,Literature
+7,students,0.005785063,d6_2020-2022,Literature
+7,rote,0.005747032,d6_2020-2022,Literature
+7,research,0.005594581,d6_2020-2022,Literature
+7,language,0.005151136,d6_2020-2022,Literature
+7,social,0.004606387,d6_2020-2022,Literature
+7,analysis,0.004526584,d6_2020-2022,Literature
+7,sexual,0.004218429,d6_2020-2022,Literature
+7,assault,0.004035554,d6_2020-2022,Literature
+7,design,0.004028208,d6_2020-2022,Literature
+7,education,0.003763404,d6_2020-2022,Literature
+7,english,0.003760846,d6_2020-2022,Literature
+7,modes,0.003746451,d6_2020-2022,Literature
+7,study,0.003594779,d6_2020-2022,Literature
+7,school,0.003491636,d6_2020-2022,Literature
+7,music,0.003459126,d6_2020-2022,Literature
+7,texts,0.003457277,d6_2020-2022,Literature
+7,ya,0.003164054,d6_2020-2022,Literature
+7,multimodal,0.002878686,d6_2020-2022,Literature
+7,understanding,0.002791194,d6_2020-2022,Literature
+7,data,0.002600207,d6_2020-2022,Literature
+7,critical,0.002553743,d6_2020-2022,Literature
+7,visual,0.002519161,d6_2020-2022,Literature
+7,meaning,0.002502982,d6_2020-2022,Literature
+7,covers,0.002473406,d6_2020-2022,Literature
+7,tommy,0.002400659,d6_2020-2022,Literature
+7,text,0.0023379,d6_2020-2022,Literature
+8,students,0.01535647,d6_2020-2022,Classroom interaction
+8,literacy,0.01475916,d6_2020-2022,Classroom interaction
+8,language,0.010677314,d6_2020-2022,Classroom interaction
+8,children,0.009305208,d6_2020-2022,Classroom interaction
+8,research,0.007489828,d6_2020-2022,Classroom interaction
+8,practices,0.007135792,d6_2020-2022,Classroom interaction
+8,culturally,0.00666291,d6_2020-2022,Classroom interaction
+8,critical,0.005972977,d6_2020-2022,Classroom interaction
+8,teachers,0.005386591,d6_2020-2022,Classroom interaction
+8,teaching,0.005222024,d6_2020-2022,Classroom interaction
+8,reading,0.00485917,d6_2020-2022,Classroom interaction
+8,education,0.004809738,d6_2020-2022,Classroom interaction
+8,cultural,0.004755791,d6_2020-2022,Classroom interaction
+8,instruction,0.004731653,d6_2020-2022,Classroom interaction
+8,rukai,0.004552475,d6_2020-2022,Classroom interaction
+8,science,0.004452658,d6_2020-2022,Classroom interaction
+8,learning,0.004434023,d6_2020-2022,Classroom interaction
+8,indigenous,0.00405525,d6_2020-2022,Classroom interaction
+8,school,0.004036078,d6_2020-2022,Classroom interaction
+8,teacher,0.003925536,d6_2020-2022,Classroom interaction
+8,study,0.003707794,d6_2020-2022,Classroom interaction
+8,knowledge,0.00360271,d6_2020-2022,Classroom interaction
+8,classroom,0.003565961,d6_2020-2022,Classroom interaction
+8,researchers,0.003523396,d6_2020-2022,Classroom interaction
+8,student,0.00333514,d6_2020-2022,Classroom interaction
+8,informed,0.00312943,d6_2020-2022,Classroom interaction
+8,story,0.003095011,d6_2020-2022,Classroom interaction
+8,studies,0.003089355,d6_2020-2022,Classroom interaction
+8,data,0.002890168,d6_2020-2022,Classroom interaction
+8,english,0.00285349,d6_2020-2022,Classroom interaction
+9,reading,0.025843699,d6_2020-2022,Literacy as social practice
+9,students,0.015836716,d6_2020-2022,Literacy as social practice
+9,language,0.013021755,d6_2020-2022,Literacy as social practice
+9,literacy,0.009108941,d6_2020-2022,Literacy as social practice
+9,motivation,0.007558263,d6_2020-2022,Literacy as social practice
+9,research,0.007395298,d6_2020-2022,Literacy as social practice
+9,children,0.006669753,d6_2020-2022,Literacy as social practice
+9,social,0.006626412,d6_2020-2022,Literacy as social practice
+9,english,0.005592119,d6_2020-2022,Literacy as social practice
+9,practices,0.00517032,d6_2020-2022,Literacy as social practice
+9,study,0.005139098,d6_2020-2022,Literacy as social practice
+9,teachers,0.004980408,d6_2020-2022,Literacy as social practice
+9,school,0.004597417,d6_2020-2022,Literacy as social practice
+9,assessment,0.004311332,d6_2020-2022,Literacy as social practice
+9,bilingual,0.004097874,d6_2020-2022,Literacy as social practice
+9,emergent,0.00379694,d6_2020-2022,Literacy as social practice
+9,spanish,0.0036604,d6_2020-2022,Literacy as social practice
+9,read,0.003491856,d6_2020-2022,Literacy as social practice
+9,knowledge,0.003380809,d6_2020-2022,Literacy as social practice
+9,global,0.003241302,d6_2020-2022,Literacy as social practice
+9,education,0.003224468,d6_2020-2022,Literacy as social practice
+9,bilinguals,0.00309771,d6_2020-2022,Literacy as social practice
+9,based,0.002873627,d6_2020-2022,Literacy as social practice
+9,critical,0.002786291,d6_2020-2022,Literacy as social practice
+9,teacher,0.0027788,d6_2020-2022,Literacy as social practice
+9,data,0.002721741,d6_2020-2022,Literacy as social practice
+9,journal,0.002721269,d6_2020-2022,Literacy as social practice
+9,learning,0.002683557,d6_2020-2022,Literacy as social practice
+9,self,0.002645373,d6_2020-2022,Literacy as social practice
+9,cultural,0.002634726,d6_2020-2022,Literacy as social practice
+10,black,0.023219818,d6_2020-2022,Critical literacy
+10,children,0.009664411,d6_2020-2022,Critical literacy
+10,students,0.009429633,d6_2020-2022,Critical literacy
+10,literacy,0.008561149,d6_2020-2022,Critical literacy
+10,critical,0.007154844,d6_2020-2022,Critical literacy
+10,school,0.006317604,d6_2020-2022,Critical literacy
+10,people,0.005584839,d6_2020-2022,Critical literacy
+10,research,0.005458478,d6_2020-2022,Critical literacy
+10,white,0.005325196,d6_2020-2022,Critical literacy
+10,education,0.004760568,d6_2020-2022,Critical literacy
+10,social,0.004753913,d6_2020-2022,Critical literacy
+10,teachers,0.004089763,d6_2020-2022,Critical literacy
+10,racism,0.003864803,d6_2020-2022,Critical literacy
+10,racial,0.003718888,d6_2020-2022,Critical literacy
+10,classroom,0.003692225,d6_2020-2022,Critical literacy
+10,girls,0.003664344,d6_2020-2022,Critical literacy
+10,practices,0.003611464,d6_2020-2022,Critical literacy
+10,race,0.003549617,d6_2020-2022,Critical literacy
+10,writing,0.003326107,d6_2020-2022,Critical literacy
+10,teaching,0.003317557,d6_2020-2022,Critical literacy
+10,blackness,0.003246822,d6_2020-2022,Critical literacy
+10,language,0.003236328,d6_2020-2022,Critical literacy
+10,african,0.003222381,d6_2020-2022,Critical literacy
+10,anti,0.003190492,d6_2020-2022,Critical literacy
+10,teacher,0.002773857,d6_2020-2022,Critical literacy
+10,justice,0.002747766,d6_2020-2022,Critical literacy
+10,puerto,0.0026812,d6_2020-2022,Critical literacy
+10,english,0.002674683,d6_2020-2022,Critical literacy
+10,literacies,0.002616149,d6_2020-2022,Critical literacy
+10,analysis,0.002514332,d6_2020-2022,Critical literacy
+11,literacy,0.019435452,d6_2020-2022,Teacher education
+11,students,0.014697615,d6_2020-2022,Teacher education
+11,teacher,0.01167213,d6_2020-2022,Teacher education
+11,research,0.009911831,d6_2020-2022,Teacher education
+11,education,0.009787639,d6_2020-2022,Teacher education
+11,teachers,0.009415195,d6_2020-2022,Teacher education
+11,teaching,0.008271661,d6_2020-2022,Teacher education
+11,practice,0.006748624,d6_2020-2022,Teacher education
+11,practices,0.006317706,d6_2020-2022,Teacher education
+11,school,0.006230967,d6_2020-2022,Teacher education
+11,coaching,0.005478836,d6_2020-2022,Teacher education
+11,race,0.00544146,d6_2020-2022,Teacher education
+11,pts,0.005121764,d6_2020-2022,Teacher education
+11,learning,0.004778103,d6_2020-2022,Teacher education
+11,critical,0.004551393,d6_2020-2022,Teacher education
+11,language,0.004219209,d6_2020-2022,Teacher education
+11,based,0.004192678,d6_2020-2022,Teacher education
+11,student,0.004183004,d6_2020-2022,Teacher education
+11,analysis,0.004005935,d6_2020-2022,Teacher education
+11,white,0.003816576,d6_2020-2022,Teacher education
+11,racial,0.003388585,d6_2020-2022,Teacher education
+11,english,0.003217242,d6_2020-2022,Teacher education
+11,university,0.003185573,d6_2020-2022,Teacher education
+11,reading,0.003108227,d6_2020-2022,Teacher education
+11,community,0.002978328,d6_2020-2022,Teacher education
+11,curriculum,0.002966808,d6_2020-2022,Teacher education
+11,biliteracy,0.002834402,d6_2020-2022,Teacher education
+11,study,0.002745039,d6_2020-2022,Teacher education
+11,development,0.002731286,d6_2020-2022,Teacher education
+11,mentoring,0.002713117,d6_2020-2022,Teacher education
+12,students,0.020823501,d6_2020-2022,ESL/bilingualism and multilingualism
+12,writing,0.01567849,d6_2020-2022,ESL/bilingualism and multilingualism
+12,language,0.015533335,d6_2020-2022,ESL/bilingualism and multilingualism
+12,literacy,0.014412548,d6_2020-2022,ESL/bilingualism and multilingualism
+12,reading,0.011755545,d6_2020-2022,ESL/bilingualism and multilingualism
+12,english,0.008476041,d6_2020-2022,ESL/bilingualism and multilingualism
+12,education,0.007718889,d6_2020-2022,ESL/bilingualism and multilingualism
+12,translanguaging,0.007444843,d6_2020-2022,ESL/bilingualism and multilingualism
+12,research,0.00674699,d6_2020-2022,ESL/bilingualism and multilingualism
+12,languages,0.006037587,d6_2020-2022,ESL/bilingualism and multilingualism
+12,school,0.005800968,d6_2020-2022,ESL/bilingualism and multilingualism
+12,teacher,0.0056456,d6_2020-2022,ESL/bilingualism and multilingualism
+12,instruction,0.005159332,d6_2020-2022,ESL/bilingualism and multilingualism
+12,classroom,0.005081148,d6_2020-2022,ESL/bilingualism and multilingualism
+12,student,0.004484696,d6_2020-2022,ESL/bilingualism and multilingualism
+12,linguistic,0.00422458,d6_2020-2022,ESL/bilingualism and multilingualism
+12,learning,0.004195745,d6_2020-2022,ESL/bilingualism and multilingualism
+12,practices,0.004172207,d6_2020-2022,ESL/bilingualism and multilingualism
+12,children,0.004167558,d6_2020-2022,ESL/bilingualism and multilingualism
+12,teachers,0.004097462,d6_2020-2022,ESL/bilingualism and multilingualism
+12,bilingual,0.004091312,d6_2020-2022,ESL/bilingualism and multilingualism
+12,multilingual,0.00403019,d6_2020-2022,ESL/bilingualism and multilingualism
+12,study,0.003885742,d6_2020-2022,ESL/bilingualism and multilingualism
+12,class,0.003760781,d6_2020-2022,ESL/bilingualism and multilingualism
+12,disciplinary,0.003724761,d6_2020-2022,ESL/bilingualism and multilingualism
+12,spanish,0.003570463,d6_2020-2022,ESL/bilingualism and multilingualism
+12,classrooms,0.003568306,d6_2020-2022,ESL/bilingualism and multilingualism
+12,adult,0.003505703,d6_2020-2022,ESL/bilingualism and multilingualism
+12,journal,0.003489234,d6_2020-2022,ESL/bilingualism and multilingualism
+12,program,0.003317101,d6_2020-2022,ESL/bilingualism and multilingualism
