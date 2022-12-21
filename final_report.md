@@ -280,7 +280,7 @@ In terms of the implications and future work, my study shows the feasibility of 
 
 **Commentary about the process**
 
-This daunting project implies many hours of work and computational resources. The time combination of time and computational resources sometimes was a limitation during the development of the project. Fortunately, in the end, I could perform the necessary analysis to answer at least exploratorily the research questions. 
+This daunting project implies many hours of work and computational resources. The combination of time and computational resources sometimes was a limitation during the development of the project. Fortunately, in the end, I could perform the necessary analysis to answer at least exploratorily the research questions. 
 
 ## References
 
@@ -289,6 +289,8 @@ Baldwin, R. S., Readence, J. E., Schumm, J. S., Konopak, J. P., Konopak, B. C., 
 Durst, R. K. (1990). The mongoose and the rat in composition research: Insights from the RTE annotated bibliography. College Composition and Communication, 41(4), 393-408.
 
 Dutro, E., & Collins. (2011). A Journey through Nine Decades of NCTE-Published Research in Elementary Literacy. Research in the Teaching of English, 46(2), 141–161.
+
+Freire, P. (2014). Pedagogy of the Oppressed: 30th Anniversary Edition (M. Bergman Ramos, Trans.). Bloomsbury Academic & Professional. http://ebookcentral.proquest.com/lib/pitt-ebooks/detail.action?docID=1745456 (Original work published 1970)
 
 Gee, J. P. (2000). The new literacy studies: From 'socially situated' to the work of the social. In D. Barton, M. Hamilton, & R. Ivanič, Situated literacies reading and writing in context (pp. 180–209). Routledge.
 
