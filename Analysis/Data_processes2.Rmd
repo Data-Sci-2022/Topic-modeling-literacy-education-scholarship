@@ -114,7 +114,7 @@ Looking at the topics qualitatively, I have inferred themes for each topic. I ha
 
 ```{r message=FALSE, warning=FALSE}
 #Loading csv with topics named
-corpus69_79_terms_id<- read_csv("../Data_product_samples/topicmodel_listsanalyzed/corpus69_79_terms2.csv")
+corpus69_79_terms_id<- read_csv("../Private/topicmodel_listsanalyzed/corpus69_79_terms2.csv")
 ```
 
 
@@ -211,7 +211,7 @@ corpus80_89_topicmodel <-
 LDA(corpus80_89_dtm, k = 12, control = list(seed = 6245))
 #results
 corpus80_89_topicmodel%>%
-  write_rds("../Data_product_samples/topicmodels/topicmodel80_99.Rds")
+  write_rds("../Private/topicmodels/topicmodel80_99.Rds")
 ```
 The result is a model that I will use as a base in the next steps
 
@@ -247,7 +247,7 @@ Looking at the topics qualitatively, I have inferred themes for each topic. I ha
 
 ```{r message=FALSE, warning=FALSE}
 #Loading csv with topics named
-corpus80_89_terms_id<- read_csv("../Data_product_samples/topicmodel_listsanalyzed/corpus80_89_terms2.csv")
+corpus80_89_terms_id<- read_csv("../Private/topicmodel_listsanalyzed/corpus80_89_terms2.csv")
 ```
 
 
@@ -379,7 +379,7 @@ Looking at the topics qualitatively, I have inferred themes for each topic. I ha
 
 ```{r message=FALSE, warning=FALSE}
 #Loading csv with topics named
-corpus90_99_terms_id<- read_csv("../Data_product_samples/topicmodel_listsanalyzed/corpus90_99_terms2.csv")
+corpus90_99_terms_id<- read_csv("../Private/topicmodel_listsanalyzed/corpus90_99_terms2.csv")
 ```
 
 
@@ -510,7 +510,7 @@ Looking at the topics qualitatively, I have inferred themes for each topic. I ha
 
 ```{r message=FALSE, warning=FALSE}
 #Loading csv with topics named
-corpus00_09_terms_id<- read_csv("../Data_product_samples/topicmodel_listsanalyzed/corpus00_09_terms2.csv")
+corpus00_09_terms_id<- read_csv("../Private/topicmodel_listsanalyzed/corpus00_09_terms2.csv")
 ```
 
 
@@ -642,7 +642,7 @@ Looking at the topics qualitatively, I have inferred themes for each topic. I ha
 
 ```{r message=FALSE, warning=FALSE}
 #Loading csv with topics named
-corpus10_19_terms_id<- read_csv("../Data_product_samples/topicmodel_listsanalyzed/corpus10_19_terms2.csv")
+corpus10_19_terms_id<- read_csv("../Private/topicmodel_listsanalyzed/corpus10_19_terms2.csv")
 ```
 
 
@@ -788,7 +788,7 @@ Looking at the topics qualitatively, I have inferred themes for each topic. I ha
 
 ```{r message=FALSE, warning=FALSE}
 #Loading csv with topics named
-corpus20_22_terms_id<- read_csv("../Data_product_samples/topicmodel_listsanalyzed/corpus20_22_terms2.csv")
+corpus20_22_terms_id<- read_csv("../Private/topicmodel_listsanalyzed/corpus20_22_terms2.csv")
 ```
 
 
